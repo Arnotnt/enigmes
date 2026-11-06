@@ -4,6 +4,7 @@ export const ROOM_WIDTH = 15;
 export const ROOM_HEIGHT = 10;
 
 export const PLAYER_SPEED = 80; // pixels par seconde
+export const CORNER_ASSIST = 14; // pixels de décalage corrigés pour entrer dans une ouverture
 
 // Le dessin du personnage fait 16×32, mais seuls ses pieds touchent les murs.
 export const PLAYER_FRAME = { width: 16, height: 32 };

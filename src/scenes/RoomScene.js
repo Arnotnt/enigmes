@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import { Npc } from '../characters/Npc.js';
-import { PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE } from '../constants.js';
+import { CORNER_ASSIST, PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE, TILE_SIZE } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
@@ -30,8 +30,8 @@ export class RoomScene extends Phaser.Scene {
     const map = this.make.tilemap({ key: this.room });
     const tileset = map.addTilesetImage('overworld', 'tiles');
     map.createLayer('sol', tileset);
-    const walls = map.createLayer('murs', tileset);
-    walls.setCollisionByExclusion([-1]); // toute tuile peinte sur ce calque bloque le passage
+    this.walls = map.createLayer('murs', tileset);
+    this.walls.setCollisionByExclusion([-1]); // toute tuile peinte sur ce calque bloque le passage
 
     const findPoint = (name) => map.findObject('objets', (object) => object.name === name);
     const start = findPoint(this.entry);
@@ -42,7 +42,7 @@ export class RoomScene extends Phaser.Scene {
     this.player.body.setOffset(PLAYER_HITBOX.offsetX, PLAYER_HITBOX.offsetY);
     this.player.setCollideWorldBounds(true);
     this.player.setDepth(1); // toujours dessiné devant le bloc et la porte
-    this.physics.add.collider(this.player, walls);
+    this.physics.add.collider(this.player, this.walls);
 
     this.puzzle = null;
     const puzzleMarker = Object.keys(PUZZLES).find(findPoint);
@@ -77,7 +77,8 @@ export class RoomScene extends Phaser.Scene {
     if (name) {
       const { x, y } = DIRECTIONS[name];
       this.facing = name;
-      this.player.body.setVelocity(x * PLAYER_SPEED, y * PLAYER_SPEED);
+      const slide = this.cornerSlide(name);
+      this.player.body.setVelocity((x + slide.x) * PLAYER_SPEED, (y + slide.y) * PLAYER_SPEED);
       this.player.anims.play(`walk-${name}`, true);
     } else {
       this.stopPlayer();
@@ -90,6 +91,32 @@ export class RoomScene extends Phaser.Scene {
     const feet = tileAt(this.player.body.center);
     const exit = this.exits.find((item) => sameTile(feet, tileAt(item)));
     if (exit) this.leaveRoom(exit);
+  }
+
+  // Quand un mur bloque le personnage juste à côté d'une ouverture, le fait glisser vers elle.
+  // Sinon il faudrait s'aligner au pixel près : le passage est à peine plus large que lui.
+  cornerSlide(name) {
+    const none = { x: 0, y: 0 };
+    const { body } = this.player;
+    if (!body.blocked[name]) return none;
+
+    const { x, y } = DIRECTIONS[name];
+    const across = { x: y === 0 ? 0 : 1, y: x === 0 ? 0 : 1 }; // axe perpendiculaire à la marche
+    const feet = tileAt(body.center);
+
+    for (const offset of [0, -1, 1]) {
+      const column = feet.column + x + across.x * offset;
+      const row = feet.row + y + across.y * offset;
+      if (this.walls.getTileAt(column, row)) continue;
+
+      const center = (index) => index * TILE_SIZE + TILE_SIZE / 2;
+      const gap = across.x ? center(column) - body.center.x : center(row) - body.center.y;
+      if (Math.abs(gap) < 2 || Math.abs(gap) > CORNER_ASSIST) continue; // déjà aligné, ou trop loin
+
+      const step = Math.sign(gap);
+      return { x: across.x * step, y: across.y * step };
+    }
+    return none;
   }
 
   stopPlayer() {
