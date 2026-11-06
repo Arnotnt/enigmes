@@ -1,4 +1,4 @@
-import { TILE_SIZE } from './constants.js';
+import { PLAYER_FRAME, PLAYER_HITBOX, TILE_SIZE } from './constants.js';
 
 // Case de la salle qui contient le point (x, y).
 export const tileAt = ({ x, y }) => ({
@@ -7,3 +7,7 @@ export const tileAt = ({ x, y }) => ({
 });
 
 export const sameTile = (a, b) => a.column === b.column && a.row === b.row;
+
+// Écart entre le centre du dessin d'un personnage et le centre de ses pieds.
+export const feetOffset = () =>
+  PLAYER_HITBOX.offsetY + PLAYER_HITBOX.height / 2 - PLAYER_FRAME.height / 2;

@@ -1,9 +1,11 @@
 import * as Phaser from 'phaser';
-import { PLAYER_FRAME, PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE } from '../constants.js';
+import { Npc } from '../characters/Npc.js';
+import { PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { FIRST_ENTRY, FIRST_ROOM } from '../rooms.js';
-import { sameTile, tileAt } from '../tiles.js';
+import { feetOffset, sameTile, tileAt } from '../tiles.js';
+import { dialogBox } from '../ui/DialogBox.js';
 
 const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
 
@@ -31,8 +33,7 @@ export class RoomScene extends Phaser.Scene {
     const start = findPoint(this.entry);
 
     // Le point d'arrivée désigne l'emplacement des pieds, pas le centre du dessin.
-    const feetOffset = PLAYER_HITBOX.offsetY + PLAYER_HITBOX.height / 2 - PLAYER_FRAME.height / 2;
-    this.player = this.physics.add.sprite(start.x, start.y - feetOffset, 'player', firstFrame(this.facing));
+    this.player = this.physics.add.sprite(start.x, start.y - feetOffset(), 'player', firstFrame(this.facing));
     this.player.body.setSize(PLAYER_HITBOX.width, PLAYER_HITBOX.height);
     this.player.body.setOffset(PLAYER_HITBOX.offsetX, PLAYER_HITBOX.offsetY);
     this.player.setCollideWorldBounds(true);
@@ -46,6 +47,9 @@ export class RoomScene extends Phaser.Scene {
         this.registry.set(SOLVED_ROOMS, [...solvedRooms, this.room]);
       });
     }
+
+    const npcSpot = findPoint('pnj');
+    this.npc = npcSpot ? new Npc(this, npcSpot, this.player) : null;
 
     this.exit = findPoint('sortie');
 
@@ -75,6 +79,7 @@ export class RoomScene extends Phaser.Scene {
     }
 
     this.puzzle?.update(delta, DIRECTIONS[name]);
+    this.npc?.update();
 
     if (this.exit && sameTile(tileAt(this.player.body.center), tileAt(this.exit))) this.leaveRoom();
   }
@@ -88,6 +93,7 @@ export class RoomScene extends Phaser.Scene {
   leaveRoom() {
     this.leaving = true;
     this.stopPlayer();
+    dialogBox.hide();
 
     const property = (name) => this.exit.properties.find((item) => item.name === name).value;
     const room = property('salle');

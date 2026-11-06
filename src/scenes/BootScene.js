@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser';
 import characterUrl from '../assets/character.png';
+import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
 import overworldUrl from '../assets/overworld.png';
-import { PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
+import { NPC_FRAME_SIZE, PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { ROOMS } from '../rooms.js';
 
@@ -20,6 +21,8 @@ export class BootScene extends Phaser.Scene {
       frameWidth: PLAYER_FRAME.width,
       frameHeight: PLAYER_FRAME.height,
     });
+
+    this.load.spritesheet('npc', npcUrl, { frameWidth: NPC_FRAME_SIZE, frameHeight: NPC_FRAME_SIZE });
 
     for (const [key, url] of Object.entries(ROOMS)) this.load.tilemapTiledJSON(key, url);
   }

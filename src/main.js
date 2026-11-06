@@ -1,3 +1,4 @@
+import '@fontsource/andika/400.css';
 import * as Phaser from 'phaser';
 import { ROOM_HEIGHT, ROOM_WIDTH, TILE_SIZE } from './constants.js';
 import { BootScene } from './scenes/BootScene.js';
