@@ -1,0 +1,30 @@
+# Énigmes
+
+Jeu d'aventure-énigmes en vue de dessus, style GBA, pour un enfant de 6-7 ans qui apprend à lire. Il joue sur ordinateur, au clavier.
+
+## Objectif
+
+C'est un **serious game** : les énigmes font progresser en lecture. Le but pédagogique passe avant la complexité du jeu.
+
+## Règles de conception
+
+- Pas de combat, pas de game over, pas de chrono. Une erreur ne punit jamais : on réessaie.
+- L'enfant ne lit pas seul : toute consigne est disponible à voix haute. Il ne doit jamais rester bloqué à cause du texte.
+- La lecture est nécessaire pour résoudre l'énigme, avec le niveau d'aide adapté : écouter reste toujours possible.
+- Une énigme ne doit jamais pouvoir bloquer la partie : prévoir une remise à zéro de la salle.
+- Le français du jeu est correct et simple ; les lettres sont bien lisibles, avec une police adaptée aux débutants.
+
+## Technique
+
+- Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier.
+- Salle de 15×10 tuiles de 16 px (240×160, agrandi à l'écran), `pixelArt: true`.
+- Déplacement libre en 4 directions, jamais en diagonale. Les blocs poussés avancent case par case.
+- Cartes faites dans Tiled.
+- Assets libres uniquement, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
+- Hébergement sur GitHub Pages : garder des chemins relatifs.
+
+## Organisation
+
+- Feuille de route : `docs/feuille-de-route.md`.
+- Une issue = une branche = une pull request.
+- Le propriétaire du projet apprend Phaser : expliquer les choix simplement, en français.
