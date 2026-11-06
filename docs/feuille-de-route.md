@@ -3,13 +3,15 @@
 ## Phase 0 : mise en place
 
 - [x] Projet Vite + Phaser et `CLAUDE.md`
-- [ ] Installer `gh` et Tiled, se connecter à GitHub
-- [ ] Créer le dépôt et publier sur GitHub Pages
-- [ ] Créer les issues ci-dessous
+- [x] Installer `gh` et Tiled, se connecter à GitHub
+- [x] Créer le dépôt et publier sur GitHub Pages
+- [x] Créer les issues ci-dessous
+
+Les numéros ci-dessous sont ceux des issues GitHub.
 
 ## Phase 1 : le socle jouable
 
-1. [ ] Déplacement et collisions (rectangles)
+1. [x] Déplacement et collisions (rectangles)
 2. [ ] Sprites et animations de marche, `CREDITS.md`
 3. [ ] Première salle dessinée dans Tiled
 
