@@ -15,7 +15,7 @@ class DialogBox {
   show(text, { autoSpeak = false } = {}) {
     this.speech = text;
     this.textElement.textContent = text;
-    this.box.classList.remove('prompt');
+    this.box.classList.remove('prompt', 'banner');
     this.box.hidden = false;
     if (autoSpeak) this.listen();
   }
@@ -24,7 +24,17 @@ class DialogBox {
   showPrompt(speech) {
     this.speech = speech;
     this.textElement.textContent = '';
+    this.box.classList.remove('banner');
     this.box.classList.add('prompt');
+    this.box.hidden = false;
+  }
+
+  // Affiche un texte en haut de l'écran, pour une énigme qui se joue dans toute la salle.
+  showBanner(text, speech) {
+    this.speech = speech;
+    this.textElement.textContent = text;
+    this.box.classList.remove('prompt');
+    this.box.classList.add('banner');
     this.box.hidden = false;
   }
 

@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { Npc } from '../characters/Npc.js';
 import { CORNER_ASSIST, PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE, TILE_SIZE } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
+import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { FIRST_ENTRY, FIRST_ROOM } from '../rooms.js';
@@ -11,7 +12,7 @@ import { dialogBox } from '../ui/DialogBox.js';
 const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
 
 // La présence de ce point dans la carte indique l'énigme de la salle.
-const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle };
+const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': AdditionPuzzle };
 
 export class RoomScene extends Phaser.Scene {
   constructor() {
@@ -128,6 +129,7 @@ export class RoomScene extends Phaser.Scene {
   leaveRoom(exit) {
     this.leaving = true;
     this.stopPlayer();
+    this.time.removeAllEvents(); // une annonce prévue ne doit pas arriver après avoir quitté la salle
     dialogBox.hide();
 
     const property = (name) => exit.properties.find((item) => item.name === name).value;
