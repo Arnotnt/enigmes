@@ -1,24 +1,28 @@
 import { BLOCK_MOVE_DURATION, BLOCK_PUSH_DELAY, OBJECTS, OVERWORLD, TILE_SIZE } from '../constants.js';
+import { sameTile, tileAt } from '../tiles.js';
 
 // Énigme : pousser le bloc sur l'interrupteur pour ouvrir la porte.
 // Le levier remet le bloc à sa place : l'enfant ne peut jamais rester coincé.
 export class BlockPuzzle {
-  constructor(scene, map, player) {
+  // solved : vrai si l'énigme a déjà été résolue. onSolved est appelée à la résolution.
+  constructor(scene, map, player, solved, onSolved) {
     this.scene = scene;
     this.map = map;
     this.player = player;
+    this.onSolved = onSolved;
 
     const point = (name) => map.findObject('objets', (object) => object.name === name);
     this.start = point('bloc');
     this.switchSpot = point('interrupteur');
     const doorSpot = point('porte');
     const leverSpot = point('retour');
-    this.reservedTiles = [doorSpot, leverSpot].map((spot) => this.tileAt(spot));
+    this.reservedTiles = [doorSpot, leverSpot].map(tileAt);
 
     scene.add.image(this.switchSpot.x, this.switchSpot.y, 'objects', OBJECTS.switch);
     this.lever = scene.add.image(leverSpot.x, leverSpot.y, 'objects', OBJECTS.lever);
     this.door = scene.physics.add.staticImage(doorSpot.x, doorSpot.y, 'tiles', OVERWORLD.doorClosed);
-    this.block = scene.physics.add.image(this.start.x, this.start.y, 'tiles', OVERWORLD.block);
+    const blockSpot = solved ? this.switchSpot : this.start;
+    this.block = scene.physics.add.image(blockSpot.x, blockSpot.y, 'tiles', OVERWORLD.block);
     this.block.setImmovable(true);
 
     this.doorCollider = scene.physics.add.collider(player, this.door);
@@ -30,7 +34,8 @@ export class BlockPuzzle {
     this.pushTime = 0;
     this.blockTween = null;
     this.onLever = false;
-    this.solved = false;
+    this.solved = solved;
+    if (solved) this.openDoor();
   }
 
   // direction : la direction dans laquelle le personnage marche, ou undefined à l'arrêt.
@@ -50,14 +55,6 @@ export class BlockPuzzle {
     }
   }
 
-  tileAt({ x, y }) {
-    return { column: Math.floor(x / TILE_SIZE), row: Math.floor(y / TILE_SIZE) };
-  }
-
-  sameTile(a, b) {
-    return a.column === b.column && a.row === b.row;
-  }
-
   // Vrai si le personnage est du côté opposé à la poussée et à peu près en face du bloc.
   isBehindBlock(direction) {
     const dx = this.player.body.center.x - this.block.x;
@@ -69,12 +66,12 @@ export class BlockPuzzle {
 
   canMoveTo(tile) {
     const wall = this.map.getTileAt(tile.column, tile.row, false, 'murs');
-    return !wall && !this.reservedTiles.some((reserved) => this.sameTile(reserved, tile));
+    return !wall && !this.reservedTiles.some((reserved) => sameTile(reserved, tile));
   }
 
   tryPush(direction) {
     this.pushTime = 0;
-    const from = this.tileAt(this.block);
+    const from = tileAt(this.block);
     const target = { column: from.column + direction.x, row: from.row + direction.y };
     if (!this.canMoveTo(target)) return;
 
@@ -85,20 +82,25 @@ export class BlockPuzzle {
       duration: BLOCK_MOVE_DURATION,
       onComplete: () => {
         this.blockTween = null;
-        if (this.sameTile(target, this.tileAt(this.switchSpot))) this.solve();
+        if (sameTile(target, tileAt(this.switchSpot))) this.solve();
       },
     });
   }
 
   solve() {
     this.solved = true;
+    this.openDoor();
+    this.scene.cameras.main.shake(150, 0.004);
+    this.onSolved();
+  }
+
+  openDoor() {
     this.door.setFrame(OVERWORLD.doorOpen);
     this.doorCollider.destroy();
-    this.scene.cameras.main.shake(150, 0.004);
   }
 
   checkLever() {
-    const onLever = this.sameTile(this.tileAt(this.player.body.center), this.tileAt(this.lever));
+    const onLever = sameTile(tileAt(this.player.body.center), tileAt(this.lever));
     if (onLever && !this.onLever) this.reset();
     this.onLever = onLever;
   }
