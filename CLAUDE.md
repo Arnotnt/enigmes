@@ -19,10 +19,11 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 - Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier.
 - Salle de 15×10 tuiles de 16 px (240×160, agrandi à l'écran), `pixelArt: true`.
 - Déplacement libre en 4 directions, jamais en diagonale. Les blocs poussés avancent case par case.
-- Cartes faites dans Tiled, dans `src/assets/maps/` (format `.tmj`). Calques : `sol` (décor), `murs` (toute tuile peinte bloque le passage), `objets` (points). Les points d'arrivée désignent les pieds du personnage (`depart`, `entree`…). Les autres sont au centre d'une case : `bloc`, `interrupteur`, `porte`, `retour` pour l'énigme, `pnj` (aux pieds, propriété `texte`), et `sortie`, avec les propriétés `salle` (carte à ouvrir) et `arrivee` (point d'arrivée dans cette carte). La case de `porte` doit rester vide dans `murs`.
+- Cartes faites dans Tiled, dans `src/assets/maps/` (format `.tmj`). Calques : `sol` (décor), `murs` (toute tuile peinte bloque le passage), `objets` (points). Les points d'arrivée désignent les pieds du personnage (`depart`, `entree`…). Les autres sont au centre d'une case : `bloc`, `interrupteur`, `porte`, `retour` pour l'énigme, `pnj` (aux pieds, propriété `texte`), `torche` (propriété `lettre`, avec un point `porte`), et `sortie`, avec les propriétés `salle` (carte à ouvrir) et `arrivee` (point d'arrivée dans cette carte). La case de `porte` doit rester vide dans `murs`.
 - Pour ajouter une salle : créer la carte, puis l'ajouter à `src/rooms.js`.
 - Assets libres uniquement, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
 - Textes en HTML par-dessus le jeu, police Andika (`src/ui/`). `dialogBox.show(texte, { autoSpeak })` : `autoSpeak: false` pour une épreuve de lecture ; l'écoute reste toujours possible.
+- Sons de lecture dans `src/reading/sounds.js`. L'ordre est provisoire : à caler sur celui de l'école. La voix du navigateur ne convient qu'aux voyelles.
 - Hébergement sur GitHub Pages : garder des chemins relatifs.
 - Images et cartes dans `src/assets/`, importées dans le code : leur nom publié change avec leur contenu, sinon le cache du navigateur mélange ancienne et nouvelle version.
 

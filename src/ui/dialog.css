@@ -20,6 +20,22 @@
   letter-spacing: 0.02em;
 }
 
+#dialog.prompt {
+  left: auto;
+  right: 3vmin;
+  bottom: auto;
+  top: 3vmin;
+  transform: none;
+  width: auto;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+#dialog.prompt #dialog-text {
+  display: none;
+}
+
 #dialog[hidden] {
   display: none;
 }

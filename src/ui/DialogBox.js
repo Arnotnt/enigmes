@@ -13,9 +13,19 @@ class DialogBox {
 
   // autoSpeak : lire tout de suite, pour une consigne. Une épreuve de lecture passera false.
   show(text, { autoSpeak = false } = {}) {
+    this.speech = text;
     this.textElement.textContent = text;
+    this.box.classList.remove('prompt');
     this.box.hidden = false;
     if (autoSpeak) this.listen();
+  }
+
+  // Affiche seulement le bouton d'écoute : l'enfant écoute, il n'a rien à lire.
+  showPrompt(speech) {
+    this.speech = speech;
+    this.textElement.textContent = '';
+    this.box.classList.add('prompt');
+    this.box.hidden = false;
   }
 
   hide() {
@@ -24,7 +34,7 @@ class DialogBox {
   }
 
   listen() {
-    if (!this.box.hidden) speak(this.textElement.textContent);
+    if (!this.box.hidden) speak(this.speech);
   }
 }
 

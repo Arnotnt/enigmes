@@ -25,7 +25,7 @@ Les numéros ci-dessous sont ceux des issues GitHub.
 
 Chaque salle s'appuie sur un niveau de lecture. L'ordre des sons est à caler sur celui de l'école.
 
-7. [ ] Les sons : allumer les torches qui portent le son entendu
+7. [x] Les sons : allumer les torches qui portent le son entendu (voyelles a, i, o)
 8. [ ] Les syllabes : marcher sur les dalles pour former « ma », « li »…
 9. [ ] Les mots : lire le mot sur la pancarte et trouver l'objet (« clé », « porte »)
 10. [ ] Les phrases : suivre une consigne écrite (« Va à la porte rouge. »)

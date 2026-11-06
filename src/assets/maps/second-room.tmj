@@ -175,28 +175,13 @@
     184,
     184,
     184,
+    0,
     184,
     184,
     184,
     184,
     184,
     184,
-    184,
-    184,
-    184,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
     184,
     184,
     0,
@@ -216,6 +201,18 @@
     184,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    184,
     184,
     0,
     0,
@@ -224,7 +221,10 @@
     0,
     0,
     0,
-    184,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     184,
@@ -382,13 +382,124 @@
      "type": "",
      "visible": true,
      "width": 0,
-     "x": 120,
-     "y": 72,
+     "x": 200,
+     "y": 120,
      "properties": [
       {
        "name": "texte",
        "type": "string",
-       "value": "Bonjour ! Tu as ouvert la porte. Bravo !"
+       "value": "Bravo ! Tu connais les sons."
+      }
+     ]
+    },
+    {
+     "height": 0,
+     "id": 4,
+     "name": "porte",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 8
+    },
+    {
+     "height": 0,
+     "id": 5,
+     "name": "sortie",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 8,
+     "properties": [
+      {
+       "name": "salle",
+       "type": "string",
+       "value": "third-room"
+      },
+      {
+       "name": "arrivee",
+       "type": "string",
+       "value": "entree"
+      }
+     ]
+    },
+    {
+     "height": 0,
+     "id": 6,
+     "name": "depuis-salle-3",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 24
+    },
+    {
+     "height": 0,
+     "id": 7,
+     "name": "torche",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 72,
+     "y": 56,
+     "properties": [
+      {
+       "name": "lettre",
+       "type": "string",
+       "value": "a"
+      }
+     ]
+    },
+    {
+     "height": 0,
+     "id": 8,
+     "name": "torche",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 56,
+     "properties": [
+      {
+       "name": "lettre",
+       "type": "string",
+       "value": "i"
+      }
+     ]
+    },
+    {
+     "height": 0,
+     "id": 9,
+     "name": "torche",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 168,
+     "y": 56,
+     "properties": [
+      {
+       "name": "lettre",
+       "type": "string",
+       "value": "o"
       }
      ]
     }
@@ -401,7 +512,7 @@
   }
  ],
  "nextlayerid": 4,
- "nextobjectid": 4,
+ "nextobjectid": 10,
  "orientation": "orthogonal",
  "renderorder": "right-down",
  "tiledversion": "1.12.2",
