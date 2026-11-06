@@ -26,5 +26,8 @@ export const BLOCK_MOVE_DURATION = 200; // millisecondes pour avancer d'une case
 export const OVERWORLD = { block: 70, doorClosed: 65, doorOpen: 145, postTop: 680, postBottom: 720 };
 export const OBJECTS = { switch: 297, lever: 299, flameFirst: 103, flameLast: 109 };
 
-export const TORCH_REACH = 22; // pixels entre les pieds et la torche pour répondre
+export const TORCH_REACH = 15; // pixels entre les pieds et la torche : il faut la toucher pour répondre
 export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant d'annoncer le son suivant
+
+export const ADDITION_MAX = 10; // total le plus grand : toutes les réponses restent entre 0 et 10
+export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo avant la suivante

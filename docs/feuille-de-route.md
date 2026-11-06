@@ -30,6 +30,10 @@ Chaque salle s'appuie sur un niveau de lecture. L'ordre des sons est à caler su
 9. [ ] Les mots : lire le mot sur la pancarte et trouver l'objet (« clé », « porte »)
 10. [ ] Les phrases : suivre une consigne écrite (« Va à la porte rouge. »)
 
+## Calcul
+
+21. [x] Addition à trou dans la troisième salle (nombres de 0 à 10, tirés au hasard)
+
 ## Phase 4 : finition
 
 11. [ ] Écrans de début et de fin, sauvegarde, sons
