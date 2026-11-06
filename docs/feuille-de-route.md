@@ -12,7 +12,7 @@ Les numéros ci-dessous sont ceux des issues GitHub.
 ## Phase 1 : le socle jouable
 
 1. [x] Déplacement et collisions (rectangles)
-2. [ ] Sprites et animations de marche, `CREDITS.md`
+2. [x] Sprites et animations de marche, `CREDITS.md`
 3. [ ] Première salle dessinée dans Tiled
 
 ## Phase 2 : les mécaniques
