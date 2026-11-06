@@ -4,11 +4,8 @@ import {
   PLAYER_HITBOX,
   PLAYER_SHEET_COLUMNS,
   PLAYER_SPEED,
-  TILE_SIZE,
-  TILES,
   WALK_FRAMES,
 } from '../constants.js';
-import { FIRST_ROOM } from '../rooms.js';
 
 // sheetRow : ligne de character.png où se trouve la marche dans cette direction.
 const DIRECTIONS = {
@@ -17,9 +14,6 @@ const DIRECTIONS = {
   up: { x: 0, y: -1, sheetRow: 2 },
   left: { x: -1, y: 0, sheetRow: 3 },
 };
-
-// Centre, en pixels, de la tuile située en (colonne, ligne).
-const tileCenter = (index) => index * TILE_SIZE + TILE_SIZE / 2;
 
 // Premier dessin de la marche dans une direction : c'est aussi la pose à l'arrêt.
 const firstFrame = (direction) => DIRECTIONS[direction].sheetRow * PLAYER_SHEET_COLUMNS;
@@ -34,27 +28,18 @@ export class RoomScene extends Phaser.Scene {
       frameWidth: PLAYER_FRAME.width,
       frameHeight: PLAYER_FRAME.height,
     });
-    this.load.spritesheet('tiles', 'assets/overworld.png', {
-      frameWidth: TILE_SIZE,
-      frameHeight: TILE_SIZE,
-    });
+    this.load.image('tiles', 'assets/overworld.png');
+    this.load.tilemapTiledJSON('first-room', 'assets/maps/first-room.tmj');
   }
 
   create() {
-    const walls = this.physics.add.staticGroup();
-    let start = null;
+    const map = this.make.tilemap({ key: 'first-room' });
+    const tileset = map.addTilesetImage('overworld', 'tiles');
+    map.createLayer('sol', tileset);
+    const walls = map.createLayer('murs', tileset);
+    walls.setCollisionByExclusion([-1]); // toute tuile peinte sur ce calque bloque le passage
 
-    FIRST_ROOM.forEach((line, row) => {
-      [...line].forEach((tile, column) => {
-        const x = tileCenter(column);
-        const y = tileCenter(row);
-        const frame = tile === '#' ? TILES.wall : TILES.floor;
-        const image = this.add.image(x, y, 'tiles', frame);
-
-        if (tile === '#') walls.add(image);
-        if (tile === 'P') start = { x, y };
-      });
-    });
+    const start = map.findObject('objets', (object) => object.name === 'depart');
 
     for (const direction of Object.keys(DIRECTIONS)) {
       const first = firstFrame(direction);

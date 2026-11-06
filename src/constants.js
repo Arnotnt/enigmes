@@ -10,6 +10,3 @@ export const PLAYER_FRAME = { width: 16, height: 32 };
 export const PLAYER_HITBOX = { width: 12, height: 12, offsetX: 2, offsetY: 18 };
 export const PLAYER_SHEET_COLUMNS = 17; // nombre de dessins par ligne dans character.png
 export const WALK_FRAMES = 4;
-
-// Numéros des tuiles dans overworld.png. Provisoire, jusqu'à la salle dans Tiled.
-export const TILES = { floor: 360, wall: 183 };

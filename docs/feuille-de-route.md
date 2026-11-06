@@ -13,7 +13,7 @@ Les numéros ci-dessous sont ceux des issues GitHub.
 
 1. [x] Déplacement et collisions (rectangles)
 2. [x] Sprites et animations de marche, `CREDITS.md`
-3. [ ] Première salle dessinée dans Tiled
+3. [x] Première salle dessinée dans Tiled
 
 ## Phase 2 : les mécaniques
 

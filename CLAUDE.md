@@ -19,7 +19,7 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 - Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier.
 - Salle de 15×10 tuiles de 16 px (240×160, agrandi à l'écran), `pixelArt: true`.
 - Déplacement libre en 4 directions, jamais en diagonale. Les blocs poussés avancent case par case.
-- Cartes faites dans Tiled.
+- Cartes faites dans Tiled, dans `public/assets/maps/` (format `.tmj`). Calques : `sol` (décor), `murs` (toute tuile peinte bloque le passage), `objets` (point `depart`, placé aux pieds du personnage).
 - Assets libres uniquement, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
 - Hébergement sur GitHub Pages : garder des chemins relatifs.
 
