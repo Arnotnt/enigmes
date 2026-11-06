@@ -1,10 +1,12 @@
 import firstRoomUrl from './assets/maps/first-room.tmj?url';
 import secondRoomUrl from './assets/maps/second-room.tmj?url';
+import thirdRoomUrl from './assets/maps/third-room.tmj?url';
 
 // Toutes les cartes du jeu. La clé est le nom utilisé par la propriété `salle` des sorties.
 export const ROOMS = {
   'first-room': firstRoomUrl,
   'second-room': secondRoomUrl,
+  'third-room': thirdRoomUrl,
 };
 
 export const FIRST_ROOM = 'first-room';

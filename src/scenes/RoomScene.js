@@ -3,11 +3,15 @@ import { Npc } from '../characters/Npc.js';
 import { PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
+import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { FIRST_ENTRY, FIRST_ROOM } from '../rooms.js';
 import { feetOffset, sameTile, tileAt } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
 const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
+
+// La présence de ce point dans la carte indique l'énigme de la salle.
+const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle };
 
 export class RoomScene extends Phaser.Scene {
   constructor() {
@@ -41,9 +45,10 @@ export class RoomScene extends Phaser.Scene {
     this.physics.add.collider(this.player, walls);
 
     this.puzzle = null;
-    if (findPoint('bloc')) {
+    const puzzleMarker = Object.keys(PUZZLES).find(findPoint);
+    if (puzzleMarker) {
       const solvedRooms = this.registry.get(SOLVED_ROOMS) ?? [];
-      this.puzzle = new BlockPuzzle(this, map, this.player, solvedRooms.includes(this.room), () => {
+      this.puzzle = new PUZZLES[puzzleMarker](this, map, this.player, solvedRooms.includes(this.room), () => {
         this.registry.set(SOLVED_ROOMS, [...solvedRooms, this.room]);
       });
     }
@@ -51,7 +56,7 @@ export class RoomScene extends Phaser.Scene {
     const npcSpot = findPoint('pnj');
     this.npc = npcSpot ? new Npc(this, npcSpot, this.player) : null;
 
-    this.exit = findPoint('sortie');
+    this.exits = map.filterObjects('objets', (object) => object.name === 'sortie');
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.heldDirections = []; // de la plus ancienne à la plus récente
@@ -79,9 +84,12 @@ export class RoomScene extends Phaser.Scene {
     }
 
     this.puzzle?.update(delta, DIRECTIONS[name]);
-    this.npc?.update();
+    // Pendant une énigme des sons, le personnage se tait pour ne pas couvrir le son à écouter.
+    if (!this.puzzle || this.puzzle.solved) this.npc?.update();
 
-    if (this.exit && sameTile(tileAt(this.player.body.center), tileAt(this.exit))) this.leaveRoom();
+    const feet = tileAt(this.player.body.center);
+    const exit = this.exits.find((item) => sameTile(feet, tileAt(item)));
+    if (exit) this.leaveRoom(exit);
   }
 
   stopPlayer() {
@@ -90,12 +98,12 @@ export class RoomScene extends Phaser.Scene {
     this.player.setFrame(firstFrame(this.facing));
   }
 
-  leaveRoom() {
+  leaveRoom(exit) {
     this.leaving = true;
     this.stopPlayer();
     dialogBox.hide();
 
-    const property = (name) => this.exit.properties.find((item) => item.name === name).value;
+    const property = (name) => exit.properties.find((item) => item.name === name).value;
     const room = property('salle');
     const entry = property('arrivee');
 

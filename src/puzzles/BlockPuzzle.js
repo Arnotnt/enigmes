@@ -1,4 +1,5 @@
 import { BLOCK_MOVE_DURATION, BLOCK_PUSH_DELAY, OBJECTS, OVERWORLD, TILE_SIZE } from '../constants.js';
+import { Door } from '../objects/Door.js';
 import { sameTile, tileAt } from '../tiles.js';
 
 // Énigme : pousser le bloc sur l'interrupteur pour ouvrir la porte.
@@ -20,12 +21,11 @@ export class BlockPuzzle {
 
     scene.add.image(this.switchSpot.x, this.switchSpot.y, 'objects', OBJECTS.switch);
     this.lever = scene.add.image(leverSpot.x, leverSpot.y, 'objects', OBJECTS.lever);
-    this.door = scene.physics.add.staticImage(doorSpot.x, doorSpot.y, 'tiles', OVERWORLD.doorClosed);
+    this.door = new Door(scene, doorSpot, player, solved);
     const blockSpot = solved ? this.switchSpot : this.start;
     this.block = scene.physics.add.image(blockSpot.x, blockSpot.y, 'tiles', OVERWORLD.block);
     this.block.setImmovable(true);
 
-    this.doorCollider = scene.physics.add.collider(player, this.door);
     scene.physics.add.collider(player, this.block, () => {
       this.touchingBlock = true;
     });
@@ -35,7 +35,6 @@ export class BlockPuzzle {
     this.blockTween = null;
     this.onLever = false;
     this.solved = solved;
-    if (solved) this.openDoor();
   }
 
   // direction : la direction dans laquelle le personnage marche, ou undefined à l'arrêt.
@@ -89,14 +88,9 @@ export class BlockPuzzle {
 
   solve() {
     this.solved = true;
-    this.openDoor();
+    this.door.open();
     this.scene.cameras.main.shake(150, 0.004);
     this.onSolved();
-  }
-
-  openDoor() {
-    this.door.setFrame(OVERWORLD.doorOpen);
-    this.doorCollider.destroy();
   }
 
   checkLever() {

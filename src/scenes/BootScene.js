@@ -3,7 +3,7 @@ import characterUrl from '../assets/character.png';
 import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
 import overworldUrl from '../assets/overworld.png';
-import { NPC_FRAME_SIZE, PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
+import { NPC_FRAME_SIZE, OBJECTS, PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { ROOMS } from '../rooms.js';
 
@@ -41,6 +41,14 @@ export class BootScene extends Phaser.Scene {
       });
     }
 
-    this.scene.start('room');
+    this.anims.create({
+      key: 'flame',
+      frames: this.anims.generateFrameNumbers('objects', { start: OBJECTS.flameFirst, end: OBJECTS.flameLast }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant la première salle.
+    document.fonts.load('16px Andika').finally(() => this.scene.start('room'));
   }
 }

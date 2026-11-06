@@ -22,5 +22,8 @@ export const BLOCK_PUSH_DELAY = 150; // millisecondes
 export const BLOCK_MOVE_DURATION = 200; // millisecondes pour avancer d'une case
 
 // Numéros des dessins dans overworld.png (OVERWORLD) et objects.png (OBJECTS).
-export const OVERWORLD = { block: 70, doorClosed: 65, doorOpen: 145 };
-export const OBJECTS = { switch: 297, lever: 299 };
+export const OVERWORLD = { block: 70, doorClosed: 65, doorOpen: 145, postTop: 680, postBottom: 720 };
+export const OBJECTS = { switch: 297, lever: 299, flameFirst: 103, flameLast: 109 };
+
+export const TORCH_REACH = 22; // pixels entre les pieds et la torche pour répondre
+export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant d'annoncer le son suivant
