@@ -1,23 +1,55 @@
+import { SPEECH_RESTART_DELAY, SPEECH_START_TIMEOUT } from './constants.js';
+
 // Lecture à voix haute avec la voix française du navigateur.
 const speech = window.speechSynthesis;
+
+let restartTimer = null;
+let watchdogTimer = null;
+let utterance = null; // gardée ici : sinon le navigateur peut l'oublier en cours de lecture
+
+const clearTimers = () => {
+  clearTimeout(restartTimer);
+  clearTimeout(watchdogTimer);
+};
 
 // Le navigateur peut finir une lecture commencée avant un rechargement de la page.
 speech?.cancel();
 
 export const canSpeak = () => Boolean(speech);
 
-export function speak(text) {
-  if (!speech) return;
-  speech.cancel(); // évite d'empiler les lectures
-
-  const utterance = new SpeechSynthesisUtterance(text);
+function start(text, canRetry) {
+  utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'fr-FR';
   utterance.rate = 0.85; // un peu plus lent, pour un enfant qui apprend à lire
   const voice = speech.getVoices().find((item) => item.lang.startsWith('fr'));
   if (voice) utterance.voice = voice;
+
+  // Si le moteur reste muet, on le relance une fois.
+  let started = false;
+  utterance.onstart = () => {
+    started = true;
+  };
+  if (canRetry) {
+    watchdogTimer = setTimeout(() => {
+      if (!started) speak(text, false);
+    }, SPEECH_START_TIMEOUT);
+  }
+
   speech.speak(utterance);
 }
 
+export function speak(text, canRetry = true) {
+  if (!speech) return;
+  clearTimers();
+
+  // Couper une lecture puis enchaîner aussitôt peut bloquer le moteur : la nouvelle ne démarre
+  // jamais. On lui laisse donc un instant pour s'arrêter.
+  const busy = speech.speaking || speech.pending;
+  speech.cancel();
+  restartTimer = setTimeout(() => start(text, canRetry), busy ? SPEECH_RESTART_DELAY : 0);
+}
+
 export function stopSpeaking() {
+  clearTimers();
   speech?.cancel();
 }

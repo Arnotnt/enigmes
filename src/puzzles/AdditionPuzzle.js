@@ -32,11 +32,12 @@ export class AdditionPuzzle {
   startRound() {
     this.torches.forEach((torch) => torch.extinguish());
 
-    // Jamais deux fois de suite la même addition.
+    // Jamais deux fois de suite la même réponse : le personnage est encore contre cette torche,
+    // et il devrait s'en écarter puis revenir pour que le jeu la prenne en compte.
     const previous = this.addition;
     do {
       this.addition = randomAddition();
-    } while (previous && this.addition.first === previous.first && this.addition.total === previous.total);
+    } while (previous && this.addition.missing === previous.missing);
 
     const { first, total } = this.addition;
     this.waiting = false;

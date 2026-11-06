@@ -16,6 +16,9 @@ export const NPC_TALK_DISTANCE = 26; // pixels entre les pieds pour engager la c
 export const NPC_HITBOX_HEIGHT = 20; // plus haut que les pieds : le joueur ne cache pas son visage
 export const NPC_FRAME_SIZE = 32; // dessins de npc.png, plus larges que ceux du personnage
 
+export const SPEECH_RESTART_DELAY = 150; // millisecondes entre une lecture coupée et la suivante
+export const SPEECH_START_TIMEOUT = 700; // millisecondes avant de relancer une voix restée muette
+
 export const ROOM_FADE = 200; // millisecondes de fondu entre deux salles
 
 // Durée de poussée avant que le bloc bouge, pour éviter de le déplacer en le frôlant.
