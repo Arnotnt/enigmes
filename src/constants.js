@@ -30,4 +30,5 @@ export const TORCH_REACH = 15; // pixels entre les pieds et la torche : il faut 
 export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant d'annoncer le son suivant
 
 export const ADDITION_MAX = 10; // total le plus grand : toutes les réponses restent entre 0 et 10
+export const ADDITION_ROUNDS = 4; // additions à trouver avant la fin du jeu
 export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo avant la suivante

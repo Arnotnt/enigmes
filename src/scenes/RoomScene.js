@@ -129,6 +129,7 @@ export class RoomScene extends Phaser.Scene {
   leaveRoom(exit) {
     this.leaving = true;
     this.stopPlayer();
+    this.time.removeAllEvents(); // une annonce prévue ne doit pas arriver après avoir quitté la salle
     dialogBox.hide();
 
     const property = (name) => exit.properties.find((item) => item.name === name).value;

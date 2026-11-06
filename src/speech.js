@@ -1,6 +1,9 @@
 // Lecture à voix haute avec la voix française du navigateur.
 const speech = window.speechSynthesis;
 
+// Le navigateur peut finir une lecture commencée avant un rechargement de la page.
+speech?.cancel();
+
 export const canSpeak = () => Boolean(speech);
 
 export function speak(text) {

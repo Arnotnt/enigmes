@@ -32,7 +32,7 @@ Chaque salle s'appuie sur un niveau de lecture. L'ordre des sons est à caler su
 
 ## Calcul
 
-21. [x] Addition à trou dans la troisième salle (nombres de 0 à 10, tirés au hasard)
+21. [x] Addition à trou dans la troisième salle : 4 additions au hasard (nombres de 0 à 10), puis fin du jeu
 
 ## Phase 4 : finition
 
