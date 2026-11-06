@@ -4,8 +4,10 @@ import {
   PLAYER_HITBOX,
   PLAYER_SHEET_COLUMNS,
   PLAYER_SPEED,
+  TILE_SIZE,
   WALK_FRAMES,
 } from '../constants.js';
+import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 
 // sheetRow : ligne de character.png où se trouve la marche dans cette direction.
 const DIRECTIONS = {
@@ -28,7 +30,9 @@ export class RoomScene extends Phaser.Scene {
       frameWidth: PLAYER_FRAME.width,
       frameHeight: PLAYER_FRAME.height,
     });
-    this.load.image('tiles', 'assets/overworld.png');
+    const tileSize = { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE };
+    this.load.spritesheet('tiles', 'assets/overworld.png', tileSize);
+    this.load.spritesheet('objects', 'assets/objects.png', tileSize);
     this.load.tilemapTiledJSON('first-room', 'assets/maps/first-room.tmj');
   }
 
@@ -59,14 +63,18 @@ export class RoomScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(start.x, start.y - feetOffset, 'player', firstFrame('down'));
     this.player.body.setSize(PLAYER_HITBOX.width, PLAYER_HITBOX.height);
     this.player.body.setOffset(PLAYER_HITBOX.offsetX, PLAYER_HITBOX.offsetY);
+    this.player.setCollideWorldBounds(true);
+    this.player.setDepth(1); // toujours dessiné devant le bloc et la porte
     this.physics.add.collider(this.player, walls);
+
+    this.puzzle = new BlockPuzzle(this, map, this.player);
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.heldDirections = []; // de la plus ancienne à la plus récente
     this.facing = 'down';
   }
 
-  update() {
+  update(time, delta) {
     // Une seule direction à la fois, jamais en diagonale : la dernière touche enfoncée gagne.
     for (const name of Object.keys(DIRECTIONS)) {
       const key = this.cursors[name];
@@ -85,5 +93,7 @@ export class RoomScene extends Phaser.Scene {
       this.player.anims.stop();
       this.player.setFrame(firstFrame(this.facing));
     }
+
+    this.puzzle.update(delta, DIRECTIONS[name]);
   }
 }
