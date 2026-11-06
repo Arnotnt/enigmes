@@ -371,6 +371,26 @@
        "value": "depuis-salle-2"
       }
      ]
+    },
+    {
+     "height": 0,
+     "id": 3,
+     "name": "pnj",
+     "opacity": 1,
+     "point": true,
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 72,
+     "properties": [
+      {
+       "name": "texte",
+       "type": "string",
+       "value": "Bonjour ! Tu as ouvert la porte. Bravo !"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -381,7 +401,7 @@
   }
  ],
  "nextlayerid": 4,
- "nextobjectid": 3,
+ "nextobjectid": 4,
  "orientation": "orthogonal",
  "renderorder": "right-down",
  "tiledversion": "1.12.2",

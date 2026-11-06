@@ -19,7 +19,7 @@ Les numéros ci-dessous sont ceux des issues GitHub.
 
 4. [x] Pousser un bloc sur un interrupteur pour ouvrir une porte, avec remise à zéro de la salle
 5. [x] Passage d'une salle à l'autre, en gardant les énigmes résolues
-6. [ ] Dialogues et voix : tout texte peut être écouté
+6. [x] Dialogues et voix : tout texte peut être écouté
 
 ## Phase 3 : apprendre à lire
 
