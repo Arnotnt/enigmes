@@ -1,4 +1,8 @@
 import * as Phaser from 'phaser';
+import characterUrl from '../assets/character.png';
+import firstRoomUrl from '../assets/maps/first-room.tmj?url';
+import objectsUrl from '../assets/objects.png';
+import overworldUrl from '../assets/overworld.png';
 import {
   PLAYER_FRAME,
   PLAYER_HITBOX,
@@ -26,14 +30,14 @@ export class RoomScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('player', 'assets/character.png', {
+    this.load.spritesheet('player', characterUrl, {
       frameWidth: PLAYER_FRAME.width,
       frameHeight: PLAYER_FRAME.height,
     });
     const tileSize = { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE };
-    this.load.spritesheet('tiles', 'assets/overworld.png', tileSize);
-    this.load.spritesheet('objects', 'assets/objects.png', tileSize);
-    this.load.tilemapTiledJSON('first-room', 'assets/maps/first-room.tmj');
+    this.load.spritesheet('tiles', overworldUrl, tileSize);
+    this.load.spritesheet('objects', objectsUrl, tileSize);
+    this.load.tilemapTiledJSON('first-room', firstRoomUrl);
   }
 
   create() {
