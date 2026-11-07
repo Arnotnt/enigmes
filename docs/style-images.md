@@ -20,3 +20,13 @@ Interdits : aucun personnage, aucun texte, aucune lettre, aucun chiffre, aucun h
 - Le quart inférieur reste calme : la boîte de dialogue s'y affiche.
 - Les points sont dessinés par le jeu, pas sur l'image.
 - Noter la source et les conditions de l'outil pour `CREDITS.md`.
+
+## Planche d'un personnage
+
+Une seule image, pour que le personnage reste le même d'une case à l'autre : 3 lignes (face, dos, profil tourné vers la droite) de 5 cases séparées par des traits noirs, fond blanc uni, corps entier, pieds alignés en bas. Même disposition que `docs/personnages/explorateur-planche.jpg`.
+
+Ranger la planche dans `docs/personnages/`, puis la découper avec Python et Pillow :
+
+```bash
+python outils/decouper-personnage.py docs/personnages/pirate-planche.jpg src/assets/personnages/pirate.png
+```
