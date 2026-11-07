@@ -9,7 +9,9 @@ import { EGYPT, TEMPLE } from './places.js';
 //   `devoir` choisit l'énigme, et le reste en donne le contenu ; les stèles se placent seules :
 //   - additions : additions à trou au hasard, `max` = total le plus grand (10 sans rien) ;
 //   - comparaisons : < ou > entre deux nombres au hasard, `max` = plus grand nombre (20 sans rien) ;
-//   - mots : écouter un mot et trouver sa stèle, `mots` = la liste (4 au plus par ligne).
+//   - mots : écouter un mot et trouver sa stèle, `mots` = la liste (4 au plus par ligne) ;
+//   - syllabes : former la syllabe entendue, consonne puis voyelle, 4 fois. `syllabes` = la liste,
+//     par exemple ['ma', 'li', 'ch-ou'] : le tiret sépare les deux sons quand ils font plusieurs lettres.
 
 const DAY_NAMES = ['Lundi', 'Mardi', 'Jeudi', 'Vendredi'];
 
