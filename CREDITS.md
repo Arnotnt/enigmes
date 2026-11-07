@@ -15,7 +15,7 @@
 - **Torche (stèle)** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`, puis détourée et réduite.
   Fichier utilisé : `src/assets/objets/torche-egypte.png`.
 
-- **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
+- **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`. La route de mer vers l'île grecque a été ajoutée par le projet.
   Fichier utilisé : `src/assets/parcours/monde-entier.jpg`.
 
 - **Personnages (explorateur, pirate)** : planches générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`, puis découpées, détourées et réduites par `outils/decouper-personnage.py`.
