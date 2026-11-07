@@ -5,8 +5,10 @@ import { OVERWORLD, TORCH, TORCH_REACH } from '../constants.js';
 // Le dessin est une stèle : image 0 éteinte, image 1 allumée. Le point désigne le centre de la
 // case où elle est posée ; la stèle monte au-dessus, comme un personnage.
 export class Torch {
-  // `picture` : la clé d'une image à montrer à la place du texte. `label` reste la réponse.
-  constructor(scene, spot, player, label, { picture } = {}) {
+  // `picture` : la clé d'une image à montrer à la place du texte, ou une fonction (x, y, côté)
+  // qui dessine elle-même et rend ses morceaux, pour une scène. `pictureSize` : côté du cadre.
+  // `label` reste la réponse.
+  constructor(scene, spot, player, label, { picture, pictureSize = TORCH.pictureSize } = {}) {
     const { x, y } = spot;
     this.scene = scene;
     this.spot = spot;
@@ -24,11 +26,11 @@ export class Torch {
     // Dessin réduit puis agrandi par la caméra : lissé, il reste net, comme le fond de la salle.
     this.stele.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
 
-    const body = scene.physics.add.staticImage(x, y, 'tiles', OVERWORLD.postBottom).setVisible(false);
-    scene.physics.add.collider(player, body);
+    this.body = scene.physics.add.staticImage(x, y, 'tiles', OVERWORLD.postBottom).setVisible(false);
+    this.collider = scene.physics.add.collider(player, this.body);
 
     if (picture) {
-      this.addPicture(bottom, picture);
+      this.addPicture(bottom, picture, pictureSize);
       return;
     }
 
@@ -53,15 +55,27 @@ export class Torch {
   }
 
   // Une image ne tient pas dans le cartouche : elle reçoit un cadre crème, posé sur la stèle.
-  addPicture(bottom, picture) {
+  // Un grand cadre monte au-dessus de la stèle, qui reste le pied du panneau.
+  addPicture(bottom, picture, size) {
     const { x } = this.spot;
-    const y = bottom - TORCH.pictureHeight;
-    const size = TORCH.pictureSize;
+    const y = bottom - TORCH.pictureHeight - (size - TORCH.pictureSize) / 2;
     const frame = this.scene.add
       .rectangle(x, y, size, size, TORCH.plateColor)
       .setStrokeStyle(0.75, 0x2b2118);
-    const image = this.scene.add.image(x, y, picture).setDisplaySize(size - 3, size - 3);
-    this.parts = [this.stele, frame, image];
+    const inner = size - 3;
+    const drawn =
+      typeof picture === 'function'
+        ? picture(x, y, inner)
+        : [this.scene.add.image(x, y, picture).setDisplaySize(inner, inner)];
+    this.parts = [this.stele, frame, ...drawn];
+  }
+
+  // Retire la stèle de la salle, pour en poser d'autres au tour suivant.
+  destroy() {
+    this.extinguish();
+    this.parts.forEach((part) => part.destroy());
+    this.collider.destroy();
+    this.body.destroy();
   }
 
   // Vrai à l'instant où le personnage arrive contre la torche.

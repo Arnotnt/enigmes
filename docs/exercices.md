@@ -32,6 +32,7 @@ Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enl
 | `syllabes` | Lecture | une syllabe | la consonne, puis la voyelle | `syllabes` | 4 |
 | `lire-mots` | Lecture | rien d'abord | un mot écrit, puis son image | `mots` | 4 |
 | `image-mot` | Lecture | la consigne | une image, puis son mot écrit | `mots`, `pieges` | 4 |
+| `phrase-scene` | Lecture | rien d'abord | une phrase, puis sa scène | `phrases` | 3 |
 
 ### `additions` : addition à trou
 
@@ -102,7 +103,26 @@ Une image s'accroche en haut de la salle, et chaque stèle porte un mot écrit :
 { room: 'temple-egypte', entry: 'entree', devoir: 'image-mot', mots: ['lune', 'moto', 'mouton', 'tomate'], pieges: ['lame', 'mot', 'mouche', 'tomber'] }
 ```
 
-Images disponibles pour `lire-mots` et `image-mot` : chat, lit, lune, moto, mouton, renard, tomate, vélo.
+### `phrase-scene` : lire une phrase, trouver sa scène
+
+Une phrase s'écrit en haut de l'écran, sans être lue. Trois scènes sont posées sur des stèles : l'enfant va toucher celle qui montre la phrase. Les deux autres ne diffèrent que d'un détail : la position (sur ou sous), ou le nombre (un ou deux). Il faut donc lire toute la phrase. Comme pour `lire-mots`, l'écoute de la phrase n'arrive qu'après une erreur.
+
+- `phrases` : 3 phrases ou plus. Le jeu en demande 3, au hasard.
+- Le jeu dessine lui-même les scènes avec les pictogrammes. Il ne comprend que ces modèles :
+  - « Le chat est **sur** le lit. », « … **sous** la table. », « … **dans** la boîte. », « … **à côté de** la chaise. » ;
+  - au pluriel : « **Deux** chiens sont sous la table. », « **Les** chats sont à côté du lit. » (« les » compte pour deux) ;
+  - « Il y a **trois** ballons. »
+- Chaque nom doit avoir son image (voir `lire-mots`). Le pluriel en -s ou -x se retrouve seul : « chiens » utilise `chien.png`.
+- Au démarrage du jeu, la console signale toute phrase que le jeu ne sait pas dessiner (« Le chat mange. ») et tout mot sans image. En jeu, ces phrases sont laissées de côté.
+- Les phrases de l'école ne suivent pas toujours ces modèles : il faut alors les adapter, en gardant les mots de la semaine.
+
+```js
+{ room: 'temple-egypte', entry: 'entree', devoir: 'phrase-scene', phrases: ['Le chat est sur le lit.', 'Deux chiens sont sous la table.', "L'oiseau est dans la boîte.", 'Le ballon est à côté de la chaise.'] }
+```
+
+## Les images
+
+Toutes les images sont dans `src/assets/pictos/`, une par mot. Aujourd'hui : arbre, ballon, boîte, chaise, chat, chien, lit, lune, moto, mouton, oiseau, panier, poisson, renard, souris, table, tomate, vélo. Pour en ajouter : `node outils/picto.mjs <mot>` (voir `lire-mots`).
 
 ## Bientôt
 
@@ -110,7 +130,6 @@ Ces exercices sont en cours de développement au Sprint 4. Leur fiche s'ajoutera
 
 | Exercice | US |
 |---|---|
-| Lire une phrase, trouver sa scène | [US-706](https://github.com/Arnotnt/enigmes/issues/73) |
 | Voir une scène, trouver sa phrase | [US-707](https://github.com/Arnotnt/enigmes/issues/74) |
 
 ## Énigmes liées à une carte

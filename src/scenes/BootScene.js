@@ -8,6 +8,7 @@ import { initSound } from '../audio/sound.js';
 import { COSTUMES, walkAnimation } from '../characters/costumes.js';
 import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, standingFrame } from '../directions.js';
+import { checkParcours } from '../parcours/check.js';
 import { PLACES } from '../parcours/places.js';
 import { PICTOS, pictoKey } from '../reading/pictos.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
@@ -40,6 +41,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   create() {
+    checkParcours(); // un mot sans image ou une phrase impossible à dessiner, dans la console
     initSound(this.game);
     for (const name of Object.keys(COSTUMES)) {
       const texture = `hero-${name}`;
