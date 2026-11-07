@@ -38,14 +38,14 @@ Taille : S, M ou L. Définition de « fini » : voir `docs/backlog.md`.
 
 ## Labels
 
-- Le label de l'épic : `epic:parcours`, `epic:carte-monde`, `epic:carte-semaine`, `epic:journee`, `epic:hd`, `epic:contenu`, `epic:lecture` ou `epic:finition`.
+- Le label de l'épic : `epic:parcours`, `epic:carte-monde`, `epic:carte-semaine`, `epic:journee`, `epic:hd`, `epic:contenu`, `epic:lecture`, `epic:finition` ou `epic:devoirs`.
 - Un seul état :
   - `us-idee` : pas encore rédigée comme une user story ;
   - `us-review` : rédigée et validée, mais il manque une image ou un arbitrage. Ajoute un commentaire « En attente de : … » ;
   - `us-prete` : peut être développée dans un sprint.
 - `parent` si la tâche ne demande pas de code.
 
-Ne mets pas de jalon : le sprint se choisit le samedi.
+Ne mets pas de jalon : le sprint se choisit le samedi. Une US de devoirs (`epic:devoirs`) va dans le jalon de devoirs de sa semaine, voir le skill `devoirs-semaine`.
 
 ## Confidentialité
 
