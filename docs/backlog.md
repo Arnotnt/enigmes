@@ -110,7 +110,7 @@ Ordre conseillé : US-403 (contenu des salles dans le parcours), US-704 (tester 
 
 À vérifier aussi : une salle jouée au vrai clavier sur le jeu publié, restée ouverte depuis le Sprint 2.
 
-### Sprint 4 : 28-29 novembre (proposition)
+### Sprint 4 : 28-29 novembre
 
 Objectif : l'enfant lance le jeu depuis un écran de démarrage, voit tous les mondes de l'année, joue en musique, et trouve des mots.
 
