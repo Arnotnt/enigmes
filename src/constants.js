@@ -50,6 +50,8 @@ export const TORCH = {
   glowRadius: 6,
   glowColor: 0xffa040,
   plateColor: 0xf3e7c4, // crème du cartouche, pour la plaque d'un mot
+  pictureSize: 22, // côté du cadre d'une image, posé sur le haut de la stèle
+  pictureHeight: 22, // centre de ce cadre
 };
 
 export const TORCH_REACH = 15; // pixels entre les pieds et la torche : il faut la toucher pour répondre
@@ -62,6 +64,7 @@ export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo
 export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle
 export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
+export const READ_WORD_ROUNDS = 4; // mots à lire avant la fin de la salle
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
 
 export const GAME_TITLE = 'Le Tour du Monde\nd’Alexis'; // titre de l'écran de démarrage, sur deux lignes

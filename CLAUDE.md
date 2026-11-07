@@ -28,6 +28,7 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 - Assets libres ou générés pour le projet, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
 - Textes en HTML par-dessus le jeu, police Andika (`src/ui/`). `dialogBox.show(texte, { autoSpeak })` : `autoSpeak: false` pour une épreuve de lecture ; l'écoute reste toujours possible.
 - Musique et bruitages dans `src/audio/` : une musique par monde (`music` dans `worlds.js`), aucune dans les salles. Elle baisse quand la voix parle. La touche M coupe musique et bruitages, jamais la voix.
+- Images des mots : pictogrammes ARASAAC dans `src/assets/pictos/`, un fichier par mot (`lune.png`), téléchargés avec `node outils/picto.mjs lune moto`.
 - Sons de lecture dans `src/reading/sounds.js`. L'ordre est provisoire : à caler sur celui de l'école. La voix du navigateur ne convient qu'aux voyelles. La page `outils/voix.html`, publiée avec le jeu, fait dire des syllabes d'un clic pour repérer celles qu'elle prononce mal.
 - Hébergement sur GitHub Pages : garder des chemins relatifs.
 - Images et cartes dans `src/assets/`, importées dans le code : leur nom publié change avec leur contenu, sinon le cache du navigateur mélange ancienne et nouvelle version.
