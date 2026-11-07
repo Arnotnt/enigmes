@@ -23,6 +23,7 @@ import { EGYPT, TEMPLE } from './places.js';
 //   - scene-phrase : voir une scène et choisir sa phrase parmi trois, `phrases` = comme phrase-scene ;
 //   - syllabes : former la syllabe entendue, consonne puis voyelle, 4 fois. `syllabes` = la liste,
 //     par exemple ['ma', 'li', 'ch-ou'] : le tiret sépare les deux sons quand ils font plusieurs lettres.
+//   - sons : entendre une voyelle et toucher sa lettre, 4 fois. `sons` = la liste, par exemple ['a', 'i', 'o'].
 
 const DAY_NAMES = ['Lundi', 'Mardi', 'Jeudi', 'Vendredi'];
 

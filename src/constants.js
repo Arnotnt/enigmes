@@ -64,6 +64,7 @@ export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo
 export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle
 export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
+export const VOWEL_ROUNDS = 4; // sons à reconnaître avant la fin de la salle
 export const READ_WORD_ROUNDS = 4; // mots à lire avant la fin de la salle
 export const SCENE_ROUNDS = 3; // phrases à lire avant la fin de la salle
 export const SCENE_FRAME = 46; // côté du cadre d'une scène, en pixels de salle
