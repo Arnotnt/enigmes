@@ -4,10 +4,12 @@ import {
   MAP_GLIDE_SPEED,
   MAP_HERO_SCALE,
   MAP_STOP_RADIUS,
+  PLAYER_FRAME,
+  PLAYER_TEXTURE_SCALE,
   ROOM_FADE,
 } from '../constants.js';
 import { playStep } from '../audio/sound.js';
-import { firstFrame } from '../directions.js';
+import { standingFrame } from '../directions.js';
 import { feetOffset } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
@@ -41,8 +43,9 @@ export class PathMapScene extends Phaser.Scene {
     stops.forEach((stop, index) => this.drawStop(this.path[place.stops[index]], stop));
 
     const start = this.path[place.stops[startIndex]];
-    this.hero = this.add.sprite(start.x, start.y, 'player', firstFrame('down')).setScale(MAP_HERO_SCALE);
-    this.hero.setOrigin(0.5, 0.5 + feetOffset() / this.hero.height); // le point est sous ses pieds
+    this.hero = this.add.sprite(start.x, start.y, 'player', standingFrame('down'));
+    this.hero.setScale(MAP_HERO_SCALE / PLAYER_TEXTURE_SCALE);
+    this.hero.setOrigin(0.5, 0.5 + feetOffset() / PLAYER_FRAME.height); // le point est sous ses pieds
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.enterKey = this.input.keyboard.addKey('ENTER');
@@ -108,7 +111,7 @@ export class PathMapScene extends Phaser.Scene {
     if (this.routeStep === this.route.length) {
       this.route = null;
       this.hero.anims.stop();
-      this.hero.setFrame(firstFrame('down'));
+      this.hero.setFrame(standingFrame('down'));
       this.say(this.describe(this.current));
     }
   }

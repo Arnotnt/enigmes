@@ -1,13 +1,13 @@
 import * as Phaser from 'phaser';
-import characterUrl from '../assets/character.png';
 import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
 import torchUrl from '../assets/objets/torche-egypte.png';
 import overworldUrl from '../assets/overworld.png';
+import heroUrl from '../assets/personnages/explorateur.png';
 import { MUSICS } from '../audio/musics.js';
 import { initSound } from '../audio/sound.js';
-import { NPC_FRAME_SIZE, PLAYER_FRAME, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
-import { DIRECTIONS, firstFrame } from '../directions.js';
+import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
+import { DIRECTIONS, standingFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
 
@@ -21,9 +21,9 @@ export class BootScene extends Phaser.Scene {
     const tileSize = { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE };
     this.load.spritesheet('tiles', overworldUrl, tileSize);
     this.load.spritesheet('objects', objectsUrl, tileSize);
-    this.load.spritesheet('player', characterUrl, {
-      frameWidth: PLAYER_FRAME.width,
-      frameHeight: PLAYER_FRAME.height,
+    this.load.spritesheet('player', heroUrl, {
+      frameWidth: PLAYER_FRAME.width * PLAYER_TEXTURE_SCALE,
+      frameHeight: PLAYER_FRAME.height * PLAYER_TEXTURE_SCALE,
     });
 
     this.load.spritesheet('torch', torchUrl, { frameWidth: TORCH.frameWidth, frameHeight: TORCH.frameHeight });
@@ -37,8 +37,11 @@ export class BootScene extends Phaser.Scene {
 
   create() {
     initSound(this.game);
+    // Le personnage est dessiné en détail, puis réduit : lissé, il garde des contours propres.
+    this.textures.get('player').setFilter(Phaser.Textures.FilterMode.LINEAR);
+
     for (const direction of Object.keys(DIRECTIONS)) {
-      const first = firstFrame(direction);
+      const first = standingFrame(direction) + 1;
       this.anims.create({
         key: `walk-${direction}`,
         frames: this.anims.generateFrameNumbers('player', {

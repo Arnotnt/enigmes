@@ -10,10 +10,12 @@ export const GAME_HEIGHT = ROOM_HEIGHT * TILE_SIZE * VIEW_ZOOM;
 export const PLAYER_SPEED = 80; // pixels par seconde
 export const CORNER_ASSIST = 14; // pixels de décalage corrigés pour entrer dans une ouverture
 
-// Le dessin du personnage fait 16×32, mais seuls ses pieds touchent les murs.
+// Le personnage occupe 16×32 pixels de salle, mais seuls ses pieds touchent les murs.
 export const PLAYER_FRAME = { width: 16, height: 32 };
 export const PLAYER_HITBOX = { width: 12, height: 12, offsetX: 2, offsetY: 18 };
-export const PLAYER_SHEET_COLUMNS = 17; // nombre de dessins par ligne dans character.png
+// Ses dessins sont 4 fois plus fins (64×128) : une fois la caméra zoomée, 1 pixel du dessin = 1 pixel de l'écran.
+export const PLAYER_TEXTURE_SCALE = 4;
+export const PLAYER_SHEET_COLUMNS = 5; // par ligne de explorateur.png : le dessin à l'arrêt, puis la marche
 export const WALK_FRAMES = 4;
 
 export const NPC_TALK_DISTANCE = 26; // pixels entre les pieds pour engager la conversation

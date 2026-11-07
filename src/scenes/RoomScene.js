@@ -4,6 +4,7 @@ import { Npc } from '../characters/Npc.js';
 import {
   CORNER_ASSIST,
   PLAYER_HITBOX,
+  PLAYER_TEXTURE_SCALE,
   PLAYER_SPEED,
   ROOM_FADE,
   ROOM_HEIGHT,
@@ -11,7 +12,7 @@ import {
   TILE_SIZE,
   VIEW_ZOOM,
 } from '../constants.js';
-import { DIRECTIONS, firstFrame } from '../directions.js';
+import { DIRECTIONS, standingFrame } from '../directions.js';
 import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { ComparePuzzle } from '../puzzles/ComparePuzzle.js';
@@ -77,7 +78,7 @@ export class RoomScene extends Phaser.Scene {
       const image = this.add.image(0, 0, `fond-${background}`).setOrigin(0).setDisplaySize(width, height);
       image.setDepth(-1);
       // L'image est réduite dans le monde de la salle, puis la caméra l'agrandit 4 fois :
-      // lissée, elle reste nette à l'écran. Le personnage, lui, garde ses pixels.
+      // lissée, elle reste nette à l'écran.
       image.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
     }
 
@@ -85,9 +86,13 @@ export class RoomScene extends Phaser.Scene {
     const start = findPoint(this.entry);
 
     // Le point d'arrivée désigne l'emplacement des pieds, pas le centre du dessin.
-    this.player = this.physics.add.sprite(start.x, start.y - feetOffset(), 'player', firstFrame(this.facing));
-    this.player.body.setSize(PLAYER_HITBOX.width, PLAYER_HITBOX.height);
-    this.player.body.setOffset(PLAYER_HITBOX.offsetX, PLAYER_HITBOX.offsetY);
+    this.player = this.physics.add.sprite(start.x, start.y - feetOffset(), 'player', standingFrame(this.facing));
+    // Le dessin est 4 fois trop grand pour la salle : réduit ici, la caméra le rend à sa vraie finesse.
+    // La boîte des pieds se donne alors en pixels du dessin, d'où le même facteur.
+    this.player.setScale(1 / PLAYER_TEXTURE_SCALE);
+    const s = PLAYER_TEXTURE_SCALE;
+    this.player.body.setSize(PLAYER_HITBOX.width * s, PLAYER_HITBOX.height * s);
+    this.player.body.setOffset(PLAYER_HITBOX.offsetX * s, PLAYER_HITBOX.offsetY * s);
     this.player.setCollideWorldBounds(true);
     this.player.setDepth(1); // toujours dessiné devant le bloc et la porte
     this.physics.add.collider(this.player, this.walls);
@@ -181,7 +186,7 @@ export class RoomScene extends Phaser.Scene {
   stopPlayer() {
     this.player.body.setVelocity(0, 0);
     this.player.anims.stop();
-    this.player.setFrame(firstFrame(this.facing));
+    this.player.setFrame(standingFrame(this.facing));
   }
 
   exitTarget(exit) {
