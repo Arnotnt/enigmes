@@ -10,12 +10,16 @@ But du projet : chaque semaine de CP, l'enfant fait ses devoirs dans le jeu, en 
 
 Déroulé d'un sprint :
 
-1. **Vendredi soir ou samedi matin :** le parent apporte les devoirs de la semaine et les images prêtes.
+1. **Vendredi soir ou samedi matin :** le parent apporte les images prêtes. Les devoirs de la semaine suivent leur propre sprint (voir plus bas).
 2. **Samedi :** on choisit les US du sprint et on fixe l'objectif.
 3. **Dimanche soir :** revue du jeu publié. L'objectif du sprint est atteint si l'enfant peut jouer le lundi matin.
 4. **Fin de semaine :** on note ce que l'enfant a aimé ou raté, pour le sprint suivant.
 
 Priorité en cas de manque de temps : **les devoirs de la semaine passent toujours avant le reste.**
+
+### Les devoirs, à part
+
+Les devoirs de chaque semaine forment l'épic E9. Ils ne font pas partie des sprints du jeu : dès que la maîtresse les donne, on ouvre un sprint de devoirs, à part, avec son propre jalon (`Devoirs <date du lundi>`). Il se fait avec le skill `devoirs-semaine` et passe avant le sprint du jeu.
 
 GitHub est la référence commune au téléphone et au Mac. Le détail des user stories et leur état vivent dans [les issues](https://github.com/Arnotnt/enigmes/issues), pas dans ce fichier.
 
@@ -63,16 +67,17 @@ Taille des US : **S** (moins d'une heure), **M** (une demi-journée), **L** (une
 | E3 Carte de la semaine | Valider lundi, mardi, jeudi, vendredi dans l'ordre | À faire |
 | E4 Journée de devoirs | Enchaîner des salles, avec un devoir par salle | À faire |
 | E5 Passage en HD | Quitter le pixel art pour tout le jeu | À faire |
-| E6 Contenu | Images des civilisations et devoirs de chaque semaine | Récurrent |
+| E6 Contenu | Images des civilisations, des salles et des objets | Récurrent |
 | E7 Lecture | Syllabes, mots, phrases | À faire |
 | E8 Finition | Écrans, sons, tests avec l'enfant | À faire |
+| E9 Devoirs | Les devoirs de chaque semaine, en sprints à part | Récurrent |
 
 ## Sprints
 
 | Sprint | Dates | Objectif | Semaine jouée |
 |---|---|---|---|
 | S1 | 7-8 novembre | Jouer ses devoirs depuis la carte d'Égypte | 9 novembre |
-| S2 | 14-15 novembre | Salles en HD et nouveau personnage | 16 novembre |
+| S2 | 14-15 novembre | Salles et torches en HD | 16 novembre |
 | S3 | 21-22 novembre | Devoirs plus faciles à créer, syllabes | 23 novembre |
 | S4 | 28-29 novembre | Mots | 30 novembre |
 | S5 | 5-6 décembre | Phrases | 7 décembre |
@@ -93,7 +98,9 @@ Pendant ce sprint seulement, les cartes sont en HD et les salles restent en pixe
 
 ### Sprint 2 : 14-15 novembre
 
-Objectif : tout le jeu est en HD, sans perte de jouabilité.
+Objectif : les salles et les torches sont en HD, sans perte de jouabilité. Le personnage reste en pixel art pour l'instant : aucun personnage HD animé n'a été trouvé (US-502, reportée).
+
+Ordre conseillé : US-505 (salles dessinées en HD), US-503 (fond de l'Égypte), puis US-504 (torches) si l'image de la torche est prête.
 
 ## Décisions prises
 
@@ -110,5 +117,5 @@ Objectif : tout le jeu est en HD, sans perte de jouabilité.
 
 ## Questions ouvertes
 
-- Personnage HD : à trouver, c'est le plus grand risque du passage en HD (US-502).
+- Personnage HD : aucun personnage animé trouvé, US-502 est reportée. Piste : 4 vues générées et une marche faite d'un petit rebond.
 - Thèmes des mondes de mars-avril et de mai-juin.
