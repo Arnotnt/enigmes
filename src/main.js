@@ -3,6 +3,7 @@ import * as Phaser from 'phaser';
 import { GAME_HEIGHT, GAME_WIDTH } from './constants.js';
 import { BootScene } from './scenes/BootScene.js';
 import { RoomScene } from './scenes/RoomScene.js';
+import { WorldScene } from './scenes/WorldScene.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -12,7 +13,7 @@ const game = new Phaser.Game({
   pixelArt: true, // agrandissement net, sans flou, pour les dessins des salles
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   physics: { default: 'arcade' },
-  scene: [BootScene, RoomScene],
+  scene: [BootScene, WorldScene, RoomScene],
 });
 
 // Accès depuis la console du navigateur, en développement uniquement.
