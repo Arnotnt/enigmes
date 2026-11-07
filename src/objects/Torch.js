@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import { OVERWORLD, TORCH, TORCH_REACH } from '../constants.js';
+import { TORCH_STYLES, torchKey, torchStyleName } from './torchStyles.js';
 
 // Torche portant une lettre, un nombre, un signe, un mot ou une image, placée sur un point de la carte.
 // Le dessin est une stèle : image 0 éteinte, image 1 allumée. Le point désigne le centre de la
@@ -20,9 +21,13 @@ export class Torch {
 
     this.needsPush = false; // voir rearm()
 
+    // La stèle du monde : la salle l'a lue dans sa carte (propriété `torche`).
+    const styleName = torchStyleName(scene.torchStyle);
+    this.style = TORCH_STYLES[styleName];
     const bottom = y + 8; // bas de la case
-    this.stele = scene.add.image(x, bottom, 'torch', 0).setOrigin(0.5, 1);
-    this.stele.setDisplaySize(TORCH.width, TORCH.width * (this.stele.height / this.stele.width));
+    this.stele = scene.add.image(x, bottom, torchKey(styleName), 0).setOrigin(0.5, 1);
+    const { width } = this.style;
+    this.stele.setDisplaySize(width, width * (this.stele.height / this.stele.width));
     // Dessin réduit puis agrandi par la caméra : lissé, il reste net, comme le fond de la salle.
     this.stele.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
 
@@ -36,7 +41,7 @@ export class Torch {
 
     // Une lettre, un nombre ou un signe s'écrit dans le cartouche de la stèle.
     // Un mot est trop large : il reçoit une plaque posée par-dessus.
-    const centerY = bottom - TORCH.labelHeight;
+    const centerY = bottom - this.style.labelHeight;
     const isWord = label.length > 2;
     const fontSize = isWord ? '9px' : label.length > 1 ? '10px' : '13px'; // 10 doit tenir dans le cartouche
     const text = scene.add
@@ -106,7 +111,7 @@ export class Torch {
     // Une lueur douce qui palpite au-dessus de la flamme : le dessin, lui, ne bouge pas.
     const { x } = this.spot;
     this.glow = this.scene.add
-      .circle(x, this.spot.y + 8 - TORCH.flameHeight, TORCH.glowRadius, TORCH.glowColor, 0.25)
+      .circle(x, this.spot.y + 8 - this.style.flameHeight, TORCH.glowRadius, TORCH.glowColor, 0.25)
       .setBlendMode(Phaser.BlendModes.ADD);
     this.scene.tweens.add({ targets: this.glow, alpha: 0.5, scale: 1.15, duration: 380, yoyo: true, repeat: -1 });
   }

@@ -30,6 +30,9 @@
 - **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, découpées dans une planche de quatre.
   Fichiers utilisés : `src/assets/salles/salle-pirates.jpg`, `salle-gaule.jpg`, `salle-chine.jpg`, `salle-grece.jpg`.
 
+- **Torches des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, puis détourées, et l'emblème des plaques effacé pour que la lettre se lise bien.
+  Fichiers utilisés : `src/assets/objets/torche-pirates.png`, `torche-gaule.png`, `torche-chine.png`, `torche-grece.png`.
+
 ## Musique
 
 - **Happy Clappy Loop**, par OwlishMedia : licence CC0 (domaine public).

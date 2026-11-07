@@ -385,6 +385,11 @@
    "name": "fond",
    "type": "string",
    "value": "salle-chine"
+  },
+  {
+   "name": "torche",
+   "type": "string",
+   "value": "chine"
   }
  ]
 }

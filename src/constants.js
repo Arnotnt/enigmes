@@ -39,14 +39,9 @@ export const BLOCK_MOVE_DURATION = 200; // millisecondes pour avancer d'une case
 export const OVERWORLD = { block: 70, doorClosed: 65, doorOpen: 145, postBottom: 720 };
 export const OBJECTS = { switch: 297, lever: 299 };
 
-// La stèle de torche-egypte.png : deux images de 160×379 (éteinte, allumée), alignées en bas.
-// Mesures en pixels de la salle, depuis le bas de la case où elle est posée.
+// Ce qui est commun aux stèles de tous les mondes. Mesures en pixels de la salle, depuis le bas de
+// la case où elle est posée. Dessin et mesures propres à chaque monde : src/objects/torchStyles.js.
 export const TORCH = {
-  frameWidth: 160,
-  frameHeight: 379,
-  width: 20, // un peu plus large qu'une case : la stèle déborde à peine
-  labelHeight: 15.5, // centre du cartouche
-  flameHeight: 41, // centre de la flamme
   glowRadius: 6,
   glowColor: 0xffa040,
   plateColor: 0xf3e7c4, // crème du cartouche, pour la plaque d'un mot

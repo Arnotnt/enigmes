@@ -385,6 +385,11 @@
    "name": "fond",
    "type": "string",
    "value": "salle-pirates"
+  },
+  {
+   "name": "torche",
+   "type": "string",
+   "value": "pirates"
   }
  ]
 }
