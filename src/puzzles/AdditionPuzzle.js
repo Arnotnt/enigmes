@@ -1,16 +1,29 @@
 import * as Phaser from 'phaser';
-import { ADDITION_MAX, ADDITION_NEXT_DELAY, ADDITION_ROUNDS, ROOM_END_DELAY } from '../constants.js';
+import {
+  ADDITION_ANSWER_MAX,
+  ADDITION_MAX,
+  ADDITION_NEXT_DELAY,
+  ADDITION_ROUNDS,
+  ROOM_END_DELAY,
+} from '../constants.js';
 import { Torch } from '../objects/Torch.js';
 import { speak } from '../speech.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
 const propertyOf = (object, name) => object.properties.find((item) => item.name === name).value;
 
-// Tire une addition a + ? = total, sans dépasser ADDITION_MAX et sans le cas vide 0 + 0 = 0.
-export function randomAddition() {
-  const total = Phaser.Math.Between(1, ADDITION_MAX);
-  const first = Phaser.Math.Between(0, total);
-  return { first, total, missing: total - first };
+// Propriété `max` de la carte dans Tiled : le total le plus grand de cette salle.
+function roomMax(map) {
+  const properties = Array.isArray(map.properties) ? map.properties : [];
+  return properties.find((item) => item.name === 'max')?.value ?? ADDITION_MAX;
+}
+
+// Tire une addition a + ? = total, sans dépasser `max` et sans le cas vide 0 + 0 = 0.
+// Le nombre à trouver reste entre 0 et ADDITION_ANSWER_MAX : ce sont les torches de la salle.
+export function randomAddition(max = ADDITION_MAX) {
+  const total = Phaser.Math.Between(1, max);
+  const missing = Phaser.Math.Between(0, Math.min(total, ADDITION_ANSWER_MAX));
+  return { first: total - missing, total, missing };
 }
 
 // Devoir : allumer la torche du nombre manquant, ADDITION_ROUNDS fois, puis la salle est finie.
@@ -23,6 +36,7 @@ export class AdditionPuzzle {
     const spots = map.filterObjects('objets', (object) => object.name === 'torche-nombre');
     this.torches = spots.map((spot) => new Torch(scene, spot, player, propertyOf(spot, 'nombre')));
 
+    this.max = roomMax(map);
     this.listenKey = scene.input.keyboard.addKey('SPACE');
     this.addition = null;
     this.roundsLeft = ADDITION_ROUNDS;
@@ -36,7 +50,7 @@ export class AdditionPuzzle {
     // et il devrait s'en écarter puis revenir pour que le jeu la prenne en compte.
     const previous = this.addition;
     do {
-      this.addition = randomAddition();
+      this.addition = randomAddition(this.max);
     } while (previous && this.addition.missing === previous.missing);
 
     const { first, total } = this.addition;

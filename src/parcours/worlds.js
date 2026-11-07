@@ -22,6 +22,9 @@ export const WORLDS = [
       week('2026-11-02', 'Semaine du 2 novembre', {}, true), // déjà passée quand le jeu a commencé
       week('2026-11-09', 'Semaine du 9 novembre', {
         Lundi: [{ room: 'third-room', entry: 'entree' }], // 4 additions à trou au hasard
+        Mardi: [{ room: 'comparaisons', entry: 'entree' }], // 4 comparaisons au hasard, de 0 à 20
+        Jeudi: [{ room: 'additions-15', entry: 'entree' }], // 4 additions à trou, totaux jusqu'à 15
+        Vendredi: [{ room: 'mots', entry: 'entree' }], // lune, renard, moto
       }),
       week('2026-11-16', 'Semaine du 16 novembre'),
       week('2026-11-23', 'Semaine du 23 novembre'),

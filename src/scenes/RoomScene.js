@@ -13,7 +13,9 @@ import {
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
+import { ComparePuzzle } from '../puzzles/ComparePuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
+import { WordPuzzle } from '../puzzles/WordPuzzle.js';
 import { markDayDone } from '../parcours/progress.js';
 import { ROOM_DONE } from '../rooms.js';
 import { feetOffset, sameTile, tileAt } from '../tiles.js';
@@ -23,7 +25,13 @@ import { dialogBox } from '../ui/DialogBox.js';
 export const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
 
 // La présence de ce point dans la carte indique l'énigme de la salle.
-const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': AdditionPuzzle };
+const PUZZLES = {
+  bloc: BlockPuzzle,
+  torche: SoundPuzzle,
+  'torche-nombre': AdditionPuzzle,
+  'torche-signe': ComparePuzzle,
+  'torche-mot': WordPuzzle,
+};
 
 export class RoomScene extends Phaser.Scene {
   constructor() {
