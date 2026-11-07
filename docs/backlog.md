@@ -62,15 +62,18 @@ Taille des US : **S** (moins d'une heure), **M** (une demi-journée), **L** (une
 
 | Épic | Objectif | État |
 |---|---|---|
-| E1 Parcours | Mondes, semaines, jours et sauvegarde | Prototype à reprendre |
-| E2 Carte du monde | Glisser de semaine en semaine sur un chemin illustré | À faire |
-| E3 Carte de la semaine | Valider lundi, mardi, jeudi, vendredi dans l'ordre | À faire |
-| E4 Journée de devoirs | Enchaîner des salles, avec un devoir par salle | À faire |
-| E5 Passage en HD | Quitter le pixel art pour tout le jeu | À faire |
+| E1 Parcours | Mondes, semaines, jours et sauvegarde | Fait ; reste US-103, US-104 (audit) |
+| E2 Carte du monde | Glisser de semaine en semaine sur un chemin illustré | Fait ; reste US-204 à revoir |
+| E3 Carte de la semaine | Valider lundi, mardi, jeudi, vendredi dans l'ordre | Fait ; reste US-304 (audit) |
+| E4 Journée de devoirs | Enchaîner des salles, avec un devoir par salle | Fait |
+| E5 Passage en HD | Quitter le pixel art pour tout le jeu | Fait |
 | E6 Contenu | Images des civilisations, des salles et des objets | Récurrent |
-| E7 Lecture | Syllabes, mots, phrases | À faire |
-| E8 Finition | Écrans, sons, tests avec l'enfant | À faire |
+| E7 Lecture | Syllabes, mots, phrases | Bien avancé ; restent US-703, US-704, US-709 |
+| E8 Finition | Écrans, sons, tests avec l'enfant | En cours : US-805 à US-808 (audit) |
 | E9 Devoirs | Les devoirs de chaque semaine, en sprints à part | Récurrent |
+| E10 Fiabilité | Vérifier le parcours avant de publier, ménage du code, documentation à jour | Nouveau (audit du 8 novembre) : US-1001 à US-1005 |
+
+L'audit du code du 8 novembre est dans [audit-2026-11-08.md](audit-2026-11-08.md), et le prompt pour le refaire dans [prompt-audit.md](prompt-audit.md).
 
 ## Sprints
 
@@ -126,14 +129,15 @@ Les exercices prêts à l'emploi sont listés dans [exercices.md](exercices.md).
 - Le premier monde joué est l'Égypte (novembre-décembre, 7 semaines), puis la Chine (janvier-février).
 - Un point = une semaine. Les jours se font dans l'ordre imposé.
 - Le personnage glisse sur le chemin : → avance, ← recule.
-- Un seul lieu de semaine pour l'instant.
+- Chaque monde a sa carte et sa carte des jours.
 - Visée HD pour tout le jeu, en gardant la grille de 15×10.
-- Septembre-Octobre compte comme terminé ; ce monde sera construit plus tard (US-205).
+- Septembre-Octobre est devenu le monde des Pirates, compté comme terminé.
 - La semaine du 2 novembre est validée d'office, faute de devoirs. À revoir si besoin.
 - Sur la carte d'Égypte, le parcours va du bas vers les pyramides, et le personnage glisse sur l'eau pour traverser le Nil.
 - Sprint 1 : une pull request par épic, par exception à la règle une US = une PR.
 
 ## Questions ouvertes
 
-- Personnage HD : aucun personnage animé trouvé, US-502 est reportée. Piste : 4 vues générées et une marche faite d'un petit rebond.
-- Thèmes des mondes de mars-avril et de mai-juin.
+- Semaines simulées : les montrer seulement en Admin (US-103) ou leur donner un `id` à part.
+- Écoute après une erreur seulement dans 3 épreuves de lecture : à garder, ou ouvrir l'écoute après quelques secondes ? `CLAUDE.md` dit « l'écoute reste toujours possible ».
+- `pixelArt: true` reste imposé par `CLAUDE.md`, alors que le jeu est passé en HD.

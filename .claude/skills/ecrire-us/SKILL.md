@@ -21,7 +21,7 @@ But : une issue claire, qu'on peut développer sans reposer de questions. On ne 
 
 ## Format de l'issue
 
-Titre : `US-<numéro> : <besoin en quelques mots>`. Le numéro suit le dernier de l'épic : E2 donne 2xx, E4 donne 4xx.
+Titre : `US-<numéro> : <besoin en quelques mots>`. Le numéro suit le dernier de l'épic : E2 donne 2xx, E4 donne 4xx, E10 donne 10xx.
 
 ```markdown
 En tant que <enfant ou parent>, je veux <besoin>, afin de <bénéfice>.
@@ -38,7 +38,7 @@ Taille : S, M ou L. Définition de « fini » : voir `docs/backlog.md`.
 
 ## Labels
 
-- Le label de l'épic : `epic:parcours`, `epic:carte-monde`, `epic:carte-semaine`, `epic:journee`, `epic:hd`, `epic:contenu`, `epic:lecture`, `epic:finition` ou `epic:devoirs`.
+- Le label de l'épic : `epic:parcours`, `epic:carte-monde`, `epic:carte-semaine`, `epic:journee`, `epic:hd`, `epic:contenu`, `epic:lecture`, `epic:finition`, `epic:devoirs` ou `epic:fiabilite`.
 - Un seul état :
   - `us-idee` : pas encore rédigée comme une user story ;
   - `us-review` : rédigée et validée, mais il manque une image ou un arbitrage. Ajoute un commentaire « En attente de : … » ;
