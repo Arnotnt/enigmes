@@ -1,4 +1,6 @@
-import { CHINE, EGYPT, GAULE, GRECE, PIRATES, TEMPLE } from './places.js';
+import {
+  CHINE, CHINE_JOURS, EGYPT, GAULE, GAULE_JOURS, GRECE, GRECE_JOURS, PIRATES, PIRATES_JOURS, TEMPLE,
+} from './places.js';
 
 // Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
 // Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
@@ -155,7 +157,7 @@ export const WORLDS = [
     months: 'septembre et octobre',
     costume: 'pirate',
     place: PIRATES,
-    weekPlace: TEMPLE, // en attendant la carte des jours des pirates
+    weekPlace: PIRATES_JOURS,
     // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
     // aux pirates plutôt qu'en Égypte. Le monde se visite quand même depuis la carte des mondes.
     done: true,
@@ -263,7 +265,7 @@ export const WORLDS = [
     months: 'janvier et février',
     costume: 'chinois',
     place: CHINE,
-    weekPlace: TEMPLE, // en attendant la carte des jours de la Chine
+    weekPlace: CHINE_JOURS,
     // Simulation (US-902).
     weeks: [
       week('2027-01-04', 'Semaine du 4 janvier', {
@@ -305,6 +307,6 @@ export const WORLDS = [
     ],
   },
   // Cartes des jours : celle du temple, en attendant la leur. 6 semaines chacun, à écrire.
-  { name: 'La Gaule', months: 'mars et avril', costume: 'gaulois', place: GAULE, weekPlace: TEMPLE, weeks: [] },
-  { name: 'La Grèce antique', months: 'mai et juin', costume: 'grec', place: GRECE, weekPlace: TEMPLE, weeks: [] },
+  { name: 'La Gaule', months: 'mars et avril', costume: 'gaulois', place: GAULE, weekPlace: GAULE_JOURS, weeks: [] },
+  { name: 'La Grèce antique', months: 'mai et juin', costume: 'grec', place: GRECE, weekPlace: GRECE_JOURS, weeks: [] },
 ];

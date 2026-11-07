@@ -4,6 +4,10 @@ import atlasUrl from '../assets/parcours/monde-entier.jpg?url';
 import gauleUrl from '../assets/parcours/monde-gaule.jpg?url';
 import greceUrl from '../assets/parcours/monde-grece.jpg?url';
 import piratesUrl from '../assets/parcours/monde-pirates.jpg?url';
+import semaineChineUrl from '../assets/parcours/semaine-chine.jpg?url';
+import semaineGauleUrl from '../assets/parcours/semaine-gaule.jpg?url';
+import semaineGreceUrl from '../assets/parcours/semaine-grece.jpg?url';
+import semainePiratesUrl from '../assets/parcours/semaine-pirates.jpg?url';
 import templeUrl from '../assets/parcours/temple.jpg?url';
 
 // Les lieux illustrés. `path` suit le chemin de l'image, en pixels de cette image.
@@ -113,4 +117,60 @@ export const GRECE = {
   stops: [0, 2, 4, 8, 12, 17],
 };
 
-export const PLACES = [ATLAS, EGYPT, TEMPLE, PIRATES, CHINE, GAULE, GRECE];
+// Les cartes des jours des autres mondes, comme le temple : quatre lieux, un par jour.
+// Images de 1264×848.
+
+// Le ponton, l'étal au perroquet, la taverne, puis la maison du capitaine.
+export const PIRATES_JOURS = {
+  key: 'place-pirates-jours',
+  url: semainePiratesUrl,
+  width: 1264,
+  path: [
+    [305, 415], [268, 465], [310, 525], [390, 550], [480, 535], [580, 520], [680, 535], [780, 575],
+    [860, 605], [960, 600], [1060, 555], [1125, 480], [1115, 410], [1065, 360], [1010, 320], [1005, 290],
+  ],
+  stops: [0, 4, 8, 15],
+};
+
+// Le portique aux lions, le pont rouge, le pavillon de thé, puis la pagode.
+export const CHINE_JOURS = {
+  key: 'place-chine-jours',
+  url: semaineChineUrl,
+  width: 1264,
+  path: [
+    [190, 375], [270, 385], [350, 410], [430, 440], [515, 425], [590, 505], [680, 545], [780, 568],
+    [870, 570], [970, 560], [1060, 525], [1090, 470], [1045, 420], [985, 375], [985, 335], [1040, 300],
+    [1065, 285],
+  ],
+  stops: [0, 4, 8, 16],
+};
+
+// La porte de la palissade, la forge, le marché, puis la grande hutte du chef.
+export const GAULE_JOURS = {
+  key: 'place-gaule-jours',
+  url: semaineGauleUrl,
+  width: 1264,
+  path: [
+    [250, 345], [310, 365], [330, 410], [295, 460], [315, 520], [420, 575], [530, 580], [630, 555],
+    [705, 515], [725, 455], [705, 400], [730, 365], [840, 340], [940, 320], [1000, 285],
+  ],
+  stops: [0, 5, 12, 14],
+};
+
+// La fontaine au lion, l'atelier du potier, le théâtre, puis le temple sur la colline.
+// Les deux autres bouts de route (vers les maisons et vers le bas à gauche) ne sont pas suivis.
+export const GRECE_JOURS = {
+  key: 'place-grece-jours',
+  url: semaineGreceUrl,
+  width: 1264,
+  path: [
+    [320, 430], [300, 500], [360, 545], [470, 545], [600, 555], [720, 575], [870, 585], [990, 570],
+    [1090, 520], [1140, 450], [1110, 380], [1040, 330], [975, 285], [950, 245], [995, 210], [1040, 195],
+  ],
+  stops: [0, 3, 6, 15],
+};
+
+export const PLACES = [
+  ATLAS, EGYPT, TEMPLE, PIRATES, CHINE, GAULE, GRECE,
+  PIRATES_JOURS, CHINE_JOURS, GAULE_JOURS, GRECE_JOURS,
+];

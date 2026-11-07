@@ -27,6 +27,9 @@
 - **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Images de 629×421, découpées dans une planche de quatre.
   Fichiers utilisés : `src/assets/parcours/monde-pirates.jpg`, `monde-chine.jpg`, `monde-gaule.jpg`, `monde-grece.jpg`.
 
+- **Cartes des jours des pirates, de la Chine, de la Gaule et de la Grèce antique** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`.
+  Fichiers utilisés : `src/assets/parcours/semaine-pirates.jpg`, `semaine-chine.jpg`, `semaine-gaule.jpg`, `semaine-grece.jpg`.
+
 - **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, découpées dans une planche de quatre.
   Fichiers utilisés : `src/assets/salles/salle-pirates.jpg`, `salle-gaule.jpg`, `salle-chine.jpg`, `salle-grece.jpg`.
 
