@@ -2,7 +2,7 @@ import { CHINE, EGYPT, GAULE, GRECE, PIRATES, TEMPLE } from './places.js';
 
 // Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
 // Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
-// `weekPlace` pour les jours ; il ne s'ouvre qu'avec les deux), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
+// `weekPlace` pour les jours ; il ne s'ouvre qu'avec les deux et des semaines), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
 // `costume` habille le héros dans ce monde (clé de `COSTUMES` dans src/characters/costumes.js,
 // par exemple 'pirate') ; sans costume, le héros est l'explorateur.
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
@@ -154,8 +154,9 @@ export const WORLDS = [
     name: 'Les Pirates',
     months: 'septembre et octobre',
     place: PIRATES,
-    // Simulation (US-902). `done` reste tant que le monde n'a pas sa carte des jours (`weekPlace`) :
-    // l'enlever en même temps, sinon le jeu enverrait l'enfant dans un monde vide.
+    weekPlace: TEMPLE, // en attendant la carte des jours des pirates
+    // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
+    // aux pirates plutôt qu'en Égypte. Le monde se visite quand même depuis la carte des mondes.
     done: true,
     weeks: [
       week('2026-08-31', 'Semaine du 31 août', {
@@ -259,7 +260,8 @@ export const WORLDS = [
     name: 'La Chine',
     months: 'janvier et février',
     place: CHINE,
-    // Simulation (US-902). Le monde s'ouvrira quand il aura aussi sa carte des jours (`weekPlace`).
+    weekPlace: TEMPLE, // en attendant la carte des jours de la Chine
+    // Simulation (US-902).
     weeks: [
       week('2027-01-04', 'Semaine du 4 janvier', {
         Lundi: [chine('mots', { mots: [...C1.mots, 'pile'] }), chine('additions', { max: 20 })],
@@ -299,6 +301,7 @@ export const WORLDS = [
       }),
     ],
   },
-  { name: 'La Gaule', months: 'mars et avril', place: GAULE, weeks: [] }, // 6 semaines
-  { name: 'La Grèce antique', months: 'mai et juin', place: GRECE, weeks: [] }, // 6 semaines
+  // Cartes des jours : celle du temple, en attendant la leur. 6 semaines chacun, à écrire.
+  { name: 'La Gaule', months: 'mars et avril', place: GAULE, weekPlace: TEMPLE, weeks: [] },
+  { name: 'La Grèce antique', months: 'mai et juin', place: GRECE, weekPlace: TEMPLE, weeks: [] },
 ];
