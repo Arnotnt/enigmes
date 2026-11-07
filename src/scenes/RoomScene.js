@@ -15,6 +15,7 @@ import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { ComparePuzzle } from '../puzzles/ComparePuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
+import { SyllablePuzzle } from '../puzzles/SyllablePuzzle.js';
 import { WordPuzzle } from '../puzzles/WordPuzzle.js';
 import { markDayDone } from '../parcours/progress.js';
 import { ROOM_DONE } from '../rooms.js';
@@ -29,7 +30,12 @@ const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': Addit
 
 // Un devoir écrit dans le parcours (`devoir: 'mots'`…) choisit lui-même son énigme, dans
 // n'importe quelle salle : la carte n'a alors besoin que de son décor et de ses murs.
-const DEVOIRS = { additions: AdditionPuzzle, comparaisons: ComparePuzzle, mots: WordPuzzle };
+const DEVOIRS = {
+  additions: AdditionPuzzle,
+  comparaisons: ComparePuzzle,
+  mots: WordPuzzle,
+  syllabes: SyllablePuzzle,
+};
 
 export class RoomScene extends Phaser.Scene {
   constructor() {

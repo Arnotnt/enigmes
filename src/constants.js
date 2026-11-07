@@ -59,4 +59,5 @@ export const ADDITION_ROUNDS = 4; // additions à trouver avant la fin du jeu
 export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo avant la suivante
 export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle
+export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
