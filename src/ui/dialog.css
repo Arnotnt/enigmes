@@ -91,7 +91,7 @@
 
 #dialog.prompt {
   left: auto;
-  right: 3vmin;
+  right: calc(4vmin + clamp(36px, 7vmin, 56px)); /* à gauche du bouton du son, sans le cacher */
   bottom: auto;
   top: 3vmin;
   transform: none;
