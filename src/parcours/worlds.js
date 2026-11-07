@@ -12,7 +12,8 @@ import { EGYPT, TEMPLE } from './places.js';
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
 // - lessons : pour chaque jour, les salles à traverser dans l'ordre, avec un devoir par salle.
 //   `room` est une clé de src/rooms.js et `entry` le point d'arrivée dans cette carte.
-//   `devoir` choisit l'énigme, et le reste en donne le contenu ; les stèles se placent seules :
+//   `devoir` choisit l'énigme, et le reste en donne le contenu ; les stèles se placent seules.
+//   La fiche de chaque exercice, avec des exemples, est dans docs/exercices.md :
 //   - additions : additions à trou au hasard, `max` = total le plus grand (10 sans rien) ;
 //   - comparaisons : < ou > entre deux nombres au hasard, `max` = plus grand nombre (20 sans rien) ;
 //   - mots : écouter un mot et trouver sa stèle, `mots` = la liste (4 au plus par ligne) ;
