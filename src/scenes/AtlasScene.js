@@ -1,12 +1,13 @@
 import { MAP_MUSIC } from '../audio/musics.js';
 import { playMusic } from '../audio/sound.js';
-import { currentWorldIndex, isWorldBuilt, isWorldDone } from '../parcours/progress.js';
+import { currentWorldIndex, isAllOpen, isWorldBuilt, isWorldDone } from '../parcours/progress.js';
 import { ATLAS } from '../parcours/places.js';
 import { WORLDS } from '../parcours/worlds.js';
 import { PathMapScene } from './PathMapScene.js';
 
 // La carte des mondes : un point par monde de l'année. On peut glisser partout pour écouter le nom
-// de chaque monde, mais Entrée n'ouvre qu'un monde fini ou en cours.
+// de chaque monde, mais Entrée n'ouvre qu'un monde fini ou en cours (tout monde construit dans la
+// sauvegarde admin).
 export class AtlasScene extends PathMapScene {
   constructor() {
     super('atlas');
@@ -16,7 +17,8 @@ export class AtlasScene extends PathMapScene {
     const current = currentWorldIndex(WORLDS);
     this.states = WORLDS.map((world, index) => {
       if (isWorldDone(world)) return 'done';
-      return index === current ? 'open' : 'closed';
+      const open = index === current || (isAllOpen() && isWorldBuilt(world));
+      return open ? 'open' : 'closed';
     });
     const stops = WORLDS.map((world, index) => ({
       label: world.name ? String(index + 1) : '?',
