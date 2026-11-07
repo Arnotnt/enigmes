@@ -21,6 +21,9 @@
 - **Personnages (explorateur, pirate)** : planches générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`, puis découpées, détourées et réduites par `outils/decouper-personnage.py`.
   Planches d'origine : `docs/personnages/`. Fichiers utilisés : `src/assets/personnages/explorateur.png`, `src/assets/personnages/pirate.png`.
 
+- **Pictogrammes ARASAAC**, par Sergio Palao. Origine : ARASAAC (https://arasaac.org). Propriété : Gouvernement d'Aragon (Espagne). Licence : Creative Commons BY-NC-SA.
+  Fichiers utilisés : `src/assets/pictos/` (un pictogramme par mot, téléchargé par `outils/picto.mjs`).
+
 ## Musique
 
 - **Happy Clappy Loop**, par OwlishMedia : licence CC0 (domaine public).

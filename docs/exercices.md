@@ -30,6 +30,7 @@ Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enl
 | `comparaisons` | Calcul | la question | le signe < ou > | `max` (facultatif) | 4 |
 | `mots` | Lecture | un mot | le mot écrit sur une stèle | `mots` | un par mot |
 | `syllabes` | Lecture | une syllabe | la consonne, puis la voyelle | `syllabes` | 4 |
+| `lire-mots` | Lecture | rien d'abord | un mot écrit, puis son image | `mots` | 4 |
 
 ### `additions` : addition à trou
 
@@ -77,13 +78,26 @@ La voix dit une syllabe. L'enfant touche la consonne dans la ligne du haut, puis
 { room: 'temple-egypte', entry: 'entree', devoir: 'syllabes', syllabes: ['ma', 'li', 'ro', 'ch-ou'] }
 ```
 
+### `lire-mots` : lire un mot, trouver son image
+
+Un mot s'écrit en haut de l'écran, sans être dit. Chaque stèle porte une image : l'enfant va toucher celle du mot. Au début de la salle, la voix dit seulement la consigne. Le bouton d'écoute du mot n'apparaît qu'après une erreur : on pousse à lire d'abord, sans jamais bloquer.
+
+- `mots` : les mots de la semaine. Toutes leurs images sont dans la salle, et 4 mots sont demandés au hasard. Donnez-en de 4 à 8 : les images en plus servent de pièges.
+- Chaque mot doit avoir son image dans `src/assets/pictos/`. Pour les télécharger depuis ARASAAC : `node outils/picto.mjs lune moto renard`. Regardez les images obtenues. Si l'une ne convient pas, cherchez le mot sur arasaac.org et donnez le numéro de la bonne : `node outils/picto.mjs lune=2933`.
+- Un mot sans image est laissé de côté, avec un avertissement dans la console.
+
+```js
+{ room: 'temple-egypte', entry: 'entree', devoir: 'lire-mots', mots: ['lune', 'renard', 'moto', 'vélo', 'chat', 'tomate'] }
+```
+
+Images disponibles : chat, lit, lune, moto, mouton, renard, tomate, vélo.
+
 ## Bientôt
 
 Ces exercices sont en cours de développement au Sprint 4. Leur fiche s'ajoutera ici quand ils seront prêts.
 
 | Exercice | US |
 |---|---|
-| Lire un mot, trouver son image | [US-702](https://github.com/Arnotnt/enigmes/issues/9) |
 | Voir une image, trouver son mot | [US-705](https://github.com/Arnotnt/enigmes/issues/72) |
 | Lire une phrase, trouver sa scène | [US-706](https://github.com/Arnotnt/enigmes/issues/73) |
 | Voir une scène, trouver sa phrase | [US-707](https://github.com/Arnotnt/enigmes/issues/74) |

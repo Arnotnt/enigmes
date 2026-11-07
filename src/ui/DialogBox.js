@@ -7,6 +7,7 @@ class DialogBox {
     this.box = document.querySelector('#dialog');
     this.textElement = document.querySelector('#dialog-text');
     this.listenButton = document.querySelector('#dialog-listen');
+    this.listenable = true;
     this.listenButton.hidden = !canSpeak();
     this.listenButton.addEventListener('click', () => this.listen());
   }
@@ -14,6 +15,7 @@ class DialogBox {
   // autoSpeak : lire tout de suite, pour une consigne. Une épreuve de lecture passera false.
   show(text, { autoSpeak = false } = {}) {
     this.speech = text;
+    this.setListenable(true);
     this.textElement.textContent = text;
     this.box.classList.remove('prompt', 'banner', 'caption');
     this.box.hidden = false;
@@ -23,6 +25,7 @@ class DialogBox {
   // Affiche seulement le bouton d'écoute : l'enfant écoute, il n'a rien à lire.
   showPrompt(speech) {
     this.speech = speech;
+    this.setListenable(true);
     this.textElement.textContent = '';
     this.box.classList.remove('banner', 'caption');
     this.box.classList.add('prompt');
@@ -32,6 +35,7 @@ class DialogBox {
   // Affiche un texte en haut de l'écran, pour une énigme qui se joue dans toute la salle.
   showBanner(text, speech) {
     this.speech = speech;
+    this.setListenable(true);
     this.textElement.textContent = text;
     this.box.classList.remove('prompt', 'caption');
     this.box.classList.add('banner');
@@ -49,8 +53,15 @@ class DialogBox {
     stopSpeaking();
   }
 
+  // Une épreuve de lecture peut cacher l'écoute un moment, pour pousser à lire d'abord.
+  // Chaque nouveau texte la rend de nouveau possible.
+  setListenable(listenable) {
+    this.listenable = listenable;
+    this.listenButton.hidden = !listenable || !canSpeak();
+  }
+
   listen() {
-    if (!this.box.hidden) speak(this.speech);
+    if (!this.box.hidden && this.listenable) speak(this.speech);
   }
 }
 
