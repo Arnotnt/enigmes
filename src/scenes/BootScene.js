@@ -2,8 +2,9 @@ import * as Phaser from 'phaser';
 import characterUrl from '../assets/character.png';
 import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
+import torchUrl from '../assets/objets/torche-egypte.png';
 import overworldUrl from '../assets/overworld.png';
-import { NPC_FRAME_SIZE, OBJECTS, PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
+import { NPC_FRAME_SIZE, PLAYER_FRAME, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
@@ -23,6 +24,7 @@ export class BootScene extends Phaser.Scene {
       frameHeight: PLAYER_FRAME.height,
     });
 
+    this.load.spritesheet('torch', torchUrl, { frameWidth: TORCH.frameWidth, frameHeight: TORCH.frameHeight });
     this.load.spritesheet('npc', npcUrl, { frameWidth: NPC_FRAME_SIZE, frameHeight: NPC_FRAME_SIZE });
 
     for (const [key, url] of Object.entries(ROOMS)) this.load.tilemapTiledJSON(key, url);
@@ -43,13 +45,6 @@ export class BootScene extends Phaser.Scene {
         repeat: -1,
       });
     }
-
-    this.anims.create({
-      key: 'flame',
-      frames: this.anims.generateFrameNumbers('objects', { start: OBJECTS.flameFirst, end: OBJECTS.flameLast }),
-      frameRate: 10,
-      repeat: -1,
-    });
 
     // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant le premier écran.
     document.fonts.load('16px Andika').finally(() => this.scene.start('world'));

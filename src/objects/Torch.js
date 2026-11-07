@@ -1,7 +1,9 @@
 import * as Phaser from 'phaser';
-import { OBJECTS, OVERWORLD, TORCH_REACH } from '../constants.js';
+import { OVERWORLD, TORCH, TORCH_REACH } from '../constants.js';
 
-// Torche portant une lettre ou un nombre, placée sur un point de la carte.
+// Torche portant une lettre, un nombre, un signe ou un mot, placée sur un point de la carte.
+// Le dessin est une stèle : image 0 éteinte, image 1 allumée. Le point désigne le centre de la
+// case où elle est posée ; la stèle monte au-dessus, comme un personnage.
 export class Torch {
   constructor(scene, spot, player, label) {
     const { x, y } = spot;
@@ -11,26 +13,34 @@ export class Torch {
     this.label = label;
     this.lit = false;
     this.near = false;
-    this.flame = null;
+    this.glow = null;
 
     this.needsPush = false; // voir rearm()
 
-    // Une lettre, un nombre ou un signe tient sur une plaque carrée ; un mot a une plaque plus large.
+    const bottom = y + 8; // bas de la case
+    this.stele = scene.add.image(x, bottom, 'torch', 0).setOrigin(0.5, 1);
+    this.stele.setDisplaySize(TORCH.width, TORCH.width * (this.stele.height / this.stele.width));
+    // Dessin réduit puis agrandi par la caméra : lissé, il reste net, comme le fond de la salle.
+    this.stele.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+
+    // Une lettre, un nombre ou un signe s'écrit dans le cartouche de la stèle.
+    // Un mot est trop large : il reçoit une plaque posée par-dessus.
+    const centerY = bottom - TORCH.labelHeight;
     const isWord = label.length > 2;
-    const fontSize = isWord ? '9px' : label.length > 1 ? '11px' : '13px'; // 10 doit tenir sur la plaque
-    const post = [
-      scene.add.image(x, y - 16, 'tiles', OVERWORLD.postTop),
-      scene.add.image(x, y, 'tiles', OVERWORLD.postBottom),
-    ];
-    const plate = scene.add.rectangle(x, y - 7, 15, 15, 0xfff8e7).setStrokeStyle(1, 0x6b4a2f);
+    const fontSize = isWord ? '9px' : label.length > 1 ? '10px' : '13px'; // 10 doit tenir dans le cartouche
     const text = scene.add
-      .text(x, y - 8, label, { fontFamily: 'Andika', fontSize, color: '#2b2118' })
+      .text(x, centerY - 1, label, { fontFamily: 'Andika', fontSize, color: '#2b2118' })
       .setOrigin(0.5)
       .setResolution(8);
     text.texture.setFilter(Phaser.Textures.FilterMode.LINEAR); // lettre lisse, contrairement aux dessins du jeu
-    if (isWord) plate.setSize(Math.ceil(text.width) + 5, 13).setPosition(x, y - 7);
-
-    this.parts = [...post, plate, text];
+    this.parts = [this.stele, text];
+    if (isWord) {
+      const plate = scene.add
+        .rectangle(x, centerY, Math.ceil(text.width) + 5, 13, TORCH.plateColor)
+        .setStrokeStyle(0.75, 0x2b2118);
+      scene.children.bringToTop(text);
+      this.parts.splice(1, 0, plate);
+    }
 
     const body = scene.physics.add.staticImage(x, y, 'tiles', OVERWORLD.postBottom).setVisible(false);
     scene.physics.add.collider(player, body);
@@ -60,14 +70,20 @@ export class Torch {
 
   light() {
     this.lit = true;
-    const { x, y } = this.spot;
-    this.flame = this.scene.add.sprite(x, y - 24, 'objects', OBJECTS.flameFirst).play('flame');
+    this.stele.setFrame(1);
+    // Une lueur douce qui palpite au-dessus de la flamme : le dessin, lui, ne bouge pas.
+    const { x } = this.spot;
+    this.glow = this.scene.add
+      .circle(x, this.spot.y + 8 - TORCH.flameHeight, TORCH.glowRadius, TORCH.glowColor, 0.25)
+      .setBlendMode(Phaser.BlendModes.ADD);
+    this.scene.tweens.add({ targets: this.glow, alpha: 0.5, scale: 1.15, duration: 380, yoyo: true, repeat: -1 });
   }
 
   extinguish() {
     this.lit = false;
-    this.flame?.destroy();
-    this.flame = null;
+    this.stele.setFrame(0);
+    this.glow?.destroy();
+    this.glow = null;
   }
 
   shake() {
