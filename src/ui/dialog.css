@@ -1,4 +1,22 @@
 /* La boîte de dialogue est en HTML, par-dessus le jeu, pour un texte net et assez grand. */
+#back-button {
+  position: fixed;
+  left: 2vmin;
+  top: 2vmin;
+  padding: 0.3em 0.7em;
+  background: #fff8e7;
+  color: #2b2118;
+  border: 0.5vmin solid #6b4a2f;
+  border-radius: 1.5vmin;
+  font-family: 'Andika', sans-serif;
+  font-size: clamp(14px, 3vmin, 24px);
+  cursor: pointer;
+}
+
+#back-button[hidden] {
+  display: none;
+}
+
 #dialog {
   position: fixed;
   left: 50%;
@@ -31,6 +49,14 @@
 
 #dialog.banner #dialog-listen {
   font-size: 0.65em;
+}
+
+#dialog.caption {
+  width: auto;
+  gap: 2vmin;
+  border-width: 0.5vmin;
+  font-size: clamp(16px, 3.6vmin, 30px);
+  white-space: nowrap;
 }
 
 #dialog.prompt {
