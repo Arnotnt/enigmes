@@ -65,6 +65,6 @@ export class BootScene extends Phaser.Scene {
     for (const word of Object.keys(PICTOS)) this.textures.get(pictoKey(word)).setFilter(Phaser.Textures.FilterMode.LINEAR);
 
     // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant le premier écran.
-    document.fonts.load('16px Andika').finally(() => this.scene.start('title'));
+    Promise.all([document.fonts.load('16px Andika'), document.fonts.load('bold 16px Andika')]).finally(() => this.scene.start('title'));
   }
 }

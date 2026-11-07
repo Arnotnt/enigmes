@@ -1,4 +1,5 @@
 import '@fontsource/andika/400.css';
+import '@fontsource/andika/700.css';
 import * as Phaser from 'phaser';
 import { GAME_HEIGHT, GAME_WIDTH } from './constants.js';
 import { AtlasScene } from './scenes/AtlasScene.js';

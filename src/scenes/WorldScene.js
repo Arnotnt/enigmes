@@ -1,11 +1,12 @@
 import { MAP_MUSIC } from '../audio/musics.js';
 import { playBravo, playMusic } from '../audio/sound.js';
-import { currentWeekIndex, currentWorldIndex, isWeekDone } from '../parcours/progress.js';
+import { currentWeekIndex, currentWorldIndex, isAllOpen, isWeekDone } from '../parcours/progress.js';
 import { WORLDS } from '../parcours/worlds.js';
 import { backButton } from '../ui/BackButton.js';
 import { PathMapScene } from './PathMapScene.js';
 
-// La carte d'un monde : un point par semaine. Le point suivant s'ouvre quand la semaine est finie.
+// La carte d'un monde : un point par semaine. Le point suivant s'ouvre quand la semaine est finie
+// (toutes sont ouvertes dans la sauvegarde admin).
 export class WorldScene extends PathMapScene {
   constructor() {
     super('world');
@@ -20,7 +21,7 @@ export class WorldScene extends PathMapScene {
   create() {
     const current = currentWeekIndex(this.world);
     const stops = this.world.weeks.map((week, index) => {
-      const open = index === current && !isWeekDone(week);
+      const open = (index === current || isAllOpen()) && !isWeekDone(week);
       return { label: String(index + 1), state: isWeekDone(week) ? 'done' : open ? 'open' : 'closed' };
     });
     this.buildMap(this.world.place, stops, current);
