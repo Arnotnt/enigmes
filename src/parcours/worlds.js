@@ -20,6 +20,7 @@ import { EGYPT, TEMPLE } from './places.js';
 //   - lire-mots : lire un mot écrit et toucher son image, `mots` = la liste (images dans src/assets/pictos/) ;
 //   - image-mot : voir une image et toucher son mot écrit, `mots` = la liste, `pieges` = mots en plus ;
 //   - phrase-scene : lire une phrase et toucher sa scène, `phrases` = la liste (« Le chat est sur le lit. ») ;
+//   - scene-phrase : voir une scène et choisir sa phrase parmi trois, `phrases` = comme phrase-scene ;
 //   - syllabes : former la syllabe entendue, consonne puis voyelle, 4 fois. `syllabes` = la liste,
 //     par exemple ['ma', 'li', 'ch-ou'] : le tiret sépare les deux sons quand ils font plusieurs lettres.
 

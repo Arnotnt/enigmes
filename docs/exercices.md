@@ -33,6 +33,7 @@ Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enl
 | `lire-mots` | Lecture | rien d'abord | un mot écrit, puis son image | `mots` | 4 |
 | `image-mot` | Lecture | la consigne | une image, puis son mot écrit | `mots`, `pieges` | 4 |
 | `phrase-scene` | Lecture | rien d'abord | une phrase, puis sa scène | `phrases` | 3 |
+| `scene-phrase` | Lecture | la consigne | une scène, puis sa phrase parmi trois | `phrases` | 3 |
 
 ### `additions` : addition à trou
 
@@ -120,17 +121,20 @@ Une phrase s'écrit en haut de l'écran, sans être lue. Trois scènes sont pos�
 { room: 'temple-egypte', entry: 'entree', devoir: 'phrase-scene', phrases: ['Le chat est sur le lit.', 'Deux chiens sont sous la table.', "L'oiseau est dans la boîte.", 'Le ballon est à côté de la chaise.'] }
 ```
 
+### `scene-phrase` : voir une scène, trouver sa phrase
+
+Une scène s'accroche en haut de la salle. Trois stèles numérotées portent chacune une phrase : quand le héros se place devant une stèle, sa phrase s'écrit en bas de l'écran, sans être lue. Entrée choisit cette phrase. Les phrases ne diffèrent que d'un mot (« sur » ou « sous », « deux » ou « trois »…) : il faut les lire et les comparer. Après une erreur, la phrase de la stèle devant laquelle on se trouve peut s'écouter.
+
+- `phrases` : les bonnes phrases, avec les mêmes modèles que `phrase-scene`. Le jeu en demande 3, et il écrit lui-même les phrases pièges, en changeant un seul mot. Les accords suivent : « dans le panier » devient « à côté du panier », « Le chat est » devient « Deux chats sont ».
+- On peut donner la même liste qu'à `phrase-scene` : un jour dans un sens, un jour dans l'autre.
+
+```js
+{ room: 'temple-egypte', entry: 'entree', devoir: 'scene-phrase', phrases: ['Le chat est sur le lit.', 'Deux chiens sont sous la table.', "L'oiseau est dans la boîte.", 'Le ballon est à côté de la chaise.'] }
+```
+
 ## Les images
 
 Toutes les images sont dans `src/assets/pictos/`, une par mot. Aujourd'hui : arbre, ballon, boîte, chaise, chat, chien, lit, lune, moto, mouton, oiseau, panier, poisson, renard, souris, table, tomate, vélo. Pour en ajouter : `node outils/picto.mjs <mot>` (voir `lire-mots`).
-
-## Bientôt
-
-Ces exercices sont en cours de développement au Sprint 4. Leur fiche s'ajoutera ici quand ils seront prêts.
-
-| Exercice | US |
-|---|---|
-| Voir une scène, trouver sa phrase | [US-707](https://github.com/Arnotnt/enigmes/issues/74) |
 
 ## Énigmes liées à une carte
 
