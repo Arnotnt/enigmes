@@ -78,13 +78,13 @@ Taille des US : **S** (moins d'une heure), **M** (une demi-journée), **L** (une
 |---|---|---|---|
 | S1 | 7-8 novembre | Jouer ses devoirs depuis la carte d'Égypte | 9 novembre |
 | S2 | 14-15 novembre | Salles et torches en HD | 16 novembre |
-| S3 | 21-22 novembre | Devoirs plus faciles à créer, syllabes | 23 novembre |
+| S3 | 21-22 novembre | Devoirs plus faciles à créer, former des syllabes | 23 novembre |
 | S4 | 28-29 novembre | Mots | 30 novembre |
 | S5 | 5-6 décembre | Phrases | 7 décembre |
 | S6 | 12-13 décembre | Fin du monde Égypte et bilan avec l'enfant | 14 décembre |
 | S7 | Vacances de Noël | Préparer la Chine | Janvier |
 
-Seuls S1 et S2 ont un jalon sur GitHub. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
+Seuls S1, S2 et S3 ont un jalon sur GitHub. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
 
 ### Sprint 1 : 7-8 novembre
 
@@ -101,6 +101,14 @@ Pendant ce sprint seulement, les cartes sont en HD et les salles restent en pixe
 Objectif : les salles et les torches sont en HD, sans perte de jouabilité. Le personnage reste en pixel art pour l'instant : aucun personnage HD animé n'a été trouvé (US-502, reportée).
 
 Ordre conseillé : US-505 (salles dessinées en HD), US-503 (fond de l'Égypte), puis US-504 (torches) si l'image de la torche est prête.
+
+### Sprint 3 : 21-22 novembre
+
+Objectif : une semaine de devoirs s'écrit dans le parcours sans toucher à Tiled, et l'enfant forme des syllabes en touchant une consonne puis une voyelle.
+
+Ordre conseillé : US-403 (contenu des salles dans le parcours), US-704 (tester la voix sur les syllabes, tâche du parent), puis US-701 (former une syllabe). Si la voix prononce mal des syllabes, une US « jouer des sons enregistrés » passe avant US-701.
+
+À vérifier aussi : une salle jouée au vrai clavier sur le jeu publié, restée ouverte depuis le Sprint 2.
 
 ## Décisions prises
 
