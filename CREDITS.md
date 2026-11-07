@@ -15,7 +15,7 @@
 - **Torche (stèle)** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`, puis détourée et réduite.
   Fichier utilisé : `src/assets/objets/torche-egypte.png`.
 
-- **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
+- **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`. La route de mer vers l'île grecque a été ajoutée par le projet.
   Fichier utilisé : `src/assets/parcours/monde-entier.jpg`.
 
 - **Personnages (explorateur, pirate, égyptien, gaulois, grec, chinois)** : planches générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`, puis découpées, détourées et réduites par `outils/decouper-personnage.py`.
@@ -23,6 +23,15 @@
 
 - **Pictogrammes ARASAAC**, par Sergio Palao. Origine : ARASAAC (https://arasaac.org). Propriété : Gouvernement d'Aragon (Espagne). Licence : Creative Commons BY-NC-SA.
   Fichiers utilisés : `src/assets/pictos/` (un pictogramme par mot, téléchargé par `outils/picto.mjs`).
+
+- **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Images de 629×421, découpées dans une planche de quatre.
+  Fichiers utilisés : `src/assets/parcours/monde-pirates.jpg`, `monde-chine.jpg`, `monde-gaule.jpg`, `monde-grece.jpg`.
+
+- **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, découpées dans une planche de quatre.
+  Fichiers utilisés : `src/assets/salles/salle-pirates.jpg`, `salle-gaule.jpg`, `salle-chine.jpg`, `salle-grece.jpg`.
+
+- **Torches des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, puis détourées, et l'emblème des plaques effacé pour que la lettre se lise bien.
+  Fichiers utilisés : `src/assets/objets/torche-pirates.png`, `torche-gaule.png`, `torche-chine.png`, `torche-grece.png`.
 
 ## Musique
 

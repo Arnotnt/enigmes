@@ -1,12 +1,12 @@
-import { EGYPT, TEMPLE } from './places.js';
+import { CHINE, EGYPT, GAULE, GRECE, PIRATES, TEMPLE } from './places.js';
 
 // Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
 // Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
-// `weekPlace` pour les jours), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
+// `weekPlace` pour les jours ; il ne s'ouvre qu'avec les deux et des semaines), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
 // `costume` habille le héros dans ce monde (clé de `COSTUMES` dans src/characters/costumes.js,
 // par exemple 'pirate') ; sans costume, le héros est l'explorateur.
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
-// Septembre-Octobre compte comme terminé : ce monde sera construit plus tard.
+// Les Pirates (septembre-octobre) comptent comme terminés : ce monde sera construit plus tard.
 //
 // Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks` :
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
@@ -36,10 +36,13 @@ function temple(devoir, contenu = {}) {
   return { room: 'temple-egypte', entry: 'entree', devoir, ...contenu };
 }
 
-// Le village d'automne et la Chine n'ont pas encore leur salle : ils prêtent celle du temple.
-// Quand leur fond sera dessiné, changer ici la salle (`room`) suffira pour tout le monde.
-const village = temple;
-const chine = temple;
+// La salle commune de chaque autre monde. La Gaule et la Grèce ont aussi la leur,
+// `salle-gaule` et `salle-grece`, pour quand leurs semaines seront écrites.
+function salle(room) {
+  return (devoir, contenu = {}) => ({ room, entry: 'entree', devoir, ...contenu });
+}
+const village = salle('salle-pirates');
+const chine = salle('salle-chine');
 
 // Le contenu de lecture de chaque semaine simulée : les mots (avec image), les pièges (mots
 // écrits sans image, qui leur ressemblent) et les phrases. Chaque liste sert deux jours.
@@ -80,7 +83,7 @@ const S7 = { // son [t]
   phrases: ['La tortue est sur le tapis.', 'La tasse est sur la table.', 'Deux tortues sont sous la table.', 'Il y a trois tomates.'],
 };
 
-// Septembre-Octobre, simulé : les voyelles, puis deux semaines de révision avec les premières phrases.
+// Les Pirates (septembre-octobre), simulé : les voyelles, puis deux semaines de révision avec les premières phrases.
 // `sons` remplace `syllabes` : il n'y a pas encore de consonne.
 const A1 = { // a, i
   mots: ['chat', 'rat', 'sac', 'lit', 'riz', 'kiwi'],
@@ -148,10 +151,12 @@ const C6 = { // ch
 
 export const WORLDS = [
   {
-    name: 'Septembre-Octobre',
+    name: 'Les Pirates',
     months: 'septembre et octobre',
-    // Simulation (US-902). `done` reste tant que le monde n'a pas ses cartes illustrées (`place`,
-    // `weekPlace`) : l'enlever en même temps, sinon le jeu enverrait l'enfant dans un monde vide.
+    place: PIRATES,
+    weekPlace: TEMPLE, // en attendant la carte des jours des pirates
+    // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
+    // aux pirates plutôt qu'en Égypte. Le monde se visite quand même depuis la carte des mondes.
     done: true,
     weeks: [
       week('2026-08-31', 'Semaine du 31 août', {
@@ -254,7 +259,9 @@ export const WORLDS = [
   {
     name: 'La Chine',
     months: 'janvier et février',
-    // Simulation (US-902). Le monde s'ouvrira quand il aura ses cartes illustrées (`place`, `weekPlace`).
+    place: CHINE,
+    weekPlace: TEMPLE, // en attendant la carte des jours de la Chine
+    // Simulation (US-902).
     weeks: [
       week('2027-01-04', 'Semaine du 4 janvier', {
         Lundi: [chine('mots', { mots: [...C1.mots, 'pile'] }), chine('additions', { max: 20 })],
@@ -294,6 +301,7 @@ export const WORLDS = [
       }),
     ],
   },
-  { name: null, months: 'mars et avril', weeks: [] },
-  { name: null, months: 'mai et juin', weeks: [] },
+  // Cartes des jours : celle du temple, en attendant la leur. 6 semaines chacun, à écrire.
+  { name: 'La Gaule', months: 'mars et avril', place: GAULE, weekPlace: TEMPLE, weeks: [] },
+  { name: 'La Grèce antique', months: 'mai et juin', place: GRECE, weekPlace: TEMPLE, weeks: [] },
 ];

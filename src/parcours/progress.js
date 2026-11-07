@@ -42,9 +42,13 @@ export function markDayDone(week, day) {
 export const isWorldDone = (world) =>
   world.done || (world.weeks.length > 0 && world.weeks.every(isWeekDone));
 
+// Un monde est construit quand il a ses deux cartes (celle des semaines et celle des jours)
+// et au moins une semaine.
+export const isWorldBuilt = (world) => Boolean(world.place && world.weekPlace && world.weeks.length);
+
 // Le monde à faire : le premier construit et pas fini, ou le dernier construit si tout est fini.
 export function currentWorldIndex(worlds) {
-  const index = worlds.findIndex((world) => world.place && !isWorldDone(world));
+  const index = worlds.findIndex((world) => isWorldBuilt(world) && !isWorldDone(world));
   if (index !== -1) return index;
-  return worlds.findLastIndex((world) => world.place);
+  return worlds.findLastIndex(isWorldBuilt);
 }

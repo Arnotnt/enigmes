@@ -1,13 +1,13 @@
 import * as Phaser from 'phaser';
 import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
-import torchUrl from '../assets/objets/torche-egypte.png';
 import overworldUrl from '../assets/overworld.png';
 import { MUSICS } from '../audio/musics.js';
 import { initSound } from '../audio/sound.js';
 import { COSTUMES, walkAnimation } from '../characters/costumes.js';
-import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
+import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, standingFrame } from '../directions.js';
+import { TORCH_STYLES, torchKey } from '../objects/torchStyles.js';
 import { checkParcours } from '../parcours/check.js';
 import { PLACES } from '../parcours/places.js';
 import { PICTOS, pictoKey } from '../reading/pictos.js';
@@ -30,7 +30,9 @@ export class BootScene extends Phaser.Scene {
     };
     for (const [name, url] of Object.entries(COSTUMES)) this.load.spritesheet(`hero-${name}`, url, heroFrame);
 
-    this.load.spritesheet('torch', torchUrl, { frameWidth: TORCH.frameWidth, frameHeight: TORCH.frameHeight });
+    for (const [name, { url, frameWidth, frameHeight }] of Object.entries(TORCH_STYLES)) {
+      this.load.spritesheet(torchKey(name), url, { frameWidth, frameHeight });
+    }
     this.load.spritesheet('npc', npcUrl, { frameWidth: NPC_FRAME_SIZE, frameHeight: NPC_FRAME_SIZE });
 
     for (const [key, url] of Object.entries(ROOMS)) this.load.tilemapTiledJSON(key, url);

@@ -82,6 +82,9 @@ export class RoomScene extends Phaser.Scene {
     this.walls.setCollisionByExclusion([-1]); // toute tuile peinte sur ce calque bloque le passage
 
     // Une salle dessinée : la grande image remplace les tuiles, mais les murs bloquent toujours.
+    // La stèle des énigmes, propre à chaque monde (src/objects/torchStyles.js).
+    this.torchStyle = mapProperty(map, 'torche');
+
     const background = mapProperty(map, 'fond');
     if (background) {
       floor.setVisible(false);

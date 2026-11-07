@@ -1,6 +1,6 @@
 import { MAP_MUSIC } from '../audio/musics.js';
 import { playMusic } from '../audio/sound.js';
-import { currentWorldIndex, isWorldDone } from '../parcours/progress.js';
+import { currentWorldIndex, isWorldBuilt, isWorldDone } from '../parcours/progress.js';
 import { ATLAS } from '../parcours/places.js';
 import { WORLDS } from '../parcours/worlds.js';
 import { PathMapScene } from './PathMapScene.js';
@@ -34,7 +34,7 @@ export class AtlasScene extends PathMapScene {
   }
 
   canEnter(index) {
-    return Boolean(WORLDS[index].place) && this.states[index] !== 'closed';
+    return isWorldBuilt(WORLDS[index]) && this.states[index] !== 'closed';
   }
 
   describe(index) {
