@@ -17,6 +17,7 @@ import { DIRECTIONS, standingFrame } from '../directions.js';
 import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { ComparePuzzle } from '../puzzles/ComparePuzzle.js';
+import { PictureWordPuzzle } from '../puzzles/PictureWordPuzzle.js';
 import { ReadWordPuzzle } from '../puzzles/ReadWordPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { SyllablePuzzle } from '../puzzles/SyllablePuzzle.js';
@@ -37,6 +38,7 @@ const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': Addit
 const DEVOIRS = {
   additions: AdditionPuzzle,
   comparaisons: ComparePuzzle,
+  'image-mot': PictureWordPuzzle,
   'lire-mots': ReadWordPuzzle,
   mots: WordPuzzle,
   syllabes: SyllablePuzzle,

@@ -18,6 +18,7 @@ import { EGYPT, TEMPLE } from './places.js';
 //   - comparaisons : < ou > entre deux nombres au hasard, `max` = plus grand nombre (20 sans rien) ;
 //   - mots : écouter un mot et trouver sa stèle, `mots` = la liste (4 au plus par ligne) ;
 //   - lire-mots : lire un mot écrit et toucher son image, `mots` = la liste (images dans src/assets/pictos/) ;
+//   - image-mot : voir une image et toucher son mot écrit, `mots` = la liste, `pieges` = mots en plus ;
 //   - syllabes : former la syllabe entendue, consonne puis voyelle, 4 fois. `syllabes` = la liste,
 //     par exemple ['ma', 'li', 'ch-ou'] : le tiret sépare les deux sons quand ils font plusieurs lettres.
 
