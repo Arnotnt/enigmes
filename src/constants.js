@@ -25,6 +25,10 @@ export const SPEECH_START_TIMEOUT = 700; // millisecondes avant de relancer une 
 
 export const ROOM_FADE = 200; // millisecondes de fondu entre deux salles
 
+export const MAP_GLIDE_SPEED = 170; // pixels par seconde sur les cartes illustrées
+export const MAP_HERO_SCALE = 2.5; // le dessin du personnage, agrandi sur les cartes
+export const MAP_STOP_RADIUS = 18; // pixels
+
 // Durée de poussée avant que le bloc bouge, pour éviter de le déplacer en le frôlant.
 export const BLOCK_PUSH_DELAY = 150; // millisecondes
 export const BLOCK_MOVE_DURATION = 200; // millisecondes pour avancer d'une case
@@ -39,3 +43,4 @@ export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant d'annoncer le 
 export const ADDITION_MAX = 10; // total le plus grand : toutes les réponses restent entre 0 et 10
 export const ADDITION_ROUNDS = 4; // additions à trouver avant la fin du jeu
 export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo avant la suivante
+export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle

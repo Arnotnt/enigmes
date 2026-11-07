@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { ADDITION_MAX, ADDITION_NEXT_DELAY, ADDITION_ROUNDS } from '../constants.js';
+import { ADDITION_MAX, ADDITION_NEXT_DELAY, ADDITION_ROUNDS, ROOM_END_DELAY } from '../constants.js';
 import { Torch } from '../objects/Torch.js';
 import { speak } from '../speech.js';
 import { dialogBox } from '../ui/DialogBox.js';
@@ -13,7 +13,7 @@ export function randomAddition() {
   return { first, total, missing: total - first };
 }
 
-// Énigme finale : allumer la torche du nombre manquant, ADDITION_ROUNDS fois, puis le jeu est fini.
+// Devoir : allumer la torche du nombre manquant, ADDITION_ROUNDS fois, puis la salle est finie.
 // Une erreur ne coûte rien. Revenir dans la salle relance une série d'additions tirées au hasard.
 export class AdditionPuzzle {
   constructor(scene, map, player) {
@@ -66,13 +66,14 @@ export class AdditionPuzzle {
     dialogBox.showBanner(`${first} + ${missing} = ${total}`, `${first} plus ${missing} égale ${total}.`);
     speak(`Bravo ! ${first} plus ${missing} égale ${total}.`);
     this.roundsLeft -= 1;
-    const next = this.roundsLeft > 0 ? () => this.startRound() : () => this.endGame();
+    const next = this.roundsLeft > 0 ? () => this.startRound() : () => this.endRoom();
     this.scene.time.delayedCall(ADDITION_NEXT_DELAY, next);
   }
 
-  endGame() {
+  endRoom() {
     this.torches.forEach((torch) => torch.light());
-    dialogBox.showBanner('Fin du jeu. Bravo !', 'Bravo ! Tu as fini le jeu !');
+    dialogBox.showBanner('Bravo !', 'Bravo ! Tu as réussi !');
     dialogBox.listen();
+    this.scene.time.delayedCall(ROOM_END_DELAY, () => this.scene.finishRoom());
   }
 }

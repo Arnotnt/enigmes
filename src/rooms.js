@@ -9,5 +9,5 @@ export const ROOMS = {
   'third-room': thirdRoomUrl,
 };
 
-export const FIRST_ROOM = 'first-room';
-export const FIRST_ENTRY = 'depart';
+// Une sortie vers cette « salle » termine le devoir de la salle : on passe à la salle suivante.
+export const ROOM_DONE = 'fin';

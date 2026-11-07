@@ -14,11 +14,13 @@ import { DIRECTIONS, firstFrame } from '../directions.js';
 import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
-import { FIRST_ENTRY, FIRST_ROOM } from '../rooms.js';
+import { markDayDone } from '../parcours/progress.js';
+import { ROOM_DONE } from '../rooms.js';
 import { feetOffset, sameTile, tileAt } from '../tiles.js';
+import { backButton } from '../ui/BackButton.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
-const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
+export const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
 
 // La présence de ce point dans la carte indique l'énigme de la salle.
 const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': AdditionPuzzle };
@@ -28,10 +30,15 @@ export class RoomScene extends Phaser.Scene {
     super('room');
   }
 
-  // data : la salle à afficher, le point d'arrivée et le regard du personnage.
-  init({ room = FIRST_ROOM, entry = FIRST_ENTRY, facing = 'down' }) {
-    this.room = room;
-    this.entry = entry;
+  // data : le monde, la semaine et le jour en cours, puis `step`, la place de la salle dans la
+  // journée. `entry` remplace le point d'arrivée prévu par la journée, `facing` est le regard.
+  init({ world, week, day, step = 0, entry, facing = 'down' }) {
+    this.world = world;
+    this.week = week;
+    this.day = day;
+    this.step = step;
+    this.room = day.rooms[step].room;
+    this.entry = entry ?? day.rooms[step].entry;
     this.facing = facing;
     this.leaving = false;
   }
@@ -71,15 +78,24 @@ export class RoomScene extends Phaser.Scene {
     const npcSpot = findPoint('pnj');
     this.npc = npcSpot ? new Npc(this, npcSpot, this.player) : null;
 
-    this.exits = map.filterObjects('objets', (object) => object.name === 'sortie');
+    // Une sortie vers une salle qui n'est pas dans la journée reste fermée.
+    this.exits = map
+      .filterObjects('objets', (object) => object.name === 'sortie')
+      .filter((exit) => this.exitTarget(exit) === ROOM_DONE || this.stepOf(this.exitTarget(exit)) !== -1);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.backKey = this.input.keyboard.addKey('ESC');
+    backButton.show(() => this.backToWeek());
     this.heldDirections = []; // de la plus ancienne à la plus récente
     this.cameras.main.fadeIn(ROOM_FADE);
   }
 
   update(time, delta) {
     if (this.leaving) return;
+    if (Phaser.Input.Keyboard.JustDown(this.backKey)) {
+      this.backToWeek();
+      return;
+    }
 
     // Une seule direction à la fois, jamais en diagonale : la dernière touche enfoncée gagne.
     for (const name of Object.keys(DIRECTIONS)) {
@@ -140,19 +156,58 @@ export class RoomScene extends Phaser.Scene {
     this.player.setFrame(firstFrame(this.facing));
   }
 
+  exitTarget(exit) {
+    return exit.properties.find((item) => item.name === 'salle').value;
+  }
+
+  stepOf(room) {
+    return this.day.rooms.findIndex((item) => item.room === room);
+  }
+
+  get journey() {
+    return { world: this.world, week: this.week, day: this.day };
+  }
+
   leaveRoom(exit) {
+    const target = this.exitTarget(exit);
+    if (target === ROOM_DONE) {
+      this.finishRoom();
+      return;
+    }
+
+    const entry = exit.properties.find((item) => item.name === 'arrivee').value;
+    const data = { ...this.journey, step: this.stepOf(target), entry, facing: this.facing };
+    this.fadeOut(() => this.scene.restart(data));
+  }
+
+  // Le devoir de la salle est fait : salle suivante, ou fin de la journée.
+  finishRoom() {
+    if (this.leaving) return;
+    const step = this.step + 1;
+    if (step < this.day.rooms.length) {
+      this.fadeOut(() => this.scene.restart({ ...this.journey, step }));
+      return;
+    }
+
+    // C'est le seul endroit qui fait avancer le parcours.
+    markDayDone(this.week, this.day);
+    this.fadeOut(() => this.scene.start('week', { ...this.journey, finished: this.day }));
+  }
+
+  // Revenir au temple ne coûte rien : on recommencera ce jour plus tard.
+  backToWeek() {
+    if (this.leaving) return;
+    this.fadeOut(() => this.scene.start('week', { world: this.world, week: this.week }));
+  }
+
+  fadeOut(next) {
     this.leaving = true;
     this.stopPlayer();
     this.time.removeAllEvents(); // une annonce prévue ne doit pas arriver après avoir quitté la salle
     dialogBox.hide();
-
-    const property = (name) => exit.properties.find((item) => item.name === name).value;
-    const room = property('salle');
-    const entry = property('arrivee');
+    backButton.hide();
 
     this.cameras.main.fadeOut(ROOM_FADE);
-    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-      this.scene.restart({ room, entry, facing: this.facing });
-    });
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, next);
   }
 }
