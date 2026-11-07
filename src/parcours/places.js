@@ -1,5 +1,9 @@
+import chineUrl from '../assets/parcours/monde-chine.jpg?url';
 import egyptUrl from '../assets/parcours/monde-egypte.jpg?url';
 import atlasUrl from '../assets/parcours/monde-entier.jpg?url';
+import gauleUrl from '../assets/parcours/monde-gaule.jpg?url';
+import greceUrl from '../assets/parcours/monde-grece.jpg?url';
+import piratesUrl from '../assets/parcours/monde-pirates.jpg?url';
 import templeUrl from '../assets/parcours/temple.jpg?url';
 
 // Les lieux illustrés. `path` suit le chemin de l'image, en pixels de cette image.
@@ -54,4 +58,59 @@ export const TEMPLE = {
   stops: [0, 3, 8, 11],
 };
 
-export const PLACES = [ATLAS, EGYPT, TEMPLE];
+// Les cartes des mondes à venir, une étape par semaine. Images de 629×421 : pour une version
+// plus grande, multiplier les points du chemin d'autant.
+// La route pavée, le coffre, les canons, le ponton, les cabanes, puis la maison du capitaine.
+export const PIRATES = {
+  key: 'place-pirates',
+  url: piratesUrl,
+  width: 629,
+  path: [
+    [472, 405], [455, 388], [430, 378], [405, 375], [440, 365], [475, 350], [505, 332], [525, 310],
+    [540, 282], [552, 255], [548, 230], [515, 225], [480, 224], [445, 217], [415, 205], [395, 190],
+    [378, 178], [362, 170], [380, 182], [405, 198], [440, 214], [480, 224], [520, 224], [540, 210],
+    [535, 192], [528, 175],
+  ],
+  stops: [0, 3, 7, 9, 14, 17, 25],
+};
+
+// La route pavée sous les deux portiques, puis le palais et les rizières en terrasses.
+export const CHINE = {
+  key: 'place-chine',
+  url: chineUrl,
+  width: 629,
+  path: [
+    [305, 412], [335, 400], [360, 385], [385, 368], [410, 352], [435, 335], [458, 318], [480, 300],
+    [500, 285], [512, 265], [514, 245], [505, 225], [495, 210], [518, 195], [495, 205], [465, 203],
+    [430, 198], [395, 190], [360, 180], [338, 168], [345, 155], [370, 147], [398, 142],
+  ],
+  stops: [0, 3, 6, 10, 13, 22],
+};
+
+// La route pavée, la charrette, le dolmen, le pont, les huttes, puis le village fortifié.
+export const GAULE = {
+  key: 'place-gaule',
+  url: gauleUrl,
+  width: 629,
+  path: [
+    [520, 415], [498, 398], [472, 382], [440, 368], [410, 358], [380, 348], [352, 333], [338, 315],
+    [330, 300], [322, 285], [305, 268], [275, 258], [245, 250], [215, 240], [182, 225], [190, 205],
+    [194, 186], [192, 172],
+  ],
+  stops: [0, 2, 6, 9, 14, 17],
+};
+
+// La plage, les statues, le stade, le temple, le marché, puis le grand temple.
+export const GRECE = {
+  key: 'place-grece',
+  url: greceUrl,
+  width: 629,
+  path: [
+    [330, 306], [368, 307], [405, 296], [435, 296], [462, 300], [480, 270], [497, 240], [512, 210],
+    [525, 186], [500, 168], [470, 160], [440, 155], [412, 150], [370, 151], [330, 149], [290, 145],
+    [250, 138], [210, 128],
+  ],
+  stops: [0, 2, 4, 8, 12, 17],
+};
+
+export const PLACES = [ATLAS, EGYPT, TEMPLE, PIRATES, CHINE, GAULE, GRECE];
