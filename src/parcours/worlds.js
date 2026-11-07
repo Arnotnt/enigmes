@@ -55,11 +55,6 @@ const S1 = { // son [l]
   pieges: ['lame', 'lime', 'lilas'],
   phrases: ['Le lama est sur le lit.', 'Deux lamas sont à côté du lit.', 'La lune est sur l’île.', 'Il y a trois lits.'],
 };
-const S2 = { // son [r]
-  mots: ['renard', 'moto', 'rat', 'riz', 'robot', 'lune'],
-  pieges: ['rame', 'roi'],
-  phrases: ['Le rat est sous le lit.', 'Le robot est dans la boîte.', 'Le renard est à côté de la moto.', 'Il y a deux rats.'],
-};
 const S3 = { // son [m]
   mots: ['momie', 'mûre', 'rame', 'mur', 'moto', 'lama'],
   pieges: ['mime', 'rime'],
@@ -288,10 +283,11 @@ export const WORLDS = [
         Vendredi: [temple('image-mot', { mots: S1.mots, pieges: S1.pieges }), temple('scene-phrase', { phrases: S1.phrases })],
       }, true), // déjà passée quand le jeu a commencé
       week('2026-11-09', 'Semaine du 9 novembre', {
-        Lundi: [temple('comparaisons', { max: 20 }), temple('mots', { mots: ['rat', 'riz', 'rame', 'robot', 'renard', 'roi'] })],
-        Mardi: [temple('scene-phrase', { phrases: S2.phrases }), temple('syllabes', { syllabes: ['ra', 'ri', 'ro', 'ru', 'la'] })],
-        Jeudi: [temple('additions', { max: 10 }), temple('image-mot', { mots: S2.mots, pieges: S2.pieges })],
-        Vendredi: [temple('phrase-scene', { phrases: S2.phrases }), temple('lire-mots', { mots: S2.mots })],
+        // Vrais devoirs de la maîtresse (US-601, US-605), pas une simulation.
+        Lundi: [temple('additions')], // totaux jusqu'à 10
+        Mardi: [temple('comparaisons', { max: 20 })],
+        Jeudi: [temple('additions', { max: 15 })],
+        Vendredi: [temple('mots', { mots: ['lune', 'renard', 'moto'] })],
       }),
       week('2026-11-16', 'Semaine du 16 novembre', {
         Lundi: [temple('lire-mots', { mots: S3.mots }), temple('scene-phrase', { phrases: S3.phrases })],
