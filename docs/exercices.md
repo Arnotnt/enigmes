@@ -29,6 +29,7 @@ Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enl
 | `additions` | Calcul | l'addition | le nombre qui manque, de 0 à 10 | `max` (facultatif) | 4 |
 | `comparaisons` | Calcul | la question | le signe < ou > | `max` (facultatif) | 4 |
 | `mots` | Lecture | un mot | le mot écrit sur une stèle | `mots` | un par mot |
+| `sons` | Lecture | une voyelle | sa lettre | `sons` | 4 |
 | `syllabes` | Lecture | une syllabe | la consonne, puis la voyelle | `syllabes` | 4 |
 | `lire-mots` | Lecture | rien d'abord | un mot écrit, puis son image | `mots` | 4 |
 | `image-mot` | Lecture | la consigne | une image, puis son mot écrit | `mots`, `pieges` | 4 |
@@ -67,6 +68,17 @@ La voix dit un mot, que l'écran n'affiche pas. Chaque stèle porte un mot écri
 
 ```js
 { room: 'temple-egypte', entry: 'entree', devoir: 'mots', mots: ['lune', 'renard', 'moto'] }
+```
+
+### `sons` : entendre une voyelle, trouver sa lettre
+
+La voix dit un son, que l'écran n'affiche pas. Une ligne de stèles porte les lettres : l'enfant touche celle du son entendu. C'est l'exercice de la rentrée, avant les consonnes : la voix du navigateur prononce bien les voyelles.
+
+- `sons` : les lettres de la salle, une stèle chacune. Le jeu en demande 4, au hasard, sans répéter deux fois de suite le même son.
+- Il comprend a, i, o, u, e et é (voir `SPOKEN_SOUNDS` dans `src/reading/sounds.js`). Une autre lettre est dite telle quelle.
+
+```js
+{ room: 'temple-egypte', entry: 'entree', devoir: 'sons', sons: ['a', 'i', 'o'] }
 ```
 
 ### `syllabes` : former la syllabe entendue

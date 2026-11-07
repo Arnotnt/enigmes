@@ -23,6 +23,7 @@ import { SentenceScenePuzzle } from '../puzzles/SentenceScenePuzzle.js';
 import { ReadWordPuzzle } from '../puzzles/ReadWordPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { SyllablePuzzle } from '../puzzles/SyllablePuzzle.js';
+import { VowelPuzzle } from '../puzzles/VowelPuzzle.js';
 import { WordPuzzle } from '../puzzles/WordPuzzle.js';
 import { markDayDone } from '../parcours/progress.js';
 import { ROOM_DONE } from '../rooms.js';
@@ -45,6 +46,7 @@ const DEVOIRS = {
   'scene-phrase': SceneSentencePuzzle,
   'lire-mots': ReadWordPuzzle,
   mots: WordPuzzle,
+  sons: VowelPuzzle,
   syllabes: SyllablePuzzle,
 };
 
