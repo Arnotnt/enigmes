@@ -25,8 +25,12 @@ Interdits : aucun personnage, aucun texte, aucune lettre, aucun chiffre, aucun h
 
 Une seule image, pour que le personnage reste le même d'une case à l'autre : 3 lignes (face, dos, profil tourné vers la droite) de 5 cases séparées par des traits noirs, fond blanc uni, corps entier, pieds alignés en bas. Même disposition que `docs/personnages/explorateur-planche.jpg`.
 
-Ranger la planche dans `docs/personnages/`, puis la découper avec Python et Pillow :
+Il faut de face et de dos un pas vu bien de face (ou de dos), pas de trois quarts, et les mêmes habits dans toutes les cases.
+
+Ranger la planche dans `docs/personnages/<nom>-planche.jpg`, décrire sa grille et ses cases dans `PLANCHES`, en tête de `outils/decouper-personnage.py`, puis la découper avec Python et Pillow :
 
 ```bash
-python outils/decouper-personnage.py docs/personnages/pirate-planche.jpg src/assets/personnages/pirate.png
+python outils/decouper-personnage.py pirate
 ```
+
+Enfin, ajouter le costume à `COSTUMES` dans `src/characters/costumes.js`.

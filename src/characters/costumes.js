@@ -1,9 +1,20 @@
+import chinoisUrl from '../assets/personnages/chinois.png';
+import egyptienUrl from '../assets/personnages/egyptien.png';
 import explorateurUrl from '../assets/personnages/explorateur.png';
+import gauloisUrl from '../assets/personnages/gaulois.png';
+import grecUrl from '../assets/personnages/grec.png';
 import pirateUrl from '../assets/personnages/pirate.png';
 
 // Les costumes du héros. Un monde choisit le sien avec sa propriété `costume` (src/parcours/worlds.js).
 // Toutes les planches ont la même disposition : voir outils/decouper-personnage.py.
-export const COSTUMES = { explorateur: explorateurUrl, pirate: pirateUrl };
+export const COSTUMES = {
+  explorateur: explorateurUrl,
+  pirate: pirateUrl,
+  egyptien: egyptienUrl,
+  gaulois: gauloisUrl,
+  grec: grecUrl,
+  chinois: chinoisUrl,
+};
 
 const DEFAULT_COSTUME = 'explorateur';
 

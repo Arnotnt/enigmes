@@ -18,8 +18,8 @@
 - **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
   Fichier utilisé : `src/assets/parcours/monde-entier.jpg`.
 
-- **Personnages (explorateur, pirate)** : planches générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`, puis découpées, détourées et réduites par `outils/decouper-personnage.py`.
-  Planches d'origine : `docs/personnages/`. Fichiers utilisés : `src/assets/personnages/explorateur.png`, `src/assets/personnages/pirate.png`.
+- **Personnages (explorateur, pirate, égyptien, gaulois, grec, chinois)** : planches générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`, puis découpées, détourées et réduites par `outils/decouper-personnage.py`.
+  Planches d'origine : `docs/personnages/`. Fichiers utilisés : `src/assets/personnages/*.png`.
 
 - **Pictogrammes ARASAAC**, par Sergio Palao. Origine : ARASAAC (https://arasaac.org). Propriété : Gouvernement d'Aragon (Espagne). Licence : Creative Commons BY-NC-SA.
   Fichiers utilisés : `src/assets/pictos/` (un pictogramme par mot, téléchargé par `outils/picto.mjs`).
