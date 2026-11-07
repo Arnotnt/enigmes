@@ -15,7 +15,7 @@ class DialogBox {
   show(text, { autoSpeak = false } = {}) {
     this.speech = text;
     this.textElement.textContent = text;
-    this.box.classList.remove('prompt', 'banner');
+    this.box.classList.remove('prompt', 'banner', 'caption');
     this.box.hidden = false;
     if (autoSpeak) this.listen();
   }
@@ -24,7 +24,7 @@ class DialogBox {
   showPrompt(speech) {
     this.speech = speech;
     this.textElement.textContent = '';
-    this.box.classList.remove('banner');
+    this.box.classList.remove('banner', 'caption');
     this.box.classList.add('prompt');
     this.box.hidden = false;
   }
@@ -33,9 +33,15 @@ class DialogBox {
   showBanner(text, speech) {
     this.speech = speech;
     this.textElement.textContent = text;
-    this.box.classList.remove('prompt');
+    this.box.classList.remove('prompt', 'caption');
     this.box.classList.add('banner');
     this.box.hidden = false;
+  }
+
+  // Comme la bannière, en plus petit, pour laisser voir une carte illustrée.
+  showCaption(text, speech) {
+    this.showBanner(text, speech);
+    this.box.classList.add('caption');
   }
 
   hide() {

@@ -1,0 +1,144 @@
+import * as Phaser from 'phaser';
+import {
+  GAME_WIDTH,
+  MAP_GLIDE_SPEED,
+  MAP_HERO_SCALE,
+  MAP_STOP_RADIUS,
+  ROOM_FADE,
+} from '../constants.js';
+import { firstFrame } from '../directions.js';
+import { feetOffset } from '../tiles.js';
+import { dialogBox } from '../ui/DialogBox.js';
+
+const STOP_COLORS = { done: 0x4f8a5b, open: 0xf2c14e, closed: 0x8a8378 };
+const TEXT_COLORS = { done: '#fff8e7', open: '#2b2118', closed: '#fff8e7' };
+
+const direction = (from, to) => {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  if (Math.abs(dx) > Math.abs(dy)) return dx > 0 ? 'right' : 'left';
+  return dy > 0 ? 'down' : 'up';
+};
+
+// Base des deux cartes illustrées : le personnage glisse de point en point sur un chemin.
+// Une carte fille appelle buildMap, puis fournit describe, enter et closedText.
+export class PathMapScene extends Phaser.Scene {
+  // stops : [{ label, state }], state valant 'done', 'open' ou 'closed'.
+  buildMap(place, stops, startIndex) {
+    this.stopsData = stops;
+    this.current = startIndex;
+    this.route = null;
+    this.leaving = false;
+
+    const scale = GAME_WIDTH / place.width;
+    this.path = place.path.map(([x, y]) => new Phaser.Math.Vector2(x * scale, y * scale));
+    this.stopPoints = place.stops;
+
+    const background = this.add.image(0, 0, place.key).setOrigin(0).setScale(scale);
+    background.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+
+    stops.forEach((stop, index) => this.drawStop(this.path[place.stops[index]], stop));
+
+    const start = this.path[place.stops[startIndex]];
+    this.hero = this.add.sprite(start.x, start.y, 'player', firstFrame('down')).setScale(MAP_HERO_SCALE);
+    this.hero.setOrigin(0.5, 0.5 + feetOffset() / this.hero.height); // le point est sous ses pieds
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.enterKey = this.input.keyboard.addKey('ENTER');
+    this.listenKey = this.input.keyboard.addKey('SPACE');
+    this.backKey = this.input.keyboard.addKey('ESC');
+    this.cameras.main.fadeIn(ROOM_FADE);
+  }
+
+  drawStop({ x, y }, { label, state }) {
+    this.add.circle(x, y, MAP_STOP_RADIUS, STOP_COLORS[state]).setStrokeStyle(3, 0x2b2118);
+    const text = state === 'done' ? '✓' : label;
+    const size = text.length > 2 ? 17 : 24;
+    const color = text.length > 2 ? '#2b2118' : TEXT_COLORS[state];
+    const item = this.add.text(x, y, text, { fontFamily: 'Andika', fontSize: size, color }).setOrigin(0.5);
+    item.setResolution(2);
+    if (text.length > 2) {
+      // Un nom de jour dépasse du point : il se lit sur une étiquette, sous le point.
+      item.setY(y + MAP_STOP_RADIUS + 14).setBackgroundColor('#fff8e7').setPadding(6, 1);
+    }
+  }
+
+  get lastReachable() {
+    const firstClosed = this.stopsData.findIndex((stop) => stop.state === 'closed');
+    return firstClosed === -1 ? this.stopsData.length - 1 : firstClosed - 1;
+  }
+
+  move(step) {
+    const target = this.current + step;
+    if (target < 0) return;
+    if (target > this.lastReachable) {
+      this.say(this.closedText(target >= this.stopsData.length ? null : target));
+      return;
+    }
+
+    const from = this.stopPoints[this.current];
+    const to = this.stopPoints[target];
+    const route = step > 0 ? this.path.slice(from + 1, to + 1) : this.path.slice(to, from).reverse();
+    this.route = route;
+    this.routeStep = 0;
+    this.current = target;
+  }
+
+  // Avance le long du chemin, à vitesse constante, même dans les virages.
+  glide(delta) {
+    let distance = (MAP_GLIDE_SPEED * delta) / 1000;
+    while (distance > 0 && this.routeStep < this.route.length) {
+      const next = this.route[this.routeStep];
+      const left = Phaser.Math.Distance.BetweenPoints(this.hero, next);
+      this.hero.anims.play(`walk-${direction(this.hero, next)}`, true);
+      if (left <= distance) {
+        this.hero.setPosition(next.x, next.y);
+        this.routeStep += 1;
+        distance -= left;
+      } else {
+        const ratio = distance / left;
+        this.hero.x += (next.x - this.hero.x) * ratio;
+        this.hero.y += (next.y - this.hero.y) * ratio;
+        distance = 0;
+      }
+    }
+
+    if (this.routeStep === this.route.length) {
+      this.route = null;
+      this.hero.anims.stop();
+      this.hero.setFrame(firstFrame('down'));
+      this.say(this.describe(this.current));
+    }
+  }
+
+  say({ text, speech = text }) {
+    dialogBox.showCaption(text, speech);
+    dialogBox.listen();
+  }
+
+  update(time, delta) {
+    if (this.leaving) return;
+    if (this.route) {
+      this.glide(delta);
+      return;
+    }
+
+    const { JustDown } = Phaser.Input.Keyboard;
+    if (JustDown(this.backKey)) this.goBack();
+    else if (JustDown(this.cursors.right)) this.move(1);
+    else if (JustDown(this.cursors.left)) this.move(-1);
+    else if (JustDown(this.listenKey)) dialogBox.listen();
+    else if (JustDown(this.enterKey)) this.enter(this.current);
+  }
+
+  // À la fin du fondu, next ouvre l'écran suivant.
+  leave(next) {
+    if (this.leaving) return;
+    this.leaving = true;
+    dialogBox.hide();
+    this.cameras.main.fadeOut(ROOM_FADE);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, next);
+  }
+
+  goBack() {}
+}
