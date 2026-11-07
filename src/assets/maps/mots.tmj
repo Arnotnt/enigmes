@@ -439,5 +439,12 @@
  "tilewidth": 16,
  "type": "map",
  "version": "1.10",
- "width": 15
+ "width": 15,
+ "properties": [
+  {
+   "name": "fond",
+   "type": "string",
+   "value": "temple-egypte"
+  }
+ ]
 }

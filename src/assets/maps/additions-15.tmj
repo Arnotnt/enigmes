@@ -605,6 +605,11 @@
    "name": "max",
    "type": "int",
    "value": 15
+  },
+  {
+   "name": "fond",
+   "type": "string",
+   "value": "temple-egypte"
   }
  ]
 }
