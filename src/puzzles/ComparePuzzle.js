@@ -1,17 +1,16 @@
 import * as Phaser from 'phaser';
 import { ADDITION_NEXT_DELAY, COMPARE_MAX, COMPARE_ROUNDS, ROOM_END_DELAY } from '../constants.js';
+import { placeStones } from '../objects/placeStones.js';
 import { Torch } from '../objects/Torch.js';
 import { speak } from '../speech.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
-const propertyOf = (object, name) => object.properties.find((item) => item.name === name).value;
-
-// Tire deux nombres différents de 0 à COMPARE_MAX : il n'y a pas de torche « = ».
-export function randomComparison() {
-  const left = Phaser.Math.Between(0, COMPARE_MAX);
+// Tire deux nombres différents de 0 à `max` : il n'y a pas de torche « = ».
+export function randomComparison(max = COMPARE_MAX) {
+  const left = Phaser.Math.Between(0, max);
   let right;
   do {
-    right = Phaser.Math.Between(0, COMPARE_MAX);
+    right = Phaser.Math.Between(0, max);
   } while (right === left);
   return { left, right, sign: left < right ? '<' : '>' };
 }
@@ -19,12 +18,14 @@ export function randomComparison() {
 // Devoir : allumer la torche du bon signe, < ou >, entre deux nombres. COMPARE_ROUNDS fois,
 // puis la salle est finie. Une erreur ne coûte rien. Revenir dans la salle relance une série.
 export class ComparePuzzle {
-  constructor(scene, map, player) {
+  // content : le devoir écrit dans le parcours. `max` est le plus grand nombre comparé.
+  constructor(scene, map, player, solved, onSolved, content = {}) {
     this.scene = scene;
     this.solved = false; // jamais mémorisée : on peut revenir pour une nouvelle série
 
-    const spots = map.filterObjects('objets', (object) => object.name === 'torche-signe');
-    this.torches = spots.map((spot) => new Torch(scene, spot, player, propertyOf(spot, 'signe')));
+    const spots = placeStones(2);
+    this.torches = ['<', '>'].map((sign, i) => new Torch(scene, spots[i], player, sign));
+    this.max = content.max ?? COMPARE_MAX;
 
     this.listenKey = scene.input.keyboard.addKey('SPACE');
     this.roundsLeft = COMPARE_ROUNDS;
@@ -38,7 +39,7 @@ export class ComparePuzzle {
       torch.rearm();
     });
 
-    this.comparison = randomComparison();
+    this.comparison = randomComparison(this.max);
     const { left, right } = this.comparison;
     this.waiting = false;
     dialogBox.showBanner(`${left}  …  ${right}`, `Quel signe va entre ${left} et ${right} ?`);

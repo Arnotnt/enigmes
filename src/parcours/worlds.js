@@ -6,6 +6,10 @@ import { EGYPT, TEMPLE } from './places.js';
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
 // - lessons : pour chaque jour, les salles à traverser dans l'ordre, avec un devoir par salle.
 //   `room` est une clé de src/rooms.js et `entry` le point d'arrivée dans cette carte.
+//   `devoir` choisit l'énigme, et le reste en donne le contenu ; les stèles se placent seules :
+//   - additions : additions à trou au hasard, `max` = total le plus grand (10 sans rien) ;
+//   - comparaisons : < ou > entre deux nombres au hasard, `max` = plus grand nombre (20 sans rien) ;
+//   - mots : écouter un mot et trouver sa stèle, `mots` = la liste (4 au plus par ligne).
 
 const DAY_NAMES = ['Lundi', 'Mardi', 'Jeudi', 'Vendredi'];
 
@@ -21,10 +25,12 @@ export const WORLDS = [
     weeks: [
       week('2026-11-02', 'Semaine du 2 novembre', {}, true), // déjà passée quand le jeu a commencé
       week('2026-11-09', 'Semaine du 9 novembre', {
-        Lundi: [{ room: 'third-room', entry: 'entree' }], // 4 additions à trou au hasard
-        Mardi: [{ room: 'comparaisons', entry: 'entree' }], // 4 comparaisons au hasard, de 0 à 20
-        Jeudi: [{ room: 'additions-15', entry: 'entree' }], // 4 additions à trou, totaux jusqu'à 15
-        Vendredi: [{ room: 'mots', entry: 'entree' }], // lune, renard, moto
+        Lundi: [{ room: 'temple-egypte', entry: 'entree', devoir: 'additions' }], // totaux jusqu'à 10
+        Mardi: [{ room: 'temple-egypte', entry: 'entree', devoir: 'comparaisons', max: 20 }],
+        Jeudi: [{ room: 'temple-egypte', entry: 'entree', devoir: 'additions', max: 15 }],
+        Vendredi: [
+          { room: 'temple-egypte', entry: 'entree', devoir: 'mots', mots: ['lune', 'renard', 'moto'] },
+        ],
       }),
       week('2026-11-16', 'Semaine du 16 novembre'),
       week('2026-11-23', 'Semaine du 23 novembre'),

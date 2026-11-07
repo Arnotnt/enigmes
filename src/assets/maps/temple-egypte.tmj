@@ -346,46 +346,6 @@
      "width": 0,
      "x": 120,
      "y": 136
-    },
-    {
-     "height": 0,
-     "id": 2,
-     "name": "torche-signe",
-     "opacity": 1,
-     "point": true,
-     "rotation": 0,
-     "type": "",
-     "visible": true,
-     "width": 0,
-     "x": 88,
-     "y": 72,
-     "properties": [
-      {
-       "name": "signe",
-       "type": "string",
-       "value": "<"
-      }
-     ]
-    },
-    {
-     "height": 0,
-     "id": 3,
-     "name": "torche-signe",
-     "opacity": 1,
-     "point": true,
-     "rotation": 0,
-     "type": "",
-     "visible": true,
-     "width": 0,
-     "x": 152,
-     "y": 72,
-     "properties": [
-      {
-       "name": "signe",
-       "type": "string",
-       "value": ">"
-      }
-     ]
     }
    ],
    "opacity": 1,
@@ -396,7 +356,7 @@
   }
  ],
  "nextlayerid": 4,
- "nextobjectid": 4,
+ "nextobjectid": 2,
  "orientation": "orthogonal",
  "renderorder": "right-down",
  "tiledversion": "1.12.2",
