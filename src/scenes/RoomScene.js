@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import { stopMusic } from '../audio/sound.js';
+import { heroTexture, walkAnimation } from '../characters/costumes.js';
 import { Npc } from '../characters/Npc.js';
 import {
   CORNER_ASSIST,
@@ -86,7 +87,8 @@ export class RoomScene extends Phaser.Scene {
     const start = findPoint(this.entry);
 
     // Le point d'arrivée désigne l'emplacement des pieds, pas le centre du dessin.
-    this.player = this.physics.add.sprite(start.x, start.y - feetOffset(), 'player', standingFrame(this.facing));
+    const texture = heroTexture(this.world);
+    this.player = this.physics.add.sprite(start.x, start.y - feetOffset(), texture, standingFrame(this.facing));
     // Le dessin est 4 fois trop grand pour la salle : réduit ici, la caméra le rend à sa vraie finesse.
     // La boîte des pieds se donne alors en pixels du dessin, d'où le même facteur.
     this.player.setScale(1 / PLAYER_TEXTURE_SCALE);
@@ -143,7 +145,7 @@ export class RoomScene extends Phaser.Scene {
       this.facing = name;
       const slide = this.cornerSlide(name);
       this.player.body.setVelocity((x + slide.x) * PLAYER_SPEED, (y + slide.y) * PLAYER_SPEED);
-      this.player.anims.play(`walk-${name}`, true);
+      this.player.anims.play(walkAnimation(this.player.texture.key, name), true);
     } else {
       this.stopPlayer();
     }

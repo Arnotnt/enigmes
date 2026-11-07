@@ -3,9 +3,9 @@ import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
 import torchUrl from '../assets/objets/torche-egypte.png';
 import overworldUrl from '../assets/overworld.png';
-import heroUrl from '../assets/personnages/explorateur.png';
 import { MUSICS } from '../audio/musics.js';
 import { initSound } from '../audio/sound.js';
+import { COSTUMES, walkAnimation } from '../characters/costumes.js';
 import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, standingFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
@@ -21,10 +21,12 @@ export class BootScene extends Phaser.Scene {
     const tileSize = { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE };
     this.load.spritesheet('tiles', overworldUrl, tileSize);
     this.load.spritesheet('objects', objectsUrl, tileSize);
-    this.load.spritesheet('player', heroUrl, {
+    // Tous les costumes du héros, chargés une fois : chaque scène prend celui de son monde.
+    const heroFrame = {
       frameWidth: PLAYER_FRAME.width * PLAYER_TEXTURE_SCALE,
       frameHeight: PLAYER_FRAME.height * PLAYER_TEXTURE_SCALE,
-    });
+    };
+    for (const [name, url] of Object.entries(COSTUMES)) this.load.spritesheet(`hero-${name}`, url, heroFrame);
 
     this.load.spritesheet('torch', torchUrl, { frameWidth: TORCH.frameWidth, frameHeight: TORCH.frameHeight });
     this.load.spritesheet('npc', npcUrl, { frameWidth: NPC_FRAME_SIZE, frameHeight: NPC_FRAME_SIZE });
@@ -37,20 +39,20 @@ export class BootScene extends Phaser.Scene {
 
   create() {
     initSound(this.game);
-    // Le personnage est dessiné en détail, puis réduit : lissé, il garde des contours propres.
-    this.textures.get('player').setFilter(Phaser.Textures.FilterMode.LINEAR);
+    for (const name of Object.keys(COSTUMES)) {
+      const texture = `hero-${name}`;
+      // Le héros est dessiné en détail, puis réduit : lissé, il garde des contours propres.
+      this.textures.get(texture).setFilter(Phaser.Textures.FilterMode.LINEAR);
 
-    for (const direction of Object.keys(DIRECTIONS)) {
-      const first = standingFrame(direction) + 1;
-      this.anims.create({
-        key: `walk-${direction}`,
-        frames: this.anims.generateFrameNumbers('player', {
-          start: first,
-          end: first + WALK_FRAMES - 1,
-        }),
-        frameRate: 8,
-        repeat: -1,
-      });
+      for (const direction of Object.keys(DIRECTIONS)) {
+        const first = standingFrame(direction) + 1;
+        this.anims.create({
+          key: walkAnimation(texture, direction),
+          frames: this.anims.generateFrameNumbers(texture, { start: first, end: first + WALK_FRAMES - 1 }),
+          frameRate: 8,
+          repeat: -1,
+        });
+      }
     }
 
     // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant le premier écran.

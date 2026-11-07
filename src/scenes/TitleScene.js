@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { MAP_MUSIC } from '../audio/musics.js';
 import { playMusic } from '../audio/sound.js';
 import { GAME_HEIGHT, GAME_TITLE, GAME_WIDTH, MAP_HERO_SCALE, PLAYER_TEXTURE_SCALE, ROOM_FADE } from '../constants.js';
+import { heroTexture } from '../characters/costumes.js';
 import { standingFrame } from '../directions.js';
 import { ATLAS } from '../parcours/places.js';
 import { dialogBox } from '../ui/DialogBox.js';
@@ -37,7 +38,7 @@ export class TitleScene extends Phaser.Scene {
     this.tweens.add({ targets: title, y: title.y - 8, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
 
     // Le personnage attend le départ, et sautille de temps en temps.
-    const hero = this.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT * 0.58, 'player', standingFrame('down'));
+    const hero = this.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT * 0.58, heroTexture(), standingFrame('down'));
     hero.setScale((MAP_HERO_SCALE * 1.4) / PLAYER_TEXTURE_SCALE);
     this.tweens.add({ targets: hero, y: hero.y - 12, duration: 220, yoyo: true, repeat: -1, repeatDelay: 1600 });
 
