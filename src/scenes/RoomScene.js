@@ -18,7 +18,7 @@ import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { WordPuzzle } from '../puzzles/WordPuzzle.js';
 import { markDayDone } from '../parcours/progress.js';
 import { ROOM_DONE } from '../rooms.js';
-import { feetOffset, sameTile, tileAt } from '../tiles.js';
+import { feetOffset, mapProperty, sameTile, tileAt } from '../tiles.js';
 import { backButton } from '../ui/BackButton.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
@@ -59,9 +59,21 @@ export class RoomScene extends Phaser.Scene {
 
     const map = this.make.tilemap({ key: this.room });
     const tileset = map.addTilesetImage('overworld', 'tiles');
-    map.createLayer('sol', tileset);
+    const floor = map.createLayer('sol', tileset);
     this.walls = map.createLayer('murs', tileset);
     this.walls.setCollisionByExclusion([-1]); // toute tuile peinte sur ce calque bloque le passage
+
+    // Une salle dessinée : la grande image remplace les tuiles, mais les murs bloquent toujours.
+    const background = mapProperty(map, 'fond');
+    if (background) {
+      floor.setVisible(false);
+      this.walls.setVisible(false);
+      const image = this.add.image(0, 0, `fond-${background}`).setOrigin(0).setDisplaySize(width, height);
+      image.setDepth(-1);
+      // L'image est réduite dans le monde de la salle, puis la caméra l'agrandit 4 fois :
+      // lissée, elle reste nette à l'écran. Le personnage, lui, garde ses pixels.
+      image.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+    }
 
     const findPoint = (name) => map.findObject('objets', (object) => object.name === name);
     const start = findPoint(this.entry);
