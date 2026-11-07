@@ -1,8 +1,6 @@
-import additions15Url from './assets/maps/additions-15.tmj?url';
-import comparaisonsUrl from './assets/maps/comparaisons.tmj?url';
 import firstRoomUrl from './assets/maps/first-room.tmj?url';
 import secondRoomUrl from './assets/maps/second-room.tmj?url';
-import motsUrl from './assets/maps/mots.tmj?url';
+import templeEgypteRoomUrl from './assets/maps/temple-egypte.tmj?url';
 import thirdRoomUrl from './assets/maps/third-room.tmj?url';
 import templeEgypteUrl from './assets/salles/temple-egypte.jpg?url';
 
@@ -11,9 +9,7 @@ export const ROOMS = {
   'first-room': firstRoomUrl,
   'second-room': secondRoomUrl,
   'third-room': thirdRoomUrl,
-  comparaisons: comparaisonsUrl, // < ou > entre deux nombres de 0 à 20
-  'additions-15': additions15Url, // additions à trou, totaux jusqu'à 15
-  mots: motsUrl, // écouter un mot et trouver le panneau où il est écrit
+  'temple-egypte': templeEgypteRoomUrl, // salle vide du temple : le devoir vient du parcours
 };
 
 // Les fonds de salle dessinés. Une carte choisit le sien avec sa propriété `fond`, dans Tiled.

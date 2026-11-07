@@ -25,13 +25,11 @@ import { dialogBox } from '../ui/DialogBox.js';
 export const SOLVED_ROOMS = 'solvedRooms'; // liste gardée dans le registre, qui survit aux changements de salle
 
 // La présence de ce point dans la carte indique l'énigme de la salle.
-const PUZZLES = {
-  bloc: BlockPuzzle,
-  torche: SoundPuzzle,
-  'torche-nombre': AdditionPuzzle,
-  'torche-signe': ComparePuzzle,
-  'torche-mot': WordPuzzle,
-};
+const PUZZLES = { bloc: BlockPuzzle, torche: SoundPuzzle, 'torche-nombre': AdditionPuzzle };
+
+// Un devoir écrit dans le parcours (`devoir: 'mots'`…) choisit lui-même son énigme, dans
+// n'importe quelle salle : la carte n'a alors besoin que de son décor et de ses murs.
+const DEVOIRS = { additions: AdditionPuzzle, comparaisons: ComparePuzzle, mots: WordPuzzle };
 
 export class RoomScene extends Phaser.Scene {
   constructor() {
@@ -87,12 +85,14 @@ export class RoomScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.walls);
 
     this.puzzle = null;
-    const puzzleMarker = Object.keys(PUZZLES).find(findPoint);
-    if (puzzleMarker) {
+    const lesson = this.day.rooms[this.step];
+    const Puzzle = DEVOIRS[lesson.devoir] ?? PUZZLES[Object.keys(PUZZLES).find(findPoint)];
+    if (lesson.devoir && !DEVOIRS[lesson.devoir]) console.warn(`Devoir inconnu : ${lesson.devoir}`);
+    if (Puzzle) {
       const solvedRooms = this.registry.get(SOLVED_ROOMS) ?? [];
-      this.puzzle = new PUZZLES[puzzleMarker](this, map, this.player, solvedRooms.includes(this.room), () => {
-        this.registry.set(SOLVED_ROOMS, [...solvedRooms, this.room]);
-      });
+      const onSolved = () => this.registry.set(SOLVED_ROOMS, [...solvedRooms, this.room]);
+      const solved = solvedRooms.includes(this.room);
+      this.puzzle = new Puzzle(this, map, this.player, solved, onSolved, lesson);
     }
 
     const npcSpot = findPoint('pnj');

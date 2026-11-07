@@ -6,12 +6,10 @@ import {
   ADDITION_ROUNDS,
   ROOM_END_DELAY,
 } from '../constants.js';
+import { placeStones } from '../objects/placeStones.js';
 import { Torch } from '../objects/Torch.js';
 import { speak } from '../speech.js';
-import { mapProperty } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
-
-const propertyOf = (object, name) => object.properties.find((item) => item.name === name).value;
 
 // Tire une addition a + ? = total, sans dépasser `max` et sans le cas vide 0 + 0 = 0.
 // Le nombre à trouver reste entre 0 et ADDITION_ANSWER_MAX : ce sont les torches de la salle.
@@ -24,14 +22,17 @@ export function randomAddition(max = ADDITION_MAX) {
 // Devoir : allumer la torche du nombre manquant, ADDITION_ROUNDS fois, puis la salle est finie.
 // Une erreur ne coûte rien. Revenir dans la salle relance une série d'additions tirées au hasard.
 export class AdditionPuzzle {
-  constructor(scene, map, player) {
+  // content : le devoir écrit dans le parcours. `max` est le total le plus grand.
+  constructor(scene, map, player, solved, onSolved, content = {}) {
     this.scene = scene;
     this.solved = false; // jamais mémorisée : on peut revenir pour une nouvelle série
 
-    const spots = map.filterObjects('objets', (object) => object.name === 'torche-nombre');
-    this.torches = spots.map((spot) => new Torch(scene, spot, player, propertyOf(spot, 'nombre')));
+    // Une stèle par réponse possible, de 0 à ADDITION_ANSWER_MAX, placées par le jeu.
+    const labels = Array.from({ length: ADDITION_ANSWER_MAX + 1 }, (_, n) => String(n));
+    const spots = placeStones(labels.length);
+    this.torches = labels.map((label, i) => new Torch(scene, spots[i], player, label));
 
-    this.max = mapProperty(map, 'max') ?? ADDITION_MAX; // propriété `max` de la carte, dans Tiled
+    this.max = content.max ?? ADDITION_MAX;
     this.listenKey = scene.input.keyboard.addKey('SPACE');
     this.addition = null;
     this.roundsLeft = ADDITION_ROUNDS;
