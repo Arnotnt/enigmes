@@ -17,6 +17,36 @@
   display: none;
 }
 
+/* Le bouton du son, en haut à droite : il coupe la musique, comme la touche M. */
+#sound-button {
+  position: fixed;
+  right: 2vmin;
+  top: 2vmin;
+  width: clamp(36px, 7vmin, 56px);
+  height: clamp(36px, 7vmin, 56px);
+  padding: 0.6vmin;
+  background: #fff8e7;
+  color: #2b2118;
+  border: 0.5vmin solid #6b4a2f;
+  border-radius: 1.5vmin;
+  cursor: pointer;
+}
+
+#sound-button[hidden],
+#sound-button .off,
+#sound-button.off .on {
+  display: none;
+}
+
+#sound-button.off .off {
+  display: block;
+}
+
+#sound-button svg {
+  width: 100%;
+  height: 100%;
+}
+
 #dialog {
   position: fixed;
   left: 50%;

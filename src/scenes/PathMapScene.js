@@ -8,6 +8,7 @@ import {
   PLAYER_TEXTURE_SCALE,
   ROOM_FADE,
 } from '../constants.js';
+import { playStep } from '../audio/sound.js';
 import { standingFrame } from '../directions.js';
 import { feetOffset } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
@@ -85,6 +86,7 @@ export class PathMapScene extends Phaser.Scene {
     this.route = route;
     this.routeStep = 0;
     this.current = target;
+    playStep();
   }
 
   // Avance le long du chemin, à vitesse constante, même dans les virages.

@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { stopMusic } from '../audio/sound.js';
 import { Npc } from '../characters/Npc.js';
 import {
   CORNER_ASSIST,
@@ -57,6 +58,7 @@ export class RoomScene extends Phaser.Scene {
   }
 
   create() {
+    stopMusic(); // pas de musique dans les salles : l'enfant se concentre sur la lecture
     const width = ROOM_WIDTH * TILE_SIZE;
     const height = ROOM_HEIGHT * TILE_SIZE;
     this.physics.world.setBounds(0, 0, width, height);
