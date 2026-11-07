@@ -310,7 +310,7 @@
     184,
     184,
     184,
-    184,
+    0,
     184,
     184,
     184,
@@ -344,8 +344,28 @@
      "type": "",
      "visible": true,
      "width": 0,
-     "x": 120,
+     "x": 88,
      "y": 136
+    },
+    {
+     "height": 0,
+     "id": 2,
+     "name": "sortie",
+     "opacity": 1,
+     "point": true,
+     "properties": [
+      {
+       "name": "salle",
+       "type": "string",
+       "value": "semaine"
+      }
+     ],
+     "rotation": 0,
+     "type": "",
+     "visible": true,
+     "width": 0,
+     "x": 120,
+     "y": 152
     }
    ],
    "opacity": 1,
@@ -356,7 +376,7 @@
   }
  ],
  "nextlayerid": 4,
- "nextobjectid": 2,
+ "nextobjectid": 3,
  "orientation": "orthogonal",
  "renderorder": "right-down",
  "tiledversion": "1.12.2",

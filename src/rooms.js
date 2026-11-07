@@ -38,3 +38,7 @@ export const BACKGROUNDS = {
 
 // Une sortie vers cette « salle » termine le devoir de la salle : on passe à la salle suivante.
 export const ROOM_DONE = 'fin';
+
+// Une sortie vers cette « salle » ramène à la carte de la semaine, comme Échap, sans rien valider.
+// Une flèche la montre dans la salle.
+export const ROOM_BACK = 'semaine';

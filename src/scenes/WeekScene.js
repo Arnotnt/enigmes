@@ -70,6 +70,11 @@ export class WeekScene extends PathMapScene {
     this.leave(() => this.scene.start('room', { world: this.world, week: this.week, day }));
   }
 
+  // ← sur le lundi ramène à la carte du monde.
+  exitsBy(step) {
+    return step < 0;
+  }
+
   goBack() {
     backButton.hide();
     this.leave(() => this.scene.start('world', { world: this.world }));
