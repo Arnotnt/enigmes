@@ -17,11 +17,15 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 ## Technique
 
 - Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier.
-- Salle de 15×10 tuiles de 16 px (240×160, agrandi à l'écran), `pixelArt: true`.
+- Jeu en 960×640. Salle de 15×10 tuiles de 16 px (240×160), agrandie 4 fois par la caméra, `pixelArt: true`.
 - Déplacement libre en 4 directions, jamais en diagonale. Les blocs poussés avancent case par case.
 - Cartes faites dans Tiled, dans `src/assets/maps/` (format `.tmj`). Calques : `sol` (décor), `murs` (toute tuile peinte bloque le passage), `objets` (points). Les points d'arrivée désignent les pieds du personnage (`depart`, `entree`…). Les autres sont au centre d'une case : `bloc`, `interrupteur`, `porte`, `retour` pour l'énigme, `pnj` (aux pieds, propriété `texte`), `torche` (propriété `lettre`, avec un point `porte`), `torche-nombre` (propriété `nombre`), et `sortie`, avec les propriétés `salle` (carte à ouvrir) et `arrivee` (point d'arrivée dans cette carte). La case de `porte` doit rester vide dans `murs`.
 - Pour ajouter une salle : créer la carte, puis l'ajouter à `src/rooms.js`.
-- Assets libres uniquement, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
+- Le jeu a 3 niveaux : carte du monde (un point par semaine), carte de la semaine (lundi, mardi, jeudi, vendredi, dans l'ordre), salles de la journée (un devoir par salle).
+- Parcours dans `src/parcours/worlds.js` : chaque week-end, remplir `lessons` pour la semaine à venir. L'`id` d'une semaine est la date du lundi et ne change plus : il sert à la sauvegarde, gardée dans `localStorage`. Une journée interrompue recommence.
+- Lieux illustrés dans `src/parcours/places.js` : `path` suit le chemin de l'image, en pixels de l'image, et `stops` donne la place de chaque point dans `path`.
+- Une sortie avec `salle` = `fin` termine le devoir de la salle, comme la fin de l'énigme des additions. Une sortie vers une salle absente de la journée reste fermée. Échap ou le bouton « Retour » ramènent à la carte sans rien valider.
+- Assets libres ou générés pour le projet, jamais de sprites Nintendo ; chaque source et licence va dans `CREDITS.md`.
 - Textes en HTML par-dessus le jeu, police Andika (`src/ui/`). `dialogBox.show(texte, { autoSpeak })` : `autoSpeak: false` pour une épreuve de lecture ; l'écoute reste toujours possible.
 - Sons de lecture dans `src/reading/sounds.js`. L'ordre est provisoire : à caler sur celui de l'école. La voix du navigateur ne convient qu'aux voyelles.
 - Hébergement sur GitHub Pages : garder des chemins relatifs.

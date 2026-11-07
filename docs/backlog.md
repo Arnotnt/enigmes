@@ -103,10 +103,12 @@ Objectif : tout le jeu est en HD, sans perte de jouabilité.
 - Le personnage glisse sur le chemin : → avance, ← recule.
 - Un seul lieu de semaine pour l'instant.
 - Visée HD pour tout le jeu, en gardant la grille de 15×10.
+- Septembre-Octobre compte comme terminé ; ce monde sera construit plus tard (US-205).
+- La semaine du 2 novembre est validée d'office, faute de devoirs. À revoir si besoin.
+- Sur la carte d'Égypte, le parcours va du bas vers les pyramides, et le personnage glisse sur l'eau pour traverser le Nil.
+- Sprint 1 : une pull request par épic, par exception à la règle une US = une PR.
 
 ## Questions ouvertes
 
-- Semaine du 2 novembre : validée d'office ou jouée en rattrapage ? À trancher pendant S1.
-- Septembre-Octobre : monde absent, ou affiché comme déjà terminé ?
 - Personnage HD : à trouver, c'est le plus grand risque du passage en HD (US-502).
 - Thèmes des mondes de mars-avril et de mai-juin.
