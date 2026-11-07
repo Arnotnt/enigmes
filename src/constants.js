@@ -67,6 +67,7 @@ export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
 export const READ_WORD_ROUNDS = 4; // mots à lire avant la fin de la salle
 export const SCENE_ROUNDS = 3; // phrases à lire avant la fin de la salle
 export const SCENE_FRAME = 46; // côté du cadre d'une scène, en pixels de salle
+export const SCENE_PICTURE = { y: 27, size: 50 }; // la scène à décrire, en haut de la salle
 export const PICTURE_FRAME = { y: 20, size: 26 }; // l'image à reconnaître, en haut de la salle (pixels de salle)
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
 
