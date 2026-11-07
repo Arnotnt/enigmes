@@ -36,10 +36,13 @@ function temple(devoir, contenu = {}) {
   return { room: 'temple-egypte', entry: 'entree', devoir, ...contenu };
 }
 
-// Les Pirates et la Chine n'ont pas encore leur salle : ils prêtent celle du temple.
-// Quand leur fond sera dessiné, changer ici la salle (`room`) suffira pour tout le monde.
-const village = temple;
-const chine = temple;
+// La salle commune de chaque autre monde. La Gaule et la Grèce ont aussi la leur,
+// `salle-gaule` et `salle-grece`, pour quand leurs semaines seront écrites.
+function salle(room) {
+  return (devoir, contenu = {}) => ({ room, entry: 'entree', devoir, ...contenu });
+}
+const village = salle('salle-pirates');
+const chine = salle('salle-chine');
 
 // Le contenu de lecture de chaque semaine simulée : les mots (avec image), les pièges (mots
 // écrits sans image, qui leur ressemblent) et les phrases. Chaque liste sert deux jours.

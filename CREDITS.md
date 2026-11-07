@@ -27,6 +27,9 @@
 - **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Images de 629×421, découpées dans une planche de quatre.
   Fichiers utilisés : `src/assets/parcours/monde-pirates.jpg`, `monde-chine.jpg`, `monde-gaule.jpg`, `monde-grece.jpg`.
 
+- **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, découpées dans une planche de quatre.
+  Fichiers utilisés : `src/assets/salles/salle-pirates.jpg`, `salle-gaule.jpg`, `salle-chine.jpg`, `salle-grece.jpg`.
+
 ## Musique
 
 - **Happy Clappy Loop**, par OwlishMedia : licence CC0 (domaine public).
