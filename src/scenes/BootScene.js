@@ -4,12 +4,14 @@ import npcUrl from '../assets/npc.png';
 import objectsUrl from '../assets/objects.png';
 import torchUrl from '../assets/objets/torche-egypte.png';
 import overworldUrl from '../assets/overworld.png';
+import { MUSICS } from '../audio/musics.js';
+import { initSound } from '../audio/sound.js';
 import { NPC_FRAME_SIZE, PLAYER_FRAME, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
 
-// Charge une seule fois tout ce qui sert au jeu, puis ouvre la carte du monde.
+// Charge une seule fois tout ce qui sert au jeu, puis ouvre l'écran de démarrage.
 export class BootScene extends Phaser.Scene {
   constructor() {
     super('boot');
@@ -30,9 +32,11 @@ export class BootScene extends Phaser.Scene {
     for (const [key, url] of Object.entries(ROOMS)) this.load.tilemapTiledJSON(key, url);
     for (const { key, url } of PLACES) this.load.image(key, url);
     for (const [name, url] of Object.entries(BACKGROUNDS)) this.load.image(`fond-${name}`, url);
+    for (const [key, urls] of Object.entries(MUSICS)) this.load.audio(key, urls);
   }
 
   create() {
+    initSound(this.game);
     for (const direction of Object.keys(DIRECTIONS)) {
       const first = firstFrame(direction);
       this.anims.create({
@@ -47,6 +51,6 @@ export class BootScene extends Phaser.Scene {
     }
 
     // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant le premier écran.
-    document.fonts.load('16px Andika').finally(() => this.scene.start('world'));
+    document.fonts.load('16px Andika').finally(() => this.scene.start('title'));
   }
 }

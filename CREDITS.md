@@ -15,6 +15,21 @@
 - **Torche (stèle)** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`, puis détourée et réduite.
   Fichier utilisé : `src/assets/objets/torche-egypte.png`.
 
+- **Carte des mondes** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
+  Fichier utilisé : `src/assets/parcours/monde-entier.jpg`.
+
+## Musique
+
+- **Happy Clappy Loop**, par OwlishMedia : licence CC0 (domaine public).
+  Source : https://opengameart.org/content/happy-clappy-loop
+  Fichiers utilisés : `src/assets/sons/musique-cartes.ogg` et `.mp3` (convertis depuis le WAV).
+
+- **Desert Loop**, par iamoneabe : licence CC0 (domaine public).
+  Source : https://opengameart.org/content/desert-loop
+  Fichiers utilisés : `src/assets/sons/musique-egypte.ogg` et `.mp3` (réencodés).
+
+- Les bruitages (départ sur la carte, bravo) sont fabriqués par le code, sans fichier.
+
 ## Police
 
 - **Andika**, par SIL International : licence SIL Open Font License 1.1. Police conçue pour les lecteurs débutants.

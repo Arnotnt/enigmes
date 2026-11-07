@@ -1,8 +1,27 @@
 import egyptUrl from '../assets/parcours/monde-egypte.jpg?url';
+import atlasUrl from '../assets/parcours/monde-entier.jpg?url';
 import templeUrl from '../assets/parcours/temple.jpg?url';
 
 // Les lieux illustrés. `path` suit le chemin de l'image, en pixels de cette image.
 // `stops` donne, pour chaque point d'étape, sa position dans `path`.
+// La carte des mondes : un point par monde, dans l'ordre de l'année.
+// Points : le village d'automne, les pyramides, le pont chinois, puis les deux îles dans les nuages.
+export const ATLAS = {
+  key: 'place-atlas',
+  url: atlasUrl,
+  width: 1264,
+  path: [
+    [250, 237], [284, 255], [302, 285], [283, 316], [252, 337], [219, 356], [193, 381], [180, 414],
+    [190, 448], [218, 471], [255, 480], [292, 477], [325, 460], [348, 434], [362, 404], [371, 372],
+    [383, 341], [402, 314], [432, 294], [468, 286], [506, 294], [550, 319], [577, 345], [590, 379],
+    [589, 415], [584, 451], [588, 486], [614, 512], [650, 521], [688, 520], [721, 503], [733, 470],
+    [716, 436], [741, 409], [780, 396], [805, 394], [835, 393], [855, 405], [866, 423], [903, 426],
+    [958, 416], [989, 403], [996, 396], [1013, 381], [1047, 369], [1078, 352], [1076, 319],
+    [1045, 300], [1011, 284], [982, 262], [982, 230], [1015, 215], [1032, 208],
+  ],
+  stops: [0, 19, 36, 42, 52],
+};
+
 export const EGYPT = {
   key: 'place-egypt',
   url: egyptUrl,
@@ -28,4 +47,4 @@ export const TEMPLE = {
   stops: [0, 3, 8, 11],
 };
 
-export const PLACES = [EGYPT, TEMPLE];
+export const PLACES = [ATLAS, EGYPT, TEMPLE];

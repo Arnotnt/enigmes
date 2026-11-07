@@ -36,3 +36,15 @@ export function markDayDone(week, day) {
     // Rien à faire : la progression reste en mémoire jusqu'à la fermeture de la page.
   }
 }
+
+// Un monde est fini quand toutes ses semaines le sont. Un monde sans semaine n'est pas encore fait,
+// sauf s'il est marqué `done`.
+export const isWorldDone = (world) =>
+  world.done || (world.weeks.length > 0 && world.weeks.every(isWeekDone));
+
+// Le monde à faire : le premier construit et pas fini, ou le dernier construit si tout est fini.
+export function currentWorldIndex(worlds) {
+  const index = worlds.findIndex((world) => world.place && !isWorldDone(world));
+  if (index !== -1) return index;
+  return worlds.findLastIndex((world) => world.place);
+}
