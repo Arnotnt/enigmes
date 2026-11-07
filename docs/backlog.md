@@ -34,7 +34,7 @@ GitHub est la référence commune au téléphone et au Mac. Le détail des user 
 | Tâche sans code | Le label `parent` |
 | Suivi | Le [tableau du projet](https://github.com/users/Arnotnt/projects/1) : Idées, Review, US prêtes, Sprint, En cours, Fini |
 
-Le dépôt est public : jamais de nom de l'enfant, de la maîtresse ou de l'école, ni de photo de cahier.
+Le dépôt est public : jamais de nom de l'enfant, de la maîtresse ou de l'école, ni de photo de cahier. Seule exception, choisie par le propriétaire : le prénom de l'enfant dans le titre du jeu.
 
 ### Qui fait quoi
 
