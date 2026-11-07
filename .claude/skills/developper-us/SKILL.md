@@ -7,8 +7,8 @@ description: Développe une user story du jeu Énigmes à partir de son issue Gi
 
 Argument : le numéro de l'US ou de l'issue.
 
-1. **Comprendre.** Lis l'issue, ses commentaires et `CLAUDE.md`. Si l'issue porte le label `idee` ou si ses critères sont flous, arrête-toi et propose d'utiliser `ecrire-us`.
-2. **Vérifier ce qui bloque.** Regarde si une autre US ou une image attendue (label `parent`) manque. Si oui, dis-le avant de commencer.
+1. **Comprendre.** Lis l'issue, ses commentaires et `CLAUDE.md`. Si l'issue porte le label `us-idee` ou si ses critères sont flous, arrête-toi et propose d'utiliser `ecrire-us`. Si elle porte `us-review`, arrête-toi et rappelle ce qu'il manque.
+2. **Vérifier ce qui bloque.** Regarde si un commentaire « Dépend de : … » renvoie à une US pas encore finie. Si oui, dis-le avant de commencer.
 3. **Annoncer.** Résume en quelques phrases le plan et les choix. Explique-les simplement, en français : le propriétaire apprend Phaser.
 4. **Brancher.** Pars de `main` à jour et crée `us-<numéro>-<mot-clé>`. Ne mélange pas deux US sur une branche.
 5. **Développer.** Reste dans le périmètre de l'issue. Toute autre idée devient une nouvelle issue. Suis les conventions de `CLAUDE.md`.

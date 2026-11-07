@@ -24,10 +24,11 @@ GitHub est la référence commune au téléphone et au Mac. Le détail des user 
 | User story | Une issue, une branche, une pull request |
 | Épic | Un label (`epic:carte-monde`…) |
 | Sprint | Un jalon ([milestones](https://github.com/Arnotnt/enigmes/milestones)) |
-| Idée à creuser | Le label `idee` |
-| Prête à planifier | Le label `us-prete` |
+| Pas encore rédigée comme une US | Le label `us-idee` |
+| Rédigée et validée, mais il manque une image ou un arbitrage | Le label `us-review` |
+| Peut être développée dans un sprint | Le label `us-prete` |
 | Tâche sans code | Le label `parent` |
-| Suivi | Le [tableau du projet](https://github.com/users/Arnotnt/projects/1) : Idées, US prêtes, Sprint, En cours, Fini |
+| Suivi | Le [tableau du projet](https://github.com/users/Arnotnt/projects/1) : Idées, Review, US prêtes, Sprint, En cours, Fini |
 
 Le dépôt est public : jamais de nom de l'enfant, de la maîtresse ou de l'école, ni de photo de cahier.
 
@@ -38,6 +39,8 @@ Le dépôt est public : jamais de nom de l'enfant, de la maîtresse ou de l'éco
 | Rôle | Idées et user stories | Développement et organisation du projet |
 | Outil | Application GitHub, ou onglet Code de l'application Claude | Claude Code |
 | Skills | `ecrire-us` | `ecrire-us`, `devoirs-semaine`, `developper-us` |
+
+Une US en `us-review` porte un commentaire « En attente de : … ». Une fois l'élément fourni, elle passe en `us-prete`. Une US qui attend une autre US reste en `us-prete`, avec un commentaire « Dépend de : … ».
 
 Style des images : voir [style-images.md](style-images.md).
 
