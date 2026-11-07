@@ -79,12 +79,12 @@ Taille des US : **S** (moins d'une heure), **M** (une demi-journée), **L** (une
 | S1 | 7-8 novembre | Jouer ses devoirs depuis la carte d'Égypte | 9 novembre |
 | S2 | 14-15 novembre | Salles et torches en HD | 16 novembre |
 | S3 | 21-22 novembre | Devoirs plus faciles à créer, former des syllabes | 23 novembre |
-| S4 | 28-29 novembre | Mots, écran de démarrage, carte des mondes et musique | 30 novembre |
-| S5 | 5-6 décembre | Phrases | 7 décembre |
+| S4 | 28-29 novembre | Mots et phrases avec des images | 30 novembre |
+| S5 | 5-6 décembre | Suivre une consigne écrite (US-703) | 7 décembre |
 | S6 | 12-13 décembre | Fin du monde Égypte et bilan avec l'enfant | 14 décembre |
 | S7 | Vacances de Noël | Préparer la Chine | Janvier |
 
-Seuls S1, S2 et S3 ont un jalon sur GitHub ; celui de S4 est à créer. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
+S1 à S4 ont un jalon sur GitHub. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
 
 ### Sprint 1 : 7-8 novembre
 
@@ -112,14 +112,13 @@ Ordre conseillé : US-403 (contenu des salles dans le parcours), US-704 (tester 
 
 ### Sprint 4 : 28-29 novembre
 
-Objectif : l'enfant lance le jeu depuis un écran de démarrage, voit tous les mondes de l'année, joue en musique, et trouve des mots.
+Objectif : l'enfant lit des mots et des phrases en les reliant à des images, dans les deux sens.
 
-Ordre conseillé :
+Ordre : US-702 (#9, lire un mot et trouver son image), US-705 (#72, voir une image et trouver son mot), US-706 (#73, lire une phrase et trouver sa scène), puis US-707 (#74, voir une scène et trouver sa phrase). Chaque US dépend de la précédente. Les images sont les pictogrammes ARASAAC ; les scènes des phrases sont composées par le jeu à partir de ces pictogrammes.
 
-1. US-801 (#11, écran de démarrage), US-206 (#66, carte des mondes) et US-803 (#65, musique et petits sons). Elles sont déjà développées sur la branche `claude/game-startup-world-screens-ct89s3` : il reste à les vérifier au clavier et à l'oreille, puis à fusionner. Points d'écoute : la musique baisse quand la voix parle, le jingle de fin de journée, la touche M.
-2. US-702 (lecture : les mots), à rédiger d'abord avec `ecrire-us`.
+L'écran de démarrage, la carte des mondes et la musique, prévus d'abord dans ce sprint, sont déjà fusionnés.
 
-Les trois premières US sont dans une seule pull request, par exception à la règle une US = une PR : elles ont été développées ensemble.
+Les exercices prêts à l'emploi sont listés dans [exercices.md](exercices.md).
 
 ## Décisions prises
 
