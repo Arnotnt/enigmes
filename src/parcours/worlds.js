@@ -1,4 +1,6 @@
-import { CHINE, EGYPT, GAULE, GRECE, PIRATES, TEMPLE } from './places.js';
+import {
+  CHINE, CHINE_JOURS, EGYPT, GAULE, GAULE_JOURS, GRECE, GRECE_JOURS, PIRATES, PIRATES_JOURS, TEMPLE,
+} from './places.js';
 
 // Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
 // Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
@@ -36,13 +38,14 @@ function temple(devoir, contenu = {}) {
   return { room: 'temple-egypte', entry: 'entree', devoir, ...contenu };
 }
 
-// La salle commune de chaque autre monde. La Gaule et la Grèce ont aussi la leur,
-// `salle-gaule` et `salle-grece`, pour quand leurs semaines seront écrites.
+// La salle commune de chaque autre monde.
 function salle(room) {
   return (devoir, contenu = {}) => ({ room, entry: 'entree', devoir, ...contenu });
 }
 const village = salle('salle-pirates');
 const chine = salle('salle-chine');
+const gaule = salle('salle-gaule');
+const grece = salle('salle-grece');
 
 // Le contenu de lecture de chaque semaine simulée : les mots (avec image), les pièges (mots
 // écrits sans image, qui leur ressemblent) et les phrases. Chaque liste sert deux jours.
@@ -149,13 +152,77 @@ const C6 = { // ch
   phrases: ['Le chat est dans la niche.', 'La mouche est sur le chou.', 'Deux chiens sont à côté de la niche.', 'Il y a trois mouches.'],
 };
 
+// La Gaule, simulée : v, j, puis an, in, oi, et une semaine de révision.
+const G1 = { // v
+  mots: ['vélo', 'cheval', 'olive', 'vache', 'valise'],
+  pieges: ['vase', 'vole', 'ville'],
+  phrases: ['La valise est sur le vélo.', 'La vache est à côté de l’arbre.', 'Deux vélos sont sous l’arbre.', 'Il y a trois vaches.'],
+};
+const G2 = { // j
+  mots: ['jupe', 'pyjama', 'jus', 'judo', 'bijou'],
+  pieges: ['joli', 'juge', 'jour'],
+  phrases: ['La jupe est sur le lit.', 'Le pyjama est dans la boîte.', 'Deux jupes sont sur la chaise.', 'Il y a trois bijoux.'],
+};
+const G3 = { // an, mélangé avec on
+  mots: ['banane', 'pantalon', 'éléphant', 'gant', 'ballon'],
+  pieges: ['bonne', 'salon', 'bonbon'],
+  phrases: ['La banane est sur la table.', 'Le gant est dans la boîte.', 'Deux éléphants sont à côté de l’arbre.', 'Il y a trois bananes.'],
+};
+const G4 = { // in
+  mots: ['lapin', 'sapin', 'raisin', 'moulin', 'dauphin'],
+  pieges: ['lion', 'savon', 'raison'],
+  phrases: ['Le lapin est sous le sapin.', 'Le raisin est dans le panier.', 'Deux lapins sont à côté du moulin.', 'Il y a trois sapins.'],
+};
+const G5 = { // oi
+  mots: ['roi', 'oiseau', 'poire', 'étoile', 'noix'],
+  pieges: ['rire', 'pire', 'noir'],
+  phrases: ['L’oiseau est sur l’arbre.', 'La poire est dans le panier.', 'Deux rois sont à côté du lit.', 'Il y a trois étoiles.'],
+};
+const G6 = { // révision
+  mots: ['vache', 'jupe', 'banane', 'lapin', 'roi', 'chou'],
+  pieges: ['vase', 'pire'],
+  phrases: ['La vache est à côté du moulin.', 'Le roi est dans le lit.', 'Deux lapins sont sous la table.', 'Il y a trois poires.'],
+};
+
+// La Grèce antique, simulée : eau, ai, gn, z, c et k, puis la révision de fin d'année.
+const R1 = { // eau, au
+  mots: ['bateau', 'gâteau', 'chapeau', 'château', 'seau'],
+  pieges: ['bâton', 'chaton', 'chapon'],
+  phrases: ['Le gâteau est sur la table.', 'Le chapeau est sous la chaise.', 'Deux bateaux sont à côté du pont.', 'Il y a trois gâteaux.'],
+};
+const R2 = { // ai
+  mots: ['lait', 'balai', 'fraise', 'chaise', 'maison'],
+  pieges: ['lit', 'bal', 'frise'],
+  phrases: ['Le balai est à côté de la chaise.', 'La fraise est dans le bol.', 'Deux chats sont dans la maison.', 'Il y a trois fraises.'],
+};
+const R3 = { // gn
+  mots: ['champignon', 'peigne', 'araignée', 'montagne', 'cygne'],
+  pieges: ['pigeon', 'peine', 'signe'],
+  phrases: ['L’araignée est sur le champignon.', 'Le peigne est dans la boîte.', 'Deux champignons sont sous l’arbre.', 'Il y a trois cygnes.'],
+};
+const R4 = { // z, et s entre deux voyelles
+  mots: ['zèbre', 'rose', 'vase', 'chemise', 'cerise'],
+  pieges: ['zéro', 'rase', 'case'],
+  phrases: ['Le zèbre est à côté du vase.', 'La rose est dans le vase.', 'Deux zèbres sont sous l’arbre.', 'Il y a trois roses.'],
+};
+const R5 = { // c, k
+  mots: ['canard', 'coq', 'koala', 'kiwi', 'café'],
+  pieges: ['cane', 'coque', 'kilo'],
+  phrases: ['Le canard est à côté du coq.', 'Le koala est sur l’arbre.', 'Deux kiwis sont dans le bol.', 'Il y a trois coqs.'],
+};
+const R6 = { // révision
+  mots: ['bateau', 'fraise', 'araignée', 'zèbre', 'canard', 'lapin'],
+  pieges: ['bâton', 'frise'],
+  phrases: ['Le bateau est sous le pont.', 'La fraise est sur le gâteau.', 'Deux zèbres sont à côté du château.', 'Il y a trois canards.'],
+};
+
 export const WORLDS = [
   {
     name: 'Les Pirates',
     months: 'septembre et octobre',
     costume: 'pirate',
     place: PIRATES,
-    weekPlace: TEMPLE, // en attendant la carte des jours des pirates
+    weekPlace: PIRATES_JOURS,
     // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
     // aux pirates plutôt qu'en Égypte. Le monde se visite quand même depuis la carte des mondes.
     done: true,
@@ -263,7 +330,7 @@ export const WORLDS = [
     months: 'janvier et février',
     costume: 'chinois',
     place: CHINE,
-    weekPlace: TEMPLE, // en attendant la carte des jours de la Chine
+    weekPlace: CHINE_JOURS,
     // Simulation (US-902).
     weeks: [
       week('2027-01-04', 'Semaine du 4 janvier', {
@@ -304,7 +371,96 @@ export const WORLDS = [
       }),
     ],
   },
-  // Cartes des jours : celle du temple, en attendant la leur. 6 semaines chacun, à écrire.
-  { name: 'La Gaule', months: 'mars et avril', costume: 'gaulois', place: GAULE, weekPlace: TEMPLE, weeks: [] },
-  { name: 'La Grèce antique', months: 'mai et juin', costume: 'grec', place: GRECE, weekPlace: TEMPLE, weeks: [] },
+  {
+    name: 'La Gaule',
+    months: 'mars et avril',
+    costume: 'gaulois',
+    place: GAULE,
+    weekPlace: GAULE_JOURS,
+    // Simulation, comme la Chine.
+    weeks: [
+      week('2027-03-01', 'Semaine du 1er mars', {
+        Lundi: [gaule('mots', { mots: [...G1.mots, 'vase'] }), gaule('additions', { max: 20 })],
+        Mardi: [gaule('image-mot', { mots: G1.mots, pieges: G1.pieges }), gaule('syllabes', { syllabes: ['va', 'vi', 'vo', 'vu', 'vé'] })],
+        Jeudi: [gaule('phrase-scene', { phrases: G1.phrases }), gaule('comparaisons', { max: 100 })],
+        Vendredi: [gaule('lire-mots', { mots: G1.mots }), gaule('scene-phrase', { phrases: G1.phrases })],
+      }),
+      week('2027-03-08', 'Semaine du 8 mars', {
+        Lundi: [gaule('syllabes', { syllabes: ['ja', 'ji', 'jo', 'ju', 'j-ou'] }), gaule('lire-mots', { mots: G2.mots })],
+        Mardi: [gaule('scene-phrase', { phrases: G2.phrases }), gaule('additions', { max: 20 })],
+        Jeudi: [gaule('comparaisons', { max: 100 }), gaule('image-mot', { mots: G2.mots, pieges: G2.pieges })],
+        Vendredi: [gaule('mots', { mots: [...G2.mots, 'joli'] }), gaule('phrase-scene', { phrases: G2.phrases })],
+      }),
+      week('2027-03-15', 'Semaine du 15 mars', {
+        Lundi: [gaule('phrase-scene', { phrases: G3.phrases }), gaule('comparaisons', { max: 100 })],
+        Mardi: [gaule('mots', { mots: ['banane', 'pantalon', 'éléphant', 'gant', 'ballon', 'bonbon'] }), gaule('lire-mots', { mots: G3.mots })],
+        Jeudi: [gaule('additions', { max: 20 }), gaule('scene-phrase', { phrases: G3.phrases })],
+        Vendredi: [gaule('syllabes', { syllabes: ['b-an', 'm-an', 'p-an', 'l-on', 'r-an'] }), gaule('image-mot', { mots: G3.mots, pieges: G3.pieges })],
+      }),
+      week('2027-03-22', 'Semaine du 22 mars', {
+        Lundi: [gaule('image-mot', { mots: G4.mots, pieges: G4.pieges }), gaule('additions', { max: 20 })],
+        Mardi: [gaule('syllabes', { syllabes: ['l-in', 'm-in', 'p-in', 's-in', 'v-in'] }), gaule('phrase-scene', { phrases: G4.phrases })],
+        Jeudi: [gaule('lire-mots', { mots: G4.mots }), gaule('mots', { mots: ['lapin', 'sapin', 'raisin', 'moulin', 'lion', 'dauphin'] })],
+        Vendredi: [gaule('scene-phrase', { phrases: G4.phrases }), gaule('comparaisons', { max: 100 })],
+      }),
+      week('2027-03-29', 'Semaine du 29 mars', {
+        Lundi: [gaule('scene-phrase', { phrases: G5.phrases }), gaule('syllabes', { syllabes: ['r-oi', 'm-oi', 't-oi', 'l-oi', 'b-oi'] })],
+        Mardi: [gaule('comparaisons', { max: 100 }), gaule('lire-mots', { mots: G5.mots })],
+        Jeudi: [gaule('mots', { mots: ['roi', 'oiseau', 'poire', 'étoile', 'noix', 'noir'] }), gaule('phrase-scene', { phrases: G5.phrases })],
+        Vendredi: [gaule('additions', { max: 20 }), gaule('image-mot', { mots: G5.mots, pieges: G5.pieges })],
+      }),
+      week('2027-04-05', 'Semaine du 5 avril', {
+        Lundi: [gaule('lire-mots', { mots: G6.mots }), gaule('comparaisons', { max: 100 })],
+        Mardi: [gaule('phrase-scene', { phrases: G6.phrases }), gaule('additions', { max: 20 })],
+        Jeudi: [gaule('syllabes', { syllabes: ['v-an', 'j-ou', 'l-in', 'r-oi', 'ch-on'] }), gaule('image-mot', { mots: G6.mots, pieges: G6.pieges })],
+        Vendredi: [gaule('scene-phrase', { phrases: G6.phrases }), gaule('mots', { mots: ['vache', 'jupe', 'banane', 'lapin', 'roi', 'chou'] })],
+      }),
+    ],
+  },
+  {
+    name: 'La Grèce antique',
+    months: 'mai et juin',
+    costume: 'grec',
+    place: GRECE,
+    weekPlace: GRECE_JOURS,
+    // Simulation, comme la Chine.
+    weeks: [
+      week('2027-05-03', 'Semaine du 3 mai', {
+        Lundi: [grece('mots', { mots: [...R1.mots, 'bâton'] }), grece('additions', { max: 20 })],
+        Mardi: [grece('image-mot', { mots: R1.mots, pieges: R1.pieges }), grece('syllabes', { syllabes: ['b-eau', 'm-au', 'l-au', 'r-eau', 'p-eau'] })],
+        Jeudi: [grece('phrase-scene', { phrases: R1.phrases }), grece('comparaisons', { max: 100 })],
+        Vendredi: [grece('lire-mots', { mots: R1.mots }), grece('scene-phrase', { phrases: R1.phrases })],
+      }),
+      week('2027-05-10', 'Semaine du 10 mai', {
+        Lundi: [grece('syllabes', { syllabes: ['l-ai', 'm-ai', 'f-ai', 'b-ai', 'r-ai'] }), grece('lire-mots', { mots: R2.mots })],
+        Mardi: [grece('scene-phrase', { phrases: R2.phrases }), grece('additions', { max: 20 })],
+        Jeudi: [grece('comparaisons', { max: 100 }), grece('image-mot', { mots: R2.mots, pieges: R2.pieges })],
+        Vendredi: [grece('mots', { mots: [...R2.mots, 'lit'] }), grece('phrase-scene', { phrases: R2.phrases })],
+      }),
+      week('2027-05-17', 'Semaine du 17 mai', {
+        Lundi: [grece('phrase-scene', { phrases: R3.phrases }), grece('comparaisons', { max: 100 })],
+        Mardi: [grece('mots', { mots: ['champignon', 'peigne', 'araignée', 'montagne', 'cygne', 'pigeon'] }), grece('lire-mots', { mots: R3.mots })],
+        Jeudi: [grece('additions', { max: 20 }), grece('scene-phrase', { phrases: R3.phrases })],
+        Vendredi: [grece('syllabes', { syllabes: ['gn-a', 'gn-o', 'gn-on', 'gn-é', 'gn-i'] }), grece('image-mot', { mots: R3.mots, pieges: R3.pieges })],
+      }),
+      week('2027-05-24', 'Semaine du 24 mai', {
+        Lundi: [grece('image-mot', { mots: R4.mots, pieges: R4.pieges }), grece('additions', { max: 20 })],
+        Mardi: [grece('syllabes', { syllabes: ['za', 'zi', 'zo', 'zu', 'zé'] }), grece('phrase-scene', { phrases: R4.phrases })],
+        Jeudi: [grece('lire-mots', { mots: R4.mots }), grece('mots', { mots: ['zèbre', 'zéro', 'rose', 'vase', 'chemise', 'cerise'] })],
+        Vendredi: [grece('scene-phrase', { phrases: R4.phrases }), grece('comparaisons', { max: 100 })],
+      }),
+      week('2027-05-31', 'Semaine du 31 mai', {
+        Lundi: [grece('scene-phrase', { phrases: R5.phrases }), grece('syllabes', { syllabes: ['ca', 'co', 'cu', 'ki', 'ké'] })],
+        Mardi: [grece('comparaisons', { max: 100 }), grece('lire-mots', { mots: R5.mots })],
+        Jeudi: [grece('mots', { mots: ['canard', 'coq', 'koala', 'kiwi', 'café', 'cane'] }), grece('phrase-scene', { phrases: R5.phrases })],
+        Vendredi: [grece('additions', { max: 20 }), grece('image-mot', { mots: R5.mots, pieges: R5.pieges })],
+      }),
+      week('2027-06-07', 'Semaine du 7 juin', {
+        Lundi: [grece('lire-mots', { mots: R6.mots }), grece('comparaisons', { max: 100 })],
+        Mardi: [grece('phrase-scene', { phrases: R6.phrases }), grece('additions', { max: 20 })],
+        Jeudi: [grece('syllabes', { syllabes: ['b-eau', 'f-ai', 'gn-on', 'za', 'ca'] }), grece('image-mot', { mots: R6.mots, pieges: R6.pieges })],
+        Vendredi: [grece('scene-phrase', { phrases: R6.phrases }), grece('mots', { mots: ['bateau', 'fraise', 'araignée', 'zèbre', 'canard', 'lapin'] })],
+      }),
+    ],
+  },
 ];
