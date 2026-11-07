@@ -6,6 +6,8 @@ import templeUrl from '../assets/parcours/temple.jpg?url';
 // `stops` donne, pour chaque point d'étape, sa position dans `path`.
 // La carte des mondes : un point par monde, dans l'ordre de l'année.
 // Points : le village d'automne, les pyramides, le pont chinois, puis les deux îles dans les nuages.
+// Mondes : les Pirates (au village, en attendant une image redessinée), l'Égypte, la Chine,
+// la Gaule et la Grèce antique (les deux îles).
 export const ATLAS = {
   key: 'place-atlas',
   url: atlasUrl,

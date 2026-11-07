@@ -6,7 +6,7 @@ import { EGYPT, TEMPLE } from './places.js';
 // `costume` habille le héros dans ce monde (clé de `COSTUMES` dans src/characters/costumes.js,
 // par exemple 'pirate') ; sans costume, le héros est l'explorateur.
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
-// Septembre-Octobre compte comme terminé : ce monde sera construit plus tard.
+// Les Pirates (septembre-octobre) comptent comme terminés : ce monde sera construit plus tard.
 //
 // Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks` :
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
@@ -36,7 +36,7 @@ function temple(devoir, contenu = {}) {
   return { room: 'temple-egypte', entry: 'entree', devoir, ...contenu };
 }
 
-// Le village d'automne et la Chine n'ont pas encore leur salle : ils prêtent celle du temple.
+// Les Pirates et la Chine n'ont pas encore leur salle : ils prêtent celle du temple.
 // Quand leur fond sera dessiné, changer ici la salle (`room`) suffira pour tout le monde.
 const village = temple;
 const chine = temple;
@@ -80,7 +80,7 @@ const S7 = { // son [t]
   phrases: ['La tortue est sur le tapis.', 'La tasse est sur la table.', 'Deux tortues sont sous la table.', 'Il y a trois tomates.'],
 };
 
-// Septembre-Octobre, simulé : les voyelles, puis deux semaines de révision avec les premières phrases.
+// Les Pirates (septembre-octobre), simulé : les voyelles, puis deux semaines de révision avec les premières phrases.
 // `sons` remplace `syllabes` : il n'y a pas encore de consonne.
 const A1 = { // a, i
   mots: ['chat', 'rat', 'sac', 'lit', 'riz', 'kiwi'],
@@ -148,7 +148,7 @@ const C6 = { // ch
 
 export const WORLDS = [
   {
-    name: 'Septembre-Octobre',
+    name: 'Les Pirates',
     months: 'septembre et octobre',
     // Simulation (US-902). `done` reste tant que le monde n'a pas ses cartes illustrées (`place`,
     // `weekPlace`) : l'enlever en même temps, sinon le jeu enverrait l'enfant dans un monde vide.
@@ -294,6 +294,6 @@ export const WORLDS = [
       }),
     ],
   },
-  { name: null, months: 'mars et avril', weeks: [] },
-  { name: null, months: 'mai et juin', weeks: [] },
+  { name: 'La Gaule', months: 'mars et avril', weeks: [] },
+  { name: 'La Grèce antique', months: 'mai et juin', weeks: [] },
 ];

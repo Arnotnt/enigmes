@@ -24,6 +24,8 @@
 - **Pictogrammes ARASAAC**, par Sergio Palao. Origine : ARASAAC (https://arasaac.org). Propriété : Gouvernement d'Aragon (Espagne). Licence : Creative Commons BY-NC-SA.
   Fichiers utilisés : `src/assets/pictos/` (un pictogramme par mot, téléchargé par `outils/picto.mjs`).
 
+- **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Premières versions, gardées comme modèles dans `docs/mondes/` (pas encore dans le jeu).
+
 ## Musique
 
 - **Happy Clappy Loop**, par OwlishMedia : licence CC0 (domaine public).
