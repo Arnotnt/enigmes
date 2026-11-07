@@ -8,15 +8,10 @@ import {
 } from '../constants.js';
 import { Torch } from '../objects/Torch.js';
 import { speak } from '../speech.js';
+import { mapProperty } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
 const propertyOf = (object, name) => object.properties.find((item) => item.name === name).value;
-
-// Propriété `max` de la carte dans Tiled : le total le plus grand de cette salle.
-function roomMax(map) {
-  const properties = Array.isArray(map.properties) ? map.properties : [];
-  return properties.find((item) => item.name === 'max')?.value ?? ADDITION_MAX;
-}
 
 // Tire une addition a + ? = total, sans dépasser `max` et sans le cas vide 0 + 0 = 0.
 // Le nombre à trouver reste entre 0 et ADDITION_ANSWER_MAX : ce sont les torches de la salle.
@@ -36,7 +31,7 @@ export class AdditionPuzzle {
     const spots = map.filterObjects('objets', (object) => object.name === 'torche-nombre');
     this.torches = spots.map((spot) => new Torch(scene, spot, player, propertyOf(spot, 'nombre')));
 
-    this.max = roomMax(map);
+    this.max = mapProperty(map, 'max') ?? ADDITION_MAX; // propriété `max` de la carte, dans Tiled
     this.listenKey = scene.input.keyboard.addKey('SPACE');
     this.addition = null;
     this.roundsLeft = ADDITION_ROUNDS;

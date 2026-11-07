@@ -6,7 +6,7 @@ import overworldUrl from '../assets/overworld.png';
 import { NPC_FRAME_SIZE, OBJECTS, PLAYER_FRAME, TILE_SIZE, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
-import { ROOMS } from '../rooms.js';
+import { BACKGROUNDS, ROOMS } from '../rooms.js';
 
 // Charge une seule fois tout ce qui sert au jeu, puis ouvre la carte du monde.
 export class BootScene extends Phaser.Scene {
@@ -27,6 +27,7 @@ export class BootScene extends Phaser.Scene {
 
     for (const [key, url] of Object.entries(ROOMS)) this.load.tilemapTiledJSON(key, url);
     for (const { key, url } of PLACES) this.load.image(key, url);
+    for (const [name, url] of Object.entries(BACKGROUNDS)) this.load.image(`fond-${name}`, url);
   }
 
   create() {

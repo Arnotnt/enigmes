@@ -9,6 +9,9 @@
 - **Carte de l'Égypte et temple** : images générées avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
   Fichiers utilisés : `src/assets/parcours/monde-egypte.jpg`, `src/assets/parcours/temple.jpg`.
 
+- **Salle du temple** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
+  Fichier utilisé : `src/assets/salles/temple-egypte.jpg`.
+
 ## Police
 
 - **Andika**, par SIL International : licence SIL Open Font License 1.1. Police conçue pour les lecteurs débutants.
