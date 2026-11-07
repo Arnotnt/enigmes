@@ -3,6 +3,8 @@ import { EGYPT, TEMPLE } from './places.js';
 // Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
 // Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
 // `weekPlace` pour les jours), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
+// `costume` habille le héros dans ce monde (clé de `COSTUMES` dans src/characters/costumes.js,
+// par exemple 'pirate') ; sans costume, le héros est l'explorateur.
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
 // Septembre-Octobre compte comme terminé : ce monde sera construit plus tard.
 //
