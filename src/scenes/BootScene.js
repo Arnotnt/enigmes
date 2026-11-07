@@ -9,6 +9,7 @@ import { COSTUMES, walkAnimation } from '../characters/costumes.js';
 import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, TORCH, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, standingFrame } from '../directions.js';
 import { PLACES } from '../parcours/places.js';
+import { PICTOS, pictoKey } from '../reading/pictos.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
 
 // Charge une seule fois tout ce qui sert au jeu, puis ouvre l'écran de démarrage.
@@ -35,6 +36,7 @@ export class BootScene extends Phaser.Scene {
     for (const { key, url } of PLACES) this.load.image(key, url);
     for (const [name, url] of Object.entries(BACKGROUNDS)) this.load.image(`fond-${name}`, url);
     for (const [key, urls] of Object.entries(MUSICS)) this.load.audio(key, urls);
+    for (const [word, url] of Object.entries(PICTOS)) this.load.image(pictoKey(word), url);
   }
 
   create() {
@@ -54,6 +56,9 @@ export class BootScene extends Phaser.Scene {
         });
       }
     }
+
+    // Les pictogrammes sont réduits dans la salle : lissés, ils restent nets.
+    for (const word of Object.keys(PICTOS)) this.textures.get(pictoKey(word)).setFilter(Phaser.Textures.FilterMode.LINEAR);
 
     // Les lettres du jeu sont dessinées avec Andika : elle doit être prête avant le premier écran.
     document.fonts.load('16px Andika').finally(() => this.scene.start('title'));

@@ -1,11 +1,12 @@
 import * as Phaser from 'phaser';
 import { OVERWORLD, TORCH, TORCH_REACH } from '../constants.js';
 
-// Torche portant une lettre, un nombre, un signe ou un mot, placée sur un point de la carte.
+// Torche portant une lettre, un nombre, un signe, un mot ou une image, placée sur un point de la carte.
 // Le dessin est une stèle : image 0 éteinte, image 1 allumée. Le point désigne le centre de la
 // case où elle est posée ; la stèle monte au-dessus, comme un personnage.
 export class Torch {
-  constructor(scene, spot, player, label) {
+  // `picture` : la clé d'une image à montrer à la place du texte. `label` reste la réponse.
+  constructor(scene, spot, player, label, { picture } = {}) {
     const { x, y } = spot;
     this.scene = scene;
     this.spot = spot;
@@ -22,6 +23,14 @@ export class Torch {
     this.stele.setDisplaySize(TORCH.width, TORCH.width * (this.stele.height / this.stele.width));
     // Dessin réduit puis agrandi par la caméra : lissé, il reste net, comme le fond de la salle.
     this.stele.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+
+    const body = scene.physics.add.staticImage(x, y, 'tiles', OVERWORLD.postBottom).setVisible(false);
+    scene.physics.add.collider(player, body);
+
+    if (picture) {
+      this.addPicture(bottom, picture);
+      return;
+    }
 
     // Une lettre, un nombre ou un signe s'écrit dans le cartouche de la stèle.
     // Un mot est trop large : il reçoit une plaque posée par-dessus.
@@ -41,9 +50,18 @@ export class Torch {
       scene.children.bringToTop(text);
       this.parts.splice(1, 0, plate);
     }
+  }
 
-    const body = scene.physics.add.staticImage(x, y, 'tiles', OVERWORLD.postBottom).setVisible(false);
-    scene.physics.add.collider(player, body);
+  // Une image ne tient pas dans le cartouche : elle reçoit un cadre crème, posé sur la stèle.
+  addPicture(bottom, picture) {
+    const { x } = this.spot;
+    const y = bottom - TORCH.pictureHeight;
+    const size = TORCH.pictureSize;
+    const frame = this.scene.add
+      .rectangle(x, y, size, size, TORCH.plateColor)
+      .setStrokeStyle(0.75, 0x2b2118);
+    const image = this.scene.add.image(x, y, picture).setDisplaySize(size - 3, size - 3);
+    this.parts = [this.stele, frame, image];
   }
 
   // Vrai à l'instant où le personnage arrive contre la torche.
