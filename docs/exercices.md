@@ -31,6 +31,7 @@ Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enl
 | `mots` | Lecture | un mot | le mot écrit sur une stèle | `mots` | un par mot |
 | `syllabes` | Lecture | une syllabe | la consonne, puis la voyelle | `syllabes` | 4 |
 | `lire-mots` | Lecture | rien d'abord | un mot écrit, puis son image | `mots` | 4 |
+| `image-mot` | Lecture | la consigne | une image, puis son mot écrit | `mots`, `pieges` | 4 |
 
 ### `additions` : addition à trou
 
@@ -90,7 +91,18 @@ Un mot s'écrit en haut de l'écran, sans être dit. Chaque stèle porte une ima
 { room: 'temple-egypte', entry: 'entree', devoir: 'lire-mots', mots: ['lune', 'renard', 'moto', 'vélo', 'chat', 'tomate'] }
 ```
 
-Images disponibles : chat, lit, lune, moto, mouton, renard, tomate, vélo.
+### `image-mot` : voir une image, trouver son mot
+
+Une image s'accroche en haut de la salle, et chaque stèle porte un mot écrit : l'enfant va toucher le mot de l'image. Le mot n'est jamais dit avant d'être trouvé. Après une erreur, chaque stèle touchée dit son mot (« Non, ici c'est écrit lame. ») : l'enfant n'est jamais bloqué.
+
+- `mots` : les mots à trouver, chacun avec son image dans `src/assets/pictos/` (voir `lire-mots`). 4 sont demandés au hasard.
+- `pieges` (facultatif) : des mots écrits en plus, sans image, qui ressemblent aux vrais. Avec `lune`, mettez `lame` ou `lutin` : il faut alors lire tout le mot, pas seulement la première lettre. La salle tient 8 stèles en tout.
+
+```js
+{ room: 'temple-egypte', entry: 'entree', devoir: 'image-mot', mots: ['lune', 'moto', 'mouton', 'tomate'], pieges: ['lame', 'mot', 'mouche', 'tomber'] }
+```
+
+Images disponibles pour `lire-mots` et `image-mot` : chat, lit, lune, moto, mouton, renard, tomate, vélo.
 
 ## Bientôt
 
@@ -98,7 +110,6 @@ Ces exercices sont en cours de développement au Sprint 4. Leur fiche s'ajoutera
 
 | Exercice | US |
 |---|---|
-| Voir une image, trouver son mot | [US-705](https://github.com/Arnotnt/enigmes/issues/72) |
 | Lire une phrase, trouver sa scène | [US-706](https://github.com/Arnotnt/enigmes/issues/73) |
 | Voir une scène, trouver sa phrase | [US-707](https://github.com/Arnotnt/enigmes/issues/74) |
 

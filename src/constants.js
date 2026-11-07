@@ -65,6 +65,7 @@ export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle
 export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
 export const READ_WORD_ROUNDS = 4; // mots à lire avant la fin de la salle
+export const PICTURE_FRAME = { y: 20, size: 26 }; // l'image à reconnaître, en haut de la salle (pixels de salle)
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
 
 export const GAME_TITLE = 'Le Tour du Monde\nd’Alexis'; // titre de l'écran de démarrage, sur deux lignes
