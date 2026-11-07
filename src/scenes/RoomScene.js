@@ -18,6 +18,7 @@ import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
 import { ComparePuzzle } from '../puzzles/ComparePuzzle.js';
 import { PictureWordPuzzle } from '../puzzles/PictureWordPuzzle.js';
+import { SentenceScenePuzzle } from '../puzzles/SentenceScenePuzzle.js';
 import { ReadWordPuzzle } from '../puzzles/ReadWordPuzzle.js';
 import { SoundPuzzle } from '../puzzles/SoundPuzzle.js';
 import { SyllablePuzzle } from '../puzzles/SyllablePuzzle.js';
@@ -39,6 +40,7 @@ const DEVOIRS = {
   additions: AdditionPuzzle,
   comparaisons: ComparePuzzle,
   'image-mot': PictureWordPuzzle,
+  'phrase-scene': SentenceScenePuzzle,
   'lire-mots': ReadWordPuzzle,
   mots: WordPuzzle,
   syllabes: SyllablePuzzle,
