@@ -1,15 +1,15 @@
 import '@fontsource/andika/400.css';
 import * as Phaser from 'phaser';
-import { ROOM_HEIGHT, ROOM_WIDTH, TILE_SIZE } from './constants.js';
+import { GAME_HEIGHT, GAME_WIDTH } from './constants.js';
 import { BootScene } from './scenes/BootScene.js';
 import { RoomScene } from './scenes/RoomScene.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
   parent: 'game',
-  width: ROOM_WIDTH * TILE_SIZE,
-  height: ROOM_HEIGHT * TILE_SIZE,
-  pixelArt: true, // agrandissement net, sans flou
+  width: GAME_WIDTH,
+  height: GAME_HEIGHT,
+  pixelArt: true, // agrandissement net, sans flou, pour les dessins des salles
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   physics: { default: 'arcade' },
   scene: [BootScene, RoomScene],

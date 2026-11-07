@@ -1,7 +1,11 @@
-// Une salle fait 15×10 tuiles de 16 px, soit 240×160 : la résolution de la GBA.
+// Une salle fait 15×10 tuiles de 16 px, soit 240×160. La caméra l'agrandit pour remplir le jeu,
+// qui fait 960×640 : les salles gardent leurs coordonnées, les cartes illustrées restent nettes.
 export const TILE_SIZE = 16;
 export const ROOM_WIDTH = 15;
 export const ROOM_HEIGHT = 10;
+export const VIEW_ZOOM = 4;
+export const GAME_WIDTH = ROOM_WIDTH * TILE_SIZE * VIEW_ZOOM;
+export const GAME_HEIGHT = ROOM_HEIGHT * TILE_SIZE * VIEW_ZOOM;
 
 export const PLAYER_SPEED = 80; // pixels par seconde
 export const CORNER_ASSIST = 14; // pixels de décalage corrigés pour entrer dans une ouverture
