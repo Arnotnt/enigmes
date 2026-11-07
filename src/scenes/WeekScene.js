@@ -1,3 +1,5 @@
+import { MAP_MUSIC } from '../audio/musics.js';
+import { playBravo, playMusic } from '../audio/sound.js';
 import { isDayDone, isDayOpen, isWeekDone } from '../parcours/progress.js';
 import { backButton } from '../ui/BackButton.js';
 import { SOLVED_ROOMS } from './RoomScene.js';
@@ -18,7 +20,7 @@ export class WeekScene extends PathMapScene {
 
   create() {
     if (this.finished && isWeekDone(this.week)) {
-      this.scene.start('world', { finished: this.week });
+      this.scene.start('world', { world: this.world, finished: this.week });
       return;
     }
 
@@ -32,6 +34,8 @@ export class WeekScene extends PathMapScene {
 
     this.buildMap(this.world.weekPlace, stops, firstToDo === -1 ? 0 : firstToDo);
     backButton.show(() => this.goBack());
+    playMusic(this.world.music ?? MAP_MUSIC);
+    if (this.finished) playBravo();
     this.say(
       this.finished
         ? { text: 'Bravo !', speech: `Bravo ! ${this.finished.name} est fini.` }
@@ -68,6 +72,6 @@ export class WeekScene extends PathMapScene {
 
   goBack() {
     backButton.hide();
-    this.leave(() => this.scene.start('world', {}));
+    this.leave(() => this.scene.start('world', { world: this.world }));
   }
 }

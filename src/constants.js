@@ -61,3 +61,10 @@ export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle
 export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
+
+export const GAME_TITLE = 'Énigmes'; // titre provisoire de l'écran de démarrage
+
+// Musique : volume normal, volume quand la voix parle, et durée des fondus.
+export const MUSIC_VOLUME = 0.35;
+export const MUSIC_DUCKED_VOLUME = 0.08;
+export const MUSIC_FADE = 500; // millisecondes

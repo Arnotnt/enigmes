@@ -1,6 +1,10 @@
 import { EGYPT, TEMPLE } from './places.js';
 
-// Le parcours du CP. Septembre-Octobre compte comme terminé : ce monde sera construit plus tard.
+// Le parcours du CP : les mondes de l'année, dans l'ordre de la carte des mondes.
+// Un monde a un nom, ses mois, puis, quand il est construit, ses cartes (`place` pour les semaines,
+// `weekPlace` pour les jours), sa musique (clé de `MUSICS` dans src/audio/musics.js) et ses semaines.
+// Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
+// Septembre-Octobre compte comme terminé : ce monde sera construit plus tard.
 //
 // Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks` :
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
@@ -20,8 +24,11 @@ function week(id, title, lessons = {}, done = false) {
 }
 
 export const WORLDS = [
+  { name: 'Septembre-Octobre', months: 'septembre et octobre', done: true, weeks: [] },
   {
     name: 'L’Égypte',
+    months: 'novembre et décembre',
+    music: 'musique-egypte',
     place: EGYPT,
     weekPlace: TEMPLE,
     weeks: [
@@ -41,4 +48,7 @@ export const WORLDS = [
       week('2026-12-14', 'Semaine du 14 décembre'),
     ],
   },
+  { name: 'La Chine', months: 'janvier et février', weeks: [] },
+  { name: null, months: 'mars et avril', weeks: [] },
+  { name: null, months: 'mai et juin', weeks: [] },
 ];
