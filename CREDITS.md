@@ -12,6 +12,9 @@
 - **Salle du temple** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`.
   Fichier utilisé : `src/assets/salles/temple-egypte.jpg`.
 
+- **Torche (stèle)** : image générée avec Gemini pour ce projet, d'après les prompts de `docs/style-images.md`, puis détourée et réduite.
+  Fichier utilisé : `src/assets/objets/torche-egypte.png`.
+
 ## Police
 
 - **Andika**, par SIL International : licence SIL Open Font License 1.1. Police conçue pour les lecteurs débutants.
