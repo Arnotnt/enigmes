@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tester la voix</title>
+    <style>
+      body { margin: 0; padding: 24px 16px; font-family: Andika, sans-serif; background: #f6efe0; color: #2b2118; }
+      main { max-width: 760px; margin: 0 auto; }
+      h1 { margin: 0 0 8px; font-size: 28px; }
+      p { line-height: 1.5; }
+      textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 18px; padding: 8px; border: 2px solid #6b4a2f; border-radius: 8px; }
+      #syllables { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+      .syllable { display: flex; border: 2px solid #6b4a2f; border-radius: 10px; overflow: hidden; background: #fffaf0; }
+      .syllable button { font: inherit; border: 0; background: none; cursor: pointer; padding: 8px 12px; color: inherit; }
+      .syllable .say { font-size: 26px; min-width: 64px; }
+      .syllable .mark { font-size: 14px; border-left: 2px solid #6b4a2f; }
+      .syllable.bad { background: #f7c9b8; border-color: #a33a1f; }
+      #result { min-height: 3em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Tester la voix sur les syllabes</h1>
+      <p>
+        Clique sur une syllabe pour l'entendre avec la voix du jeu. Si elle est mal dite, clique sur
+        « mal dite ». À la fin, recopie la liste du bas dans un commentaire de l'issue US-704.
+      </p>
+      <label for="list">Syllabes à tester, séparées par des espaces :</label>
+      <textarea id="list" rows="4"></textarea>
+      <div id="syllables"></div>
+      <label for="result">Syllabes mal dites :</label>
+      <textarea id="result" rows="2" readonly></textarea>
+    </main>
+    <script type="module">
+      import '@fontsource/andika/400.css';
+      import { canSpeak, speak } from '../src/speech.js';
+      import { SOUND_ORDER } from '../src/reading/sounds.js';
+
+      // Par défaut : chaque consonne de l'ordre des sons avec chaque voyelle.
+      const vowels = SOUND_ORDER.filter((sound) => 'aiouyeé'.includes(sound));
+      const consonants = SOUND_ORDER.filter((sound) => !vowels.includes(sound));
+      const list = document.querySelector('#list');
+      list.value = consonants.map((c) => vowels.map((v) => c + v).join(' ')).join('\n');
+
+      const area = document.querySelector('#syllables');
+      const result = document.querySelector('#result');
+      const bad = new Set();
+
+      function showResult() {
+        result.value = [...bad].join(' ');
+      }
+
+      function render() {
+        area.replaceChildren();
+        const syllables = [...new Set(list.value.split(/\s+/).filter(Boolean))];
+        for (const syllable of syllables) {
+          const box = document.createElement('div');
+          box.className = 'syllable' + (bad.has(syllable) ? ' bad' : '');
+          const say = document.createElement('button');
+          say.className = 'say';
+          say.textContent = syllable;
+          say.addEventListener('click', () => speak(syllable));
+          const mark = document.createElement('button');
+          mark.className = 'mark';
+          mark.textContent = 'mal dite';
+          mark.addEventListener('click', () => {
+            if (bad.has(syllable)) bad.delete(syllable);
+            else bad.add(syllable);
+            box.classList.toggle('bad', bad.has(syllable));
+            showResult();
+          });
+          box.append(say, mark);
+          area.append(box);
+        }
+      }
+
+      if (!canSpeak()) area.textContent = 'Ce navigateur ne sait pas lire à voix haute.';
+      else {
+        list.addEventListener('input', render);
+        render();
+      }
+    </script>
+  </body>
+</html>
