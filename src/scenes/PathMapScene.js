@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import {
   GAME_WIDTH,
+  MAP_EXIT_WALK,
   MAP_GLIDE_SPEED,
   MAP_HERO_SCALE,
   MAP_STOP_RADIUS,
@@ -33,6 +34,7 @@ export class PathMapScene extends Phaser.Scene {
     this.current = startIndex;
     this.route = null;
     this.leaving = false;
+    this.exiting = false; // vrai quand le personnage sort par un bout du chemin
 
     const scale = GAME_WIDTH / place.width;
     this.path = place.path.map(([x, y]) => new Phaser.Math.Vector2(x * scale, y * scale));
@@ -76,6 +78,10 @@ export class PathMapScene extends Phaser.Scene {
 
   move(step) {
     const target = this.current + step;
+    if ((target < 0 || target >= this.stopsData.length) && this.exitsBy(step)) {
+      this.walkOut(step);
+      return;
+    }
     if (target < 0) return;
     if (target > this.lastReachable) {
       this.say(this.closedText(target >= this.stopsData.length ? null : target));
@@ -88,6 +94,29 @@ export class PathMapScene extends Phaser.Scene {
     this.route = route;
     this.routeStep = 0;
     this.current = target;
+    playStep();
+  }
+
+  // Vrai si dépasser ce bout du chemin (-1 : avant le premier point, 1 : après le dernier) ramène
+  // à la carte précédente, comme Échap. Chaque carte choisit ses bouts.
+  exitsBy() {
+    return false;
+  }
+
+  // Le personnage sort de la carte : vers la gauche par le début du chemin, ou dans le
+  // prolongement du chemin par la fin. Arrivé au bout, il quitte la carte sans rien valider.
+  walkOut(step) {
+    const here = this.path[this.stopPoints[this.current]];
+    let way = new Phaser.Math.Vector2(-1, 0);
+    if (step > 0) {
+      const before = this.path[this.stopPoints[this.current] - 1] ?? here;
+      way = here.clone().subtract(before);
+      if (way.length() === 0) way.set(1, 0);
+    }
+    this.route = [here.clone().add(way.normalize().scale(MAP_EXIT_WALK))];
+    this.routeStep = 0;
+    this.exiting = true;
+    dialogBox.hide();
     playStep();
   }
 
@@ -112,6 +141,10 @@ export class PathMapScene extends Phaser.Scene {
 
     if (this.routeStep === this.route.length) {
       this.route = null;
+      if (this.exiting) {
+        this.goBack();
+        return;
+      }
       this.hero.anims.stop();
       this.hero.setFrame(standingFrame('down'));
       this.say(this.describe(this.current));

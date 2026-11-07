@@ -30,6 +30,7 @@ export const ROOM_FADE = 200; // millisecondes de fondu entre deux salles
 export const MAP_GLIDE_SPEED = 170; // pixels par seconde sur les cartes illustrées
 export const MAP_HERO_SCALE = 2.5; // le dessin du personnage, agrandi sur les cartes
 export const MAP_STOP_RADIUS = 18; // pixels
+export const MAP_EXIT_WALK = 70; // pixels parcourus en quittant la carte par un bout du chemin
 
 // Durée de poussée avant que le bloc bouge, pour éviter de le déplacer en le frôlant.
 export const BLOCK_PUSH_DELAY = 150; // millisecondes

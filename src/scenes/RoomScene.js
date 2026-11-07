@@ -26,7 +26,7 @@ import { SyllablePuzzle } from '../puzzles/SyllablePuzzle.js';
 import { VowelPuzzle } from '../puzzles/VowelPuzzle.js';
 import { WordPuzzle } from '../puzzles/WordPuzzle.js';
 import { markDayDone } from '../parcours/progress.js';
-import { ROOM_DONE } from '../rooms.js';
+import { ROOM_BACK, ROOM_DONE } from '../rooms.js';
 import { feetOffset, mapProperty, sameTile, tileAt } from '../tiles.js';
 import { backButton } from '../ui/BackButton.js';
 import { dialogBox } from '../ui/DialogBox.js';
@@ -129,7 +129,8 @@ export class RoomScene extends Phaser.Scene {
     // Une sortie vers une salle qui n'est pas dans la journée reste fermée.
     this.exits = map
       .filterObjects('objets', (object) => object.name === 'sortie')
-      .filter((exit) => this.exitTarget(exit) === ROOM_DONE || this.stepOf(this.exitTarget(exit)) !== -1);
+      .filter((exit) => [ROOM_DONE, ROOM_BACK].includes(this.exitTarget(exit)) || this.stepOf(this.exitTarget(exit)) !== -1);
+    this.exits.filter((exit) => this.exitTarget(exit) === ROOM_BACK).forEach((exit) => this.drawBackArrow(exit));
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.backKey = this.input.keyboard.addKey('ESC');
@@ -216,8 +217,19 @@ export class RoomScene extends Phaser.Scene {
     return { world: this.world, week: this.week, day: this.day };
   }
 
+  // Une flèche vers le bas, qui bouge doucement, au-dessus de la sortie vers la semaine.
+  drawBackArrow({ x, y }) {
+    const arrow = this.add.triangle(x, y - 6, 0, 0, 12, 0, 6, 8, 0xf2c14e);
+    arrow.setStrokeStyle(1, 0x2b2118);
+    this.tweens.add({ targets: arrow, y: y - 2, duration: 500, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+  }
+
   leaveRoom(exit) {
     const target = this.exitTarget(exit);
+    if (target === ROOM_BACK) {
+      this.backToWeek();
+      return;
+    }
     if (target === ROOM_DONE) {
       this.finishRoom();
       return;

@@ -52,6 +52,11 @@ export class WorldScene extends PathMapScene {
     this.leave(() => this.scene.start('week', { world: this.world, week }));
   }
 
+  // ← sur la première semaine, ou → sur la dernière, ramène à la carte des mondes.
+  exitsBy() {
+    return true;
+  }
+
   goBack() {
     backButton.hide();
     this.leave(() => this.scene.start('atlas'));
