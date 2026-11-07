@@ -1,5 +1,7 @@
 # Feuille de route
 
+Le suivi du travail se fait désormais dans [le backlog](backlog.md). Cette page garde l'historique des premières phases.
+
 ## Phase 0 : mise en place
 
 - [x] Projet Vite + Phaser et `CLAUDE.md`

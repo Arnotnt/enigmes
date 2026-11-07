@@ -29,6 +29,9 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 
 ## Organisation
 
-- Feuille de route : `docs/feuille-de-route.md`.
-- Une issue = une branche = une pull request.
+- Méthode, épics et sprints : `docs/backlog.md`. Un sprint = un week-end. Les user stories vivent dans les issues GitHub, référence commune au téléphone et au Mac. `docs/feuille-de-route.md` garde l'historique des premières phases.
+- Une user story = une issue = une branche = une pull request.
+- Skills du projet : `ecrire-us`, `devoirs-semaine`, `developper-us`.
+- Style des images : `docs/style-images.md`.
+- Le dépôt est public : jamais de nom de l'enfant, de la maîtresse ou de l'école, ni de photo de cahier.
 - Le propriétaire du projet apprend Phaser : expliquer les choix simplement, en français.
