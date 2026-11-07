@@ -153,6 +153,7 @@ export const WORLDS = [
   {
     name: 'Les Pirates',
     months: 'septembre et octobre',
+    costume: 'pirate',
     place: PIRATES,
     weekPlace: TEMPLE, // en attendant la carte des jours des pirates
     // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
@@ -207,6 +208,7 @@ export const WORLDS = [
     name: 'L’Égypte',
     months: 'novembre et décembre',
     music: 'musique-egypte',
+    costume: 'egyptien',
     place: EGYPT,
     weekPlace: TEMPLE,
     weeks: [
@@ -259,6 +261,7 @@ export const WORLDS = [
   {
     name: 'La Chine',
     months: 'janvier et février',
+    costume: 'chinois',
     place: CHINE,
     weekPlace: TEMPLE, // en attendant la carte des jours de la Chine
     // Simulation (US-902).
@@ -302,6 +305,6 @@ export const WORLDS = [
     ],
   },
   // Cartes des jours : celle du temple, en attendant la leur. 6 semaines chacun, à écrire.
-  { name: 'La Gaule', months: 'mars et avril', place: GAULE, weekPlace: TEMPLE, weeks: [] },
-  { name: 'La Grèce antique', months: 'mai et juin', place: GRECE, weekPlace: TEMPLE, weeks: [] },
+  { name: 'La Gaule', months: 'mars et avril', costume: 'gaulois', place: GAULE, weekPlace: TEMPLE, weeks: [] },
+  { name: 'La Grèce antique', months: 'mai et juin', costume: 'grec', place: GRECE, weekPlace: TEMPLE, weeks: [] },
 ];
