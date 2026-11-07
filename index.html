@@ -7,6 +7,8 @@
     <style>
       html, body { margin: 0; height: 100%; background: #14141f; overflow: hidden; }
       #game { width: 100%; height: 100%; }
+      /* Phaser demande un agrandissement net, qui abîmerait les cartes illustrées. */
+      #game canvas { image-rendering: auto !important; }
     </style>
   </head>
   <body>

@@ -1,6 +1,15 @@
 import * as Phaser from 'phaser';
 import { Npc } from '../characters/Npc.js';
-import { CORNER_ASSIST, PLAYER_HITBOX, PLAYER_SPEED, ROOM_FADE, TILE_SIZE } from '../constants.js';
+import {
+  CORNER_ASSIST,
+  PLAYER_HITBOX,
+  PLAYER_SPEED,
+  ROOM_FADE,
+  ROOM_HEIGHT,
+  ROOM_WIDTH,
+  TILE_SIZE,
+  VIEW_ZOOM,
+} from '../constants.js';
 import { DIRECTIONS, firstFrame } from '../directions.js';
 import { AdditionPuzzle } from '../puzzles/AdditionPuzzle.js';
 import { BlockPuzzle } from '../puzzles/BlockPuzzle.js';
@@ -28,6 +37,11 @@ export class RoomScene extends Phaser.Scene {
   }
 
   create() {
+    const width = ROOM_WIDTH * TILE_SIZE;
+    const height = ROOM_HEIGHT * TILE_SIZE;
+    this.physics.world.setBounds(0, 0, width, height);
+    this.cameras.main.setZoom(VIEW_ZOOM).centerOn(width / 2, height / 2);
+
     const map = this.make.tilemap({ key: this.room });
     const tileset = map.addTilesetImage('overworld', 'tiles');
     map.createLayer('sol', tileset);
