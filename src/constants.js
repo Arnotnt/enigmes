@@ -62,7 +62,7 @@ export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la sal
 export const SYLLABLE_ROUNDS = 4; // syllabes à former avant la fin de la salle
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
 
-export const GAME_TITLE = 'Énigmes'; // titre provisoire de l'écran de démarrage
+export const GAME_TITLE = 'Le Tour du Monde\nd’Alexis'; // titre de l'écran de démarrage, sur deux lignes
 
 // Musique : volume normal, volume quand la voix parle, et durée des fondus.
 export const MUSIC_VOLUME = 0.35;

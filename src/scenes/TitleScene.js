@@ -8,8 +8,9 @@ import { dialogBox } from '../ui/DialogBox.js';
 
 const START_TEXT = 'Appuie sur Entrée pour jouer.';
 
-// L'écran de démarrage. L'appui sur Entrée sert aussi à débloquer le son : le navigateur refuse
-// la musique et la voix tant qu'on n'a touché à rien.
+// L'écran de démarrage. La musique est demandée dès l'arrivée : le navigateur la lance tout de
+// suite s'il le permet, sinon au premier appui sur une touche ou au premier clic (il refuse le son
+// tant qu'on n'a touché à rien).
 export class TitleScene extends Phaser.Scene {
   constructor() {
     super('title');
@@ -23,9 +24,11 @@ export class TitleScene extends Phaser.Scene {
     background.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
     this.add.rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, 0x2b2118, 0.35).setOrigin(0);
 
-    const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT * 0.3, GAME_TITLE, {
+    const title = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT * 0.27, GAME_TITLE, {
       fontFamily: 'Andika',
-      fontSize: 110,
+      fontSize: 84,
+      align: 'center',
+      lineSpacing: -6,
       color: '#fff8e7',
       stroke: '#6b4a2f',
       strokeThickness: 14,
@@ -38,6 +41,7 @@ export class TitleScene extends Phaser.Scene {
     hero.setScale(MAP_HERO_SCALE * 1.4);
     this.tweens.add({ targets: hero, y: hero.y - 12, duration: 220, yoyo: true, repeat: -1, repeatDelay: 1600 });
 
+    playMusic(MAP_MUSIC);
     dialogBox.show(START_TEXT);
     this.enterKey = this.input.keyboard.addKey('ENTER');
     this.listenKey = this.input.keyboard.addKey('SPACE');
@@ -53,7 +57,6 @@ export class TitleScene extends Phaser.Scene {
 
   start() {
     this.leaving = true;
-    playMusic(MAP_MUSIC);
     dialogBox.hide();
     this.cameras.main.fadeOut(ROOM_FADE);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start('atlas'));
