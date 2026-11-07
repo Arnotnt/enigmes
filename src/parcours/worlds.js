@@ -20,7 +20,9 @@ export const WORLDS = [
     weekPlace: TEMPLE,
     weeks: [
       week('2026-11-02', 'Semaine du 2 novembre', {}, true), // déjà passée quand le jeu a commencé
-      week('2026-11-09', 'Semaine du 9 novembre'),
+      week('2026-11-09', 'Semaine du 9 novembre', {
+        Lundi: [{ room: 'third-room', entry: 'entree' }], // 4 additions à trou au hasard
+      }),
       week('2026-11-16', 'Semaine du 16 novembre'),
       week('2026-11-23', 'Semaine du 23 novembre'),
       week('2026-11-30', 'Semaine du 30 novembre'),
