@@ -36,6 +36,11 @@ function temple(devoir, contenu = {}) {
   return { room: 'temple-egypte', entry: 'entree', devoir, ...contenu };
 }
 
+// Le village d'automne et la Chine n'ont pas encore leur salle : ils prêtent celle du temple.
+// Quand leur fond sera dessiné, changer ici la salle (`room`) suffira pour tout le monde.
+const village = temple;
+const chine = temple;
+
 // Le contenu de lecture de chaque semaine simulée : les mots (avec image), les pièges (mots
 // écrits sans image, qui leur ressemblent) et les phrases. Chaque liste sert deux jours.
 // La salle tient 8 stèles : mots et pièges ensemble n'en dépassent jamais 8.
@@ -75,8 +80,124 @@ const S7 = { // son [t]
   phrases: ['La tortue est sur le tapis.', 'La tasse est sur la table.', 'Deux tortues sont sous la table.', 'Il y a trois tomates.'],
 };
 
+// Septembre-Octobre, simulé : les voyelles, puis deux semaines de révision avec les premières phrases.
+// `sons` remplace `syllabes` : il n'y a pas encore de consonne.
+const A1 = { // a, i
+  mots: ['chat', 'rat', 'sac', 'lit', 'riz', 'kiwi'],
+  pieges: ['lot', 'sec'],
+};
+const A2 = { // o
+  mots: ['moto', 'os', 'robot', 'vélo', 'domino', 'lit'],
+  pieges: ['mot', 'lot'],
+};
+const A3 = { // u
+  mots: ['lune', 'tortue', 'mur', 'mûre', 'bus', 'jupe'],
+  pieges: ['lut', 'rue'],
+};
+const A4 = { // e
+  mots: ['renard', 'cheval', 'melon', 'cerise', 'chemise'],
+  pieges: ['menu', 'venir'],
+};
+const A5 = { // é
+  mots: ['vélo', 'fée', 'café', 'fusée', 'épée', 'bébé'],
+  pieges: ['été', 'épi'],
+};
+const A6 = { // révision : les nombres
+  mots: ['chat', 'moto', 'lune', 'fée', 'robot', 'sac'],
+  pieges: ['mot', 'lot'],
+  phrases: ['Il y a deux chats.', 'Il y a trois lits.', 'Il y a un vélo.', 'Il y a deux robots.'],
+};
+const A7 = { // révision : les positions
+  mots: ['lit', 'vélo', 'tortue', 'cheval', 'bébé'],
+  pieges: ['lot', 'bel'],
+  phrases: ['Le chat est sur le lit.', 'Le rat est sous la table.', 'Le robot est dans la boîte.', 'Il y a deux vélos.'],
+};
+const VOYELLES = ['a', 'i', 'o', 'u', 'e', 'é'];
+
+// La Chine, simulée : p, d, b, puis les premiers sons de deux lettres (ou, on, ch).
+const C1 = { // p
+  mots: ['pomme', 'pirate', 'purée', 'pull', 'puma'],
+  pieges: ['pipe', 'pile', 'pâte'],
+  phrases: ['La pomme est sur la table.', 'Le pirate est à côté du sac.', 'Deux pommes sont dans le panier.', 'Il y a trois pulls.'],
+};
+const C2 = { // d
+  mots: ['dé', 'domino', 'radis', 'dame', 'salade'],
+  pieges: ['date', 'dur', 'ride'],
+  phrases: ['Le dé est dans la boîte.', 'Deux dominos sont sur la table.', 'Le radis est à côté de la tomate.', 'Il y a trois dés.'],
+};
+const C3 = { // b, mélangé avec d et p, souvent confondus
+  mots: ['bol', 'bus', 'bébé', 'robe', 'tube', 'robot'],
+  pieges: ['balle', 'bulle'],
+  phrases: ['Le bébé est dans le lit.', 'Le bol est sur la table.', 'Deux bus sont à côté de l’arbre.', 'Il y a trois bols.'],
+};
+const C4 = { // ou
+  mots: ['loup', 'poule', 'roue', 'poupée', 'soupe', 'mouton'],
+  pieges: ['loupe', 'pou'],
+  phrases: ['Le loup est sous le lit.', 'Deux poules sont à côté de la roue.', 'La poupée est dans la boîte.', 'Il y a trois poules.'],
+};
+const C5 = { // on
+  mots: ['dragon', 'pont', 'melon', 'lion', 'bonbon', 'ballon'],
+  pieges: ['long', 'salon'],
+  phrases: ['Le dragon est sur le pont.', 'Le lion est sous le pont.', 'Deux melons sont dans le panier.', 'Il y a trois bonbons.'],
+};
+const C6 = { // ch
+  mots: ['cheval', 'mouche', 'niche', 'chou', 'chaise', 'chat'],
+  pieges: ['chute', 'roche'],
+  phrases: ['Le chat est dans la niche.', 'La mouche est sur le chou.', 'Deux chiens sont à côté de la niche.', 'Il y a trois mouches.'],
+};
+
 export const WORLDS = [
-  { name: 'Septembre-Octobre', months: 'septembre et octobre', done: true, weeks: [] },
+  {
+    name: 'Septembre-Octobre',
+    months: 'septembre et octobre',
+    // Simulation (US-902). `done` reste tant que le monde n'a pas ses cartes illustrées (`place`,
+    // `weekPlace`) : l'enlever en même temps, sinon le jeu enverrait l'enfant dans un monde vide.
+    done: true,
+    weeks: [
+      week('2026-08-31', 'Semaine du 31 août', {
+        Lundi: [village('sons', { sons: ['a', 'i'] }), village('additions', { max: 5 })],
+        Mardi: [village('lire-mots', { mots: A1.mots }), village('comparaisons', { max: 5 })],
+        Jeudi: [village('mots', { mots: A1.mots }), village('sons', { sons: ['a', 'i'] })],
+        Vendredi: [village('image-mot', { mots: A1.mots, pieges: A1.pieges }), village('additions', { max: 5 })],
+      }),
+      week('2026-09-07', 'Semaine du 7 septembre', {
+        Lundi: [village('mots', { mots: A2.mots }), village('additions', { max: 5 })],
+        Mardi: [village('sons', { sons: ['a', 'i', 'o'] }), village('image-mot', { mots: A2.mots, pieges: A2.pieges })],
+        Jeudi: [village('comparaisons', { max: 10 }), village('sons', { sons: ['a', 'i', 'o'] })],
+        Vendredi: [village('lire-mots', { mots: A2.mots }), village('additions', { max: 5 })],
+      }),
+      week('2026-09-14', 'Semaine du 14 septembre', {
+        Lundi: [village('image-mot', { mots: A3.mots, pieges: A3.pieges }), village('sons', { sons: ['i', 'o', 'u'] })],
+        Mardi: [village('additions', { max: 6 }), village('mots', { mots: A3.mots })],
+        Jeudi: [village('sons', { sons: ['i', 'o', 'u'] }), village('lire-mots', { mots: A3.mots })],
+        Vendredi: [village('additions', { max: 6 }), village('comparaisons', { max: 10 })],
+      }),
+      week('2026-09-21', 'Semaine du 21 septembre', {
+        Lundi: [village('comparaisons', { max: 10 }), village('sons', { sons: ['a', 'o', 'u', 'e'] })],
+        Mardi: [village('lire-mots', { mots: A4.mots }), village('additions', { max: 8 })],
+        Jeudi: [village('mots', { mots: [...A4.mots, 'menu'] }), village('additions', { max: 8 })],
+        Vendredi: [village('image-mot', { mots: A4.mots, pieges: A4.pieges }), village('sons', { sons: ['a', 'o', 'u', 'e'] })],
+      }),
+      week('2026-09-28', 'Semaine du 28 septembre', {
+        Lundi: [village('additions', { max: 8 }), village('lire-mots', { mots: A5.mots })],
+        Mardi: [village('sons', { sons: ['e', 'é', 'i'] }), village('mots', { mots: A5.mots })],
+        Jeudi: [village('image-mot', { mots: A5.mots, pieges: A5.pieges }), village('additions', { max: 8 })],
+        Vendredi: [village('sons', { sons: ['e', 'é', 'i'] }), village('comparaisons', { max: 10 })],
+      }),
+      week('2026-10-05', 'Semaine du 5 octobre', {
+        Lundi: [village('sons', { sons: VOYELLES }), village('additions', { max: 10 })],
+        Mardi: [village('lire-mots', { mots: A6.mots }), village('phrase-scene', { phrases: A6.phrases })],
+        Jeudi: [village('mots', { mots: A6.mots }), village('comparaisons', { max: 10 })],
+        Vendredi: [village('image-mot', { mots: A6.mots, pieges: A6.pieges }), village('scene-phrase', { phrases: A6.phrases })],
+      }),
+      week('2026-10-12', 'Semaine du 12 octobre', {
+        Lundi: [village('phrase-scene', { phrases: A7.phrases }), village('mots', { mots: [...A7.mots, 'lune'] })],
+        Mardi: [village('additions', { max: 10 }), village('image-mot', { mots: A7.mots, pieges: A7.pieges })],
+        Jeudi: [village('scene-phrase', { phrases: A7.phrases }), village('sons', { sons: VOYELLES })],
+        Vendredi: [village('lire-mots', { mots: A7.mots }), village('comparaisons', { max: 15 })],
+      }),
+    ],
+  },
   {
     name: 'L’Égypte',
     months: 'novembre et décembre',
@@ -130,7 +251,49 @@ export const WORLDS = [
       }),
     ],
   },
-  { name: 'La Chine', months: 'janvier et février', weeks: [] },
+  {
+    name: 'La Chine',
+    months: 'janvier et février',
+    // Simulation (US-902). Le monde s'ouvrira quand il aura ses cartes illustrées (`place`, `weekPlace`).
+    weeks: [
+      week('2027-01-04', 'Semaine du 4 janvier', {
+        Lundi: [chine('mots', { mots: [...C1.mots, 'pile'] }), chine('additions', { max: 20 })],
+        Mardi: [chine('image-mot', { mots: C1.mots, pieges: C1.pieges }), chine('syllabes', { syllabes: ['pa', 'pi', 'po', 'pu', 'té'] })],
+        Jeudi: [chine('phrase-scene', { phrases: C1.phrases }), chine('comparaisons', { max: 50 })],
+        Vendredi: [chine('lire-mots', { mots: C1.mots }), chine('scene-phrase', { phrases: C1.phrases })],
+      }),
+      week('2027-01-11', 'Semaine du 11 janvier', {
+        Lundi: [chine('syllabes', { syllabes: ['da', 'di', 'do', 'du', 'pa'] }), chine('lire-mots', { mots: C2.mots })],
+        Mardi: [chine('scene-phrase', { phrases: C2.phrases }), chine('additions', { max: 20 })],
+        Jeudi: [chine('comparaisons', { max: 50 }), chine('image-mot', { mots: C2.mots, pieges: C2.pieges })],
+        Vendredi: [chine('mots', { mots: [...C2.mots, 'date'] }), chine('phrase-scene', { phrases: C2.phrases })],
+      }),
+      week('2027-01-18', 'Semaine du 18 janvier', {
+        Lundi: [chine('phrase-scene', { phrases: C3.phrases }), chine('comparaisons', { max: 60 })],
+        Mardi: [chine('mots', { mots: ['bol', 'bus', 'bébé', 'balle', 'robe', 'tube'] }), chine('lire-mots', { mots: C3.mots })],
+        Jeudi: [chine('additions', { max: 20 }), chine('scene-phrase', { phrases: C3.phrases })],
+        Vendredi: [chine('syllabes', { syllabes: ['ba', 'bo', 'bu', 'da', 'po'] }), chine('image-mot', { mots: C3.mots, pieges: C3.pieges })],
+      }),
+      week('2027-01-25', 'Semaine du 25 janvier', {
+        Lundi: [chine('image-mot', { mots: C4.mots, pieges: C4.pieges }), chine('additions', { max: 20 })],
+        Mardi: [chine('syllabes', { syllabes: ['l-ou', 'm-ou', 'p-ou', 'r-ou', 's-ou'] }), chine('phrase-scene', { phrases: C4.phrases })],
+        Jeudi: [chine('lire-mots', { mots: C4.mots }), chine('mots', { mots: ['loup', 'loupe', 'poule', 'roue', 'soupe', 'poupée'] })],
+        Vendredi: [chine('scene-phrase', { phrases: C4.phrases }), chine('comparaisons', { max: 80 })],
+      }),
+      week('2027-02-01', 'Semaine du 1er février', {
+        Lundi: [chine('scene-phrase', { phrases: C5.phrases }), chine('syllabes', { syllabes: ['p-on', 'l-on', 'm-on', 'b-on', 'd-on'] })],
+        Mardi: [chine('comparaisons', { max: 100 }), chine('lire-mots', { mots: C5.mots })],
+        Jeudi: [chine('mots', { mots: ['dragon', 'pont', 'melon', 'lion', 'long', 'bonbon'] }), chine('phrase-scene', { phrases: C5.phrases })],
+        Vendredi: [chine('additions', { max: 20 }), chine('image-mot', { mots: C5.mots, pieges: C5.pieges })],
+      }),
+      week('2027-02-08', 'Semaine du 8 février', {
+        Lundi: [chine('lire-mots', { mots: C6.mots }), chine('comparaisons', { max: 100 })],
+        Mardi: [chine('phrase-scene', { phrases: C6.phrases }), chine('additions', { max: 20 })],
+        Jeudi: [chine('syllabes', { syllabes: ['ch-a', 'ch-i', 'ch-o', 'ch-ou', 'ch-on'] }), chine('image-mot', { mots: C6.mots, pieges: C6.pieges })],
+        Vendredi: [chine('scene-phrase', { phrases: C6.phrases }), chine('mots', { mots: ['cheval', 'mouche', 'niche', 'chou', 'chute', 'chat'] })],
+      }),
+    ],
+  },
   { name: null, months: 'mars et avril', weeks: [] },
   { name: null, months: 'mai et juin', weeks: [] },
 ];

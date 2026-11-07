@@ -146,7 +146,7 @@ Une scène s'accroche en haut de la salle. Trois stèles numérotées portent ch
 
 ## Les images
 
-Toutes les images sont dans `src/assets/pictos/`, une par mot. Aujourd'hui : ananas, arbre, âne, ballon, boîte, café, chaise, chat, chien, fée, fil, fusée, île, lama, lit, lune, momie, moto, mouton, mur, mûre, navire, nez, oiseau, olive, os, panier, poisson, rame, rat, renard, riz, robot, sac, salade, sel, sirop, sofa, souris, table, tapis, tasse, tomate, tortue, vélo. Pour en ajouter : `node outils/picto.mjs <mot>` (voir `lire-mots`).
+Toutes les images sont dans `src/assets/pictos/`, une par mot. Aujourd'hui : ananas, arbre, âne, ballon, bébé, boîte, bol, bonbon, bus, café, cerise, chaise, chat, chemise, cheval, chien, chou, dame, dé, domino, dragon, épée, fée, fil, fusée, île, jupe, kiwi, lama, lion, lit, loup, lune, melon, momie, moto, mouche, mouton, mur, mûre, navire, nez, niche, oiseau, olive, os, panier, pirate, poisson, pomme, pont, poule, poupée, pull, puma, purée, radis, rame, rat, renard, riz, robe, robot, roue, sac, salade, sel, sirop, sofa, soupe, souris, table, tapis, tasse, tomate, tortue, tube, vélo. Pour en ajouter : `node outils/picto.mjs <mot>` (voir `lire-mots`).
 
 ## Énigmes liées à une carte
 
