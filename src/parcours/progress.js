@@ -30,13 +30,15 @@ export const isAllOpen = () => profile === 'admin';
 // devoirs. L'enfant ne peut pas y jouer, donc aucun de ses jours ne sera validé à l'avance.
 export const isWeekWaiting = (week) => Boolean(week.simulation) && !isAllOpen();
 
-export const isDayDone = (week, day) => (progress[week.id] ?? []).includes(day.name);
+// Un jour sans devoir (jour férié, sortie) compte comme fait : il ne bloque jamais la suite.
+export const isDayDone = (week, day) => day.rooms.length === 0 || (progress[week.id] ?? []).includes(day.name);
 export const isWeekDone = (week) => week.done || week.days.every((day) => isDayDone(week, day));
 
-// Un jour s'ouvre quand le précédent est validé.
+// Un jour s'ouvre quand tous les précédents sont validés : un mardi sans devoir n'ouvre pas jeudi
+// avant que lundi soit fait.
 export function isDayOpen(week, day) {
   const index = week.days.indexOf(day);
-  return isAllOpen() || index === 0 || isDayDone(week, week.days[index - 1]);
+  return isAllOpen() || week.days.slice(0, index).every((previous) => isDayDone(week, previous));
 }
 
 // La semaine à faire : la première qui n'est pas finie, ou la dernière si tout est fini.

@@ -26,6 +26,7 @@ export class WeekScene extends PathMapScene {
 
     const { days } = this.week;
     const state = (day) => {
+      if (day.rooms.length === 0) return 'empty';
       if (isDayDone(this.week, day)) return 'done';
       return isDayOpen(this.week, day) ? 'open' : 'closed';
     };
@@ -46,15 +47,15 @@ export class WeekScene extends PathMapScene {
   describe(index) {
     const day = this.week.days[index];
     if (day.rooms.length === 0) {
-      return { text: day.name, speech: `${day.name}. Il n’y a pas encore de devoir ce jour-là.` };
+      return { text: day.name, speech: `${day.name}. Il n’y a pas de devoir ce jour-là.` };
     }
     return { text: day.name, speech: `${day.name}. Appuie sur Entrée pour commencer.` };
   }
 
   closedText(target) {
     if (target === null) return { text: 'Fin du chemin', speech: 'C’est le dernier jour de la semaine.' };
-    const previous = this.week.days[target - 1];
-    return { text: 'Fermé', speech: `Ce jour est fermé. Finis d’abord ${previous.name.toLowerCase()}.` };
+    const toDo = this.week.days.find((day) => !isDayDone(this.week, day));
+    return { text: 'Fermé', speech: `Ce jour est fermé. Finis d’abord ${toDo.name.toLowerCase()}.` };
   }
 
   // Chaque jour repart de zéro : les énigmes de la veille ne restent pas résolues.

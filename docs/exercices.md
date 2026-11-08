@@ -22,6 +22,8 @@ Une semaine écrite avec `simulation(…)` au lieu de `week(…)` est inventée 
 - `entry` : le point d'arrivée dans la salle, ici `entree`.
 - `devoir` : l'exercice, choisi dans le tableau ci-dessous. Le reste de la ligne donne son contenu.
 
+Un jour sans devoir (jour férié, sortie) ne s'écrit pas, ou s'écrit avec une liste vide : il compte comme fait, et le jour suivant s'ouvre.
+
 Après avoir écrit une semaine, lancer `npm run verifier` : il signale un devoir inconnu, une salle ou un point d'arrivée absent, une liste vide, plus de 8 stèles de mots (mots et pièges ensemble), un `max` inférieur à 1, un mot sans image, une phrase que le jeu ne sait pas dessiner, une syllabe mal écrite ou un son inconnu. La publication s'arrête s'il trouve une erreur.
 
 Les stèles se placent seules. Une erreur fait trembler la stèle, sans rien enlever, et l'enfant réessaie. La touche Espace et le bouton d'écoute redisent la consigne. Revenir dans la salle relance une nouvelle série.

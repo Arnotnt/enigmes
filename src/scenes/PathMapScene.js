@@ -15,8 +15,9 @@ import { standingFrame } from '../directions.js';
 import { feetOffset } from '../tiles.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
-const STOP_COLORS = { done: 0x4f8a5b, open: 0xf2c14e, closed: 0x8a8378 };
-const TEXT_COLORS = { done: '#fff8e7', open: '#2b2118', closed: '#fff8e7' };
+const STOP_COLORS = { done: 0x4f8a5b, open: 0xf2c14e, closed: 0x8a8378, empty: 0xc9d6df };
+const TEXT_COLORS = { done: '#fff8e7', open: '#2b2118', closed: '#fff8e7', empty: '#2b2118' };
+const STOP_MARKS = { done: '✓', empty: '–' }; // à la place du numéro ou du nom
 
 const direction = (from, to) => {
   const dx = to.x - from.x;
@@ -28,7 +29,7 @@ const direction = (from, to) => {
 // Base des deux cartes illustrées : le personnage glisse de point en point sur un chemin.
 // Une carte fille appelle buildMap, puis fournit describe, enter et closedText.
 export class PathMapScene extends Phaser.Scene {
-  // stops : [{ label, state }], state valant 'done', 'open' ou 'closed'.
+  // stops : [{ label, state }], state valant 'done', 'open', 'closed' ou 'empty' (un jour sans devoir).
   buildMap(place, stops, startIndex) {
     this.stopsData = stops;
     this.current = startIndex;
@@ -60,7 +61,7 @@ export class PathMapScene extends Phaser.Scene {
 
   drawStop({ x, y }, { label, state }) {
     this.add.circle(x, y, MAP_STOP_RADIUS, STOP_COLORS[state]).setStrokeStyle(3, 0x2b2118);
-    const text = state === 'done' ? '✓' : label;
+    const text = STOP_MARKS[state] ?? label;
     const size = text.length > 2 ? 17 : 24;
     const color = text.length > 2 ? '#2b2118' : TEXT_COLORS[state];
     const item = this.add.text(x, y, text, { fontFamily: 'Andika', fontSize: size, color }).setOrigin(0.5);
