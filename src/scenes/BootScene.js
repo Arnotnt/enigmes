@@ -5,7 +5,7 @@ import overworldUrl from '../assets/overworld.png';
 import { MUSICS } from '../audio/musics.js';
 import { initSound } from '../audio/sound.js';
 import { COSTUMES, walkAnimation } from '../characters/costumes.js';
-import { NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, WALK_FRAMES } from '../constants.js';
+import { GAME_HEIGHT, GAME_WIDTH, NPC_FRAME_SIZE, PLAYER_FRAME, PLAYER_TEXTURE_SCALE, TILE_SIZE, WALK_FRAMES } from '../constants.js';
 import { DIRECTIONS, standingFrame } from '../directions.js';
 import { TORCH_STYLES, torchKey } from '../objects/torchStyles.js';
 import { checkParcours } from '../parcours/check.js';
@@ -13,13 +13,27 @@ import { PLACES } from '../parcours/places.js';
 import { PICTOS, pictoKey } from '../reading/pictos.js';
 import { BACKGROUNDS, ROOMS } from '../rooms.js';
 
+const LOADING_BAR = { width: 480, height: 32, border: 6 };
+
 // Charge une seule fois tout ce qui sert au jeu, puis ouvre l'écran de démarrage.
 export class BootScene extends Phaser.Scene {
   constructor() {
     super('boot');
   }
 
+  // Une barre avance pendant le chargement : sans elle, l'écran noir ferait croire à une panne.
+  drawLoadingBar() {
+    const { width, height, border } = LOADING_BAR;
+    const left = (GAME_WIDTH - width) / 2;
+    const y = GAME_HEIGHT / 2;
+    this.add.rectangle(GAME_WIDTH / 2, y, width + border * 2, height + border * 2, 0x6b4a2f);
+    this.add.rectangle(GAME_WIDTH / 2, y, width, height, 0xfff8e7);
+    const fill = this.add.rectangle(left, y, width, height, 0xf2c14e).setOrigin(0, 0.5).setScale(0, 1);
+    this.load.on('progress', (value) => fill.setScale(value, 1));
+  }
+
   preload() {
+    this.drawLoadingBar();
     const tileSize = { frameWidth: TILE_SIZE, frameHeight: TILE_SIZE };
     this.load.spritesheet('tiles', overworldUrl, tileSize);
     this.load.spritesheet('objects', objectsUrl, tileSize);
