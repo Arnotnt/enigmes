@@ -30,6 +30,16 @@ export function chooseProfile(name) {
   progress = load(profile);
 }
 
+// Efface la progression de la sauvegarde admin, jamais celle de l'enfant.
+export function resetAdminProgress() {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.admin);
+  } catch {
+    // Rien à faire : la sauvegarde n'existe qu'en mémoire.
+  }
+  if (profile === 'admin') progress = {};
+}
+
 // Vrai dans la sauvegarde admin : rien n'est fermé.
 export const isAllOpen = () => profile === 'admin';
 
