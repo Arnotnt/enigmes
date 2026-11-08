@@ -30,7 +30,7 @@
 - **Cartes des jours des pirates, de la Chine, de la Gaule et de la Grèce antique** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`.
   Fichiers utilisés : `src/assets/parcours/semaine-pirates.jpg`, `semaine-chine.jpg`, `semaine-gaule.jpg`, `semaine-grece.jpg`.
 
-- **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, découpées dans une planche de quatre.
+- **Salles des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet. Images d'environ 1380 pixels de large.
   Fichiers utilisés : `src/assets/salles/salle-pirates.jpg`, `salle-gaule.jpg`, `salle-chine.jpg`, `salle-grece.jpg`.
 
 - **Torches des pirates, de la Gaule, de la Chine et de la Grèce antique** : images générées avec Gemini pour ce projet, puis détourées, et l'emblème des plaques effacé pour que la lettre se lise bien.
