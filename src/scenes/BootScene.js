@@ -43,7 +43,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   create() {
-    checkParcours(); // un mot sans image ou une phrase impossible à dessiner, dans la console
+    checkParcours({ readMap: (room) => this.cache.tilemap.get(room)?.data }); // les erreurs, dans la console
     initSound(this.game);
     for (const name of Object.keys(COSTUMES)) {
       const texture = `hero-${name}`;
