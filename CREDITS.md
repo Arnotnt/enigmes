@@ -24,7 +24,7 @@
 - **Pictogrammes ARASAAC**, par Sergio Palao. Origine : ARASAAC (https://arasaac.org). Propriété : Gouvernement d'Aragon (Espagne). Licence : Creative Commons BY-NC-SA.
   Fichiers utilisés : `src/assets/pictos/` (un pictogramme par mot, téléchargé par `outils/picto.mjs`).
 
-- **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Images de 629×421, découpées dans une planche de quatre.
+- **Mondes des pirates, de la Gaule, de la Grèce antique et de la Chine** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`. Images de 1264 pixels de large.
   Fichiers utilisés : `src/assets/parcours/monde-pirates.jpg`, `monde-chine.jpg`, `monde-gaule.jpg`, `monde-grece.jpg`.
 
 - **Cartes des jours des pirates, de la Chine, de la Gaule et de la Grèce antique** : images générées avec Gemini pour ce projet, d'après le style de `docs/style-images.md`.
