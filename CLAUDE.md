@@ -16,7 +16,7 @@ C'est un **serious game** : les énigmes font progresser en lecture. Le but péd
 
 ## Technique
 
-- Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier.
+- Phaser 4 et Vite, en JavaScript. `npm run dev` pour lancer, `npm run build` pour publier, `npm run verifier` pour relire tout le parcours (la publication s'arrête s'il trouve une erreur).
 - Jeu en 960×640. Salle de 15×10 tuiles de 16 px (240×160), agrandie 4 fois par la caméra, `pixelArt: true`.
 - Déplacement libre en 4 directions, jamais en diagonale. Les blocs poussés avancent case par case.
 - Cartes faites dans Tiled, dans `src/assets/maps/` (format `.tmj`). Calques : `sol` (décor), `murs` (toute tuile peinte bloque le passage), `objets` (points). Les points d'arrivée désignent les pieds du personnage (`depart`, `entree`…). Les autres sont au centre d'une case : `bloc`, `interrupteur`, `porte`, `retour` pour l'énigme, `pnj` (aux pieds, propriété `texte`), `torche` (propriété `lettre`, avec un point `porte`), `torche-nombre` (marque la salle de démonstration des additions), et `sortie`, avec les propriétés `salle` (carte à ouvrir) et `arrivee` (point d'arrivée dans cette carte). La case de `porte` doit rester vide dans `murs`. Une carte peut avoir une propriété `fond` (clé de `BACKGROUNDS` dans `src/rooms.js`) : la grande image, rangée dans `src/assets/salles/`, remplace alors les tuiles, et `murs` bloque toujours sans se voir. Elle peut aussi avoir une propriété `torche` (clé de `TORCH_STYLES` dans `src/objects/torchStyles.js`) : la stèle des énigmes de ce monde, celle de l'Égypte sans propriété.
