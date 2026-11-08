@@ -8,7 +8,7 @@ import {
 // `costume` habille le héros dans ce monde (clé de `COSTUMES` dans src/characters/costumes.js,
 // par exemple 'pirate') ; sans costume, le héros est l'explorateur.
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
-// Les Pirates (septembre-octobre) comptent comme terminés : ce monde sera construit plus tard.
+// Un monde `done` compte comme terminé : marquer aussi ses semaines `done`, pour qu'elles se revoient.
 //
 // Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks`,
 // en remplaçant `simulation` par `week` si elle était simulée :
@@ -225,8 +225,8 @@ export const WORLDS = [
     costume: 'pirate',
     place: PIRATES,
     weekPlace: PIRATES_JOURS,
-    // Simulation (US-902). `done` : ces semaines sont passées. Sans lui, le jeu enverrait l'enfant
-    // aux pirates plutôt qu'en Égypte. Le monde se visite quand même depuis la carte des mondes.
+    // Simulation (US-902). `done`, sur le monde et sur chaque semaine : elles sont passées. Sans lui,
+    // le jeu enverrait l'enfant aux pirates plutôt qu'en Égypte. Le monde se revoit quand même.
     done: true,
     weeks: [
       week('2026-08-31', 'Semaine du 31 août', {
@@ -234,43 +234,43 @@ export const WORLDS = [
         Mardi: [village('lire-mots', { mots: A1.mots }), village('comparaisons', { max: 5 })],
         Jeudi: [village('mots', { mots: A1.mots }), village('sons', { sons: ['a', 'i'] })],
         Vendredi: [village('image-mot', { mots: A1.mots, pieges: A1.pieges }), village('additions', { max: 5 })],
-      }),
+      }, true),
       week('2026-09-07', 'Semaine du 7 septembre', {
         Lundi: [village('mots', { mots: A2.mots }), village('additions', { max: 5 })],
         Mardi: [village('sons', { sons: ['a', 'i', 'o'] }), village('image-mot', { mots: A2.mots, pieges: A2.pieges })],
         Jeudi: [village('comparaisons', { max: 10 }), village('sons', { sons: ['a', 'i', 'o'] })],
         Vendredi: [village('lire-mots', { mots: A2.mots }), village('additions', { max: 5 })],
-      }),
+      }, true),
       week('2026-09-14', 'Semaine du 14 septembre', {
         Lundi: [village('image-mot', { mots: A3.mots, pieges: A3.pieges }), village('sons', { sons: ['i', 'o', 'u'] })],
         Mardi: [village('additions', { max: 6 }), village('mots', { mots: A3.mots })],
         Jeudi: [village('sons', { sons: ['i', 'o', 'u'] }), village('lire-mots', { mots: A3.mots })],
         Vendredi: [village('additions', { max: 6 }), village('comparaisons', { max: 10 })],
-      }),
+      }, true),
       week('2026-09-21', 'Semaine du 21 septembre', {
         Lundi: [village('comparaisons', { max: 10 }), village('sons', { sons: ['a', 'o', 'u', 'e'] })],
         Mardi: [village('lire-mots', { mots: A4.mots }), village('additions', { max: 8 })],
         Jeudi: [village('mots', { mots: [...A4.mots, 'menu'] }), village('additions', { max: 8 })],
         Vendredi: [village('image-mot', { mots: A4.mots, pieges: A4.pieges }), village('sons', { sons: ['a', 'o', 'u', 'e'] })],
-      }),
+      }, true),
       week('2026-09-28', 'Semaine du 28 septembre', {
         Lundi: [village('additions', { max: 8 }), village('lire-mots', { mots: A5.mots })],
         Mardi: [village('sons', { sons: ['e', 'é', 'i'] }), village('mots', { mots: A5.mots })],
         Jeudi: [village('image-mot', { mots: A5.mots, pieges: A5.pieges }), village('additions', { max: 8 })],
         Vendredi: [village('sons', { sons: ['e', 'é', 'i'] }), village('comparaisons', { max: 10 })],
-      }),
+      }, true),
       week('2026-10-05', 'Semaine du 5 octobre', {
         Lundi: [village('sons', { sons: VOYELLES }), village('additions', { max: 10 })],
         Mardi: [village('lire-mots', { mots: A6.mots }), village('phrase-scene', { phrases: A6.phrases })],
         Jeudi: [village('mots', { mots: A6.mots }), village('comparaisons', { max: 10 })],
         Vendredi: [village('image-mot', { mots: A6.mots, pieges: A6.pieges }), village('scene-phrase', { phrases: A6.phrases })],
-      }),
+      }, true),
       week('2026-10-12', 'Semaine du 12 octobre', {
         Lundi: [village('phrase-scene', { phrases: A7.phrases }), village('mots', { mots: [...A7.mots, 'lune'] })],
         Mardi: [village('additions', { max: 10 }), village('image-mot', { mots: A7.mots, pieges: A7.pieges })],
         Jeudi: [village('scene-phrase', { phrases: A7.phrases }), village('sons', { sons: VOYELLES })],
         Vendredi: [village('lire-mots', { mots: A7.mots }), village('comparaisons', { max: 15 })],
-      }),
+      }, true),
     ],
   },
   {
