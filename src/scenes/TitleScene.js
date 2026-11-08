@@ -10,8 +10,9 @@ import { chooseProfile } from '../parcours/progress.js';
 import { ATLAS } from '../parcours/places.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
-// Les deux sauvegardes. Celle de l'enfant est choisie d'office : il n'a qu'à appuyer sur Entrée.
-const PROFILES = [
+// Les sauvegardes. Celle de l'enfant est choisie d'office : il n'a qu'à appuyer sur Entrée.
+// Admin ne s'affiche qu'avec ?admin dans l'adresse : l'enfant ne peut pas y entrer par erreur.
+const ALL_PROFILES = [
   {
     id: 'joueur',
     name: PLAYER_NAME,
@@ -27,7 +28,7 @@ const PROFILES = [
     color: 0xdfe6ee,
   },
 ];
-const START_TEXT = 'Appuie sur Entrée pour jouer.';
+const PROFILES = new URLSearchParams(window.location.search).has('admin') ? ALL_PROFILES : [ALL_PROFILES[0]];
 
 const CARD = { width: 250, height: 110, gap: 60, y: GAME_HEIGHT * 0.66 };
 const GOLD = 0xf2c14e;
@@ -60,7 +61,7 @@ export class TitleScene extends Phaser.Scene {
     this.highlight();
 
     playMusic(MAP_MUSIC);
-    dialogBox.show(START_TEXT);
+    dialogBox.show(PROFILES[0].speech, { autoSpeak: true });
     this.cursors = this.input.keyboard.createCursorKeys();
     this.enterKey = this.input.keyboard.addKey('ENTER');
     this.listenKey = this.input.keyboard.addKey('SPACE');
@@ -114,6 +115,7 @@ export class TitleScene extends Phaser.Scene {
   }
 
   cardX(index) {
+    if (PROFILES.length === 1) return GAME_WIDTH / 2;
     const offset = (CARD.width + CARD.gap) / 2;
     return GAME_WIDTH / 2 + (index === 0 ? -offset : offset);
   }
@@ -153,7 +155,7 @@ export class TitleScene extends Phaser.Scene {
     this.tweens.killTweensOf(this.hero, ['x']);
     this.hero.setFlipX(this.cardX(index) < this.hero.x);
     this.tweens.add({ targets: this.hero, x: this.cardX(index), duration: 250, ease: 'Sine.Out' });
-    dialogBox.show(PROFILES[index].speech);
+    dialogBox.show(PROFILES[index].speech, { autoSpeak: true });
   }
 
   update() {
@@ -162,7 +164,7 @@ export class TitleScene extends Phaser.Scene {
     if (JustDown(this.listenKey)) dialogBox.listen();
     else if (JustDown(this.enterKey)) this.start();
     else if (JustDown(this.cursors.left)) this.select(0);
-    else if (JustDown(this.cursors.right)) this.select(1);
+    else if (JustDown(this.cursors.right)) this.select(PROFILES.length - 1);
   }
 
   start() {

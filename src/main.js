@@ -1,13 +1,15 @@
 import '@fontsource/andika/400.css';
 import '@fontsource/andika/700.css';
 import * as Phaser from 'phaser';
-import { GAME_HEIGHT, GAME_WIDTH } from './constants.js';
+import { GAME_HEIGHT, GAME_TITLE, GAME_WIDTH } from './constants.js';
 import { AtlasScene } from './scenes/AtlasScene.js';
 import { BootScene } from './scenes/BootScene.js';
 import { RoomScene } from './scenes/RoomScene.js';
 import { TitleScene } from './scenes/TitleScene.js';
 import { WeekScene } from './scenes/WeekScene.js';
 import { WorldScene } from './scenes/WorldScene.js';
+
+document.title = GAME_TITLE.replace('\n', ' ');
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
