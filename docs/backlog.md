@@ -80,14 +80,15 @@ L'audit du code du 8 novembre est dans [audit-2026-11-08.md](audit-2026-11-08.md
 | Sprint | Dates | Objectif | Semaine jouée |
 |---|---|---|---|
 | S1 | 7-8 novembre | Jouer ses devoirs depuis la carte d'Égypte | 9 novembre |
-| S2 | 14-15 novembre | Salles et torches en HD | 16 novembre |
-| S3 | 21-22 novembre | Devoirs plus faciles à créer, former des syllabes | 23 novembre |
-| S4 | 28-29 novembre | Mots et phrases avec des images | 30 novembre |
-| S5 | 5-6 décembre | Suivre une consigne écrite (US-703) | 7 décembre |
-| S6 | 12-13 décembre | Fin du monde Égypte et bilan avec l'enfant | 14 décembre |
-| S7 | Vacances de Noël | Préparer la Chine | Janvier |
+| S2 | Livré en avance | Salles et torches en HD | 9 novembre |
+| S3 | Livré en avance | Devoirs plus faciles à créer, former des syllabes | 9 novembre |
+| S4 | Livré en avance | Mots et phrases avec des images | 9 novembre |
+| S5 | 14-15 novembre | Jamais de fausse semaine ni de blocage | 16 novembre |
+| S6 | 21-22 novembre | Suivre une consigne écrite (US-1002, US-1003, US-703) | 23 novembre |
+| S7 | 12-13 décembre | Fin du monde Égypte et bilan avec l'enfant | 14 décembre |
+| S8 | Vacances de Noël | Préparer la Chine | Janvier |
 
-S1 à S4 ont un jalon sur GitHub. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
+S1 à S5 ont un jalon sur GitHub. Les suivants sont une prévision, à ajuster chaque samedi selon ce que demande l'école.
 
 ### Sprint 1 : 7-8 novembre
 
@@ -123,6 +124,16 @@ L'écran de démarrage, la carte des mondes et la musique, prévus d'abord dans 
 
 Les exercices prêts à l'emploi sont listés dans [exercices.md](exercices.md).
 
+### Sprint 5 : 14-15 novembre
+
+Objectif : l'enfant ne peut plus jouer une semaine simulée ni rester bloqué, et une erreur dans les devoirs se voit avant de publier.
+
+Ordre : US-103 (#95, à faire avant d'écrire les vrais devoirs du 16 novembre), US-1001 (#98), US-304 (#96), US-104 (#97), US-805 (#99), US-806 (#100), US-709 (#102), puis US-807 (#101) et US-1004 (#106) si le temps le permet.
+
+Côté parent : US-704 (#60), tester la voix sur les syllabes, une fois US-709 faite pour écouter la bonne voix.
+
+Attention : la semaine simulée du 16 novembre s'ouvre dès que l'enfant finit celle du 9, donc avant ce sprint si US-103 n'est pas faite.
+
 ## Décisions prises
 
 - Le jeu suit 3 niveaux : carte du monde, carte de la semaine, salles de la journée.
@@ -135,6 +146,7 @@ Les exercices prêts à l'emploi sont listés dans [exercices.md](exercices.md).
 - La semaine du 2 novembre est validée d'office, faute de devoirs. À revoir si besoin.
 - Sur la carte d'Égypte, le parcours va du bas vers les pyramides, et le personnage glisse sur l'eau pour traverser le Nil.
 - Sprint 1 : une pull request par épic, par exception à la règle une US = une PR.
+- La sauvegarde Admin n'apparaît qu'avec `?admin` dans l'adresse du jeu (US-805).
 
 ## Questions ouvertes
 
