@@ -29,12 +29,20 @@ speech?.cancel();
 
 export const canSpeak = () => Boolean(speech);
 
+// Une voix de France d'abord : sur Mac, une voix du Québec peut être listée avant, et l'accent
+// compte pour des sons et des syllabes. Sinon, une autre voix française.
+function frenchVoice() {
+  const voices = speech.getVoices();
+  const language = (voice) => voice.lang.replace('_', '-');
+  return voices.find((voice) => language(voice) === 'fr-FR') ?? voices.find((voice) => language(voice).startsWith('fr'));
+}
+
 function start(text, canRetry) {
   const current = new SpeechSynthesisUtterance(text);
   utterance = current;
   utterance.lang = 'fr-FR';
   utterance.rate = 0.85; // un peu plus lent, pour un enfant qui apprend à lire
-  const voice = speech.getVoices().find((item) => item.lang.startsWith('fr'));
+  const voice = frenchVoice();
   if (voice) utterance.voice = voice;
 
   // Si le moteur reste muet, on le relance une fois.
