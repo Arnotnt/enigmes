@@ -6,9 +6,16 @@
 // sa progression à part. La clé de l'enfant reste celle d'avant, pour ne rien perdre.
 const STORAGE_KEYS = { joueur: 'enigmes.progress', admin: 'enigmes.progress.admin' };
 
+// Garde seulement ce qui ressemble à une progression : une sauvegarde abîmée ne doit jamais
+// empêcher d'enregistrer la suite.
+function repair(saved) {
+  if (typeof saved !== 'object' || saved === null || Array.isArray(saved)) return {};
+  return Object.fromEntries(Object.entries(saved).filter(([, days]) => Array.isArray(days)));
+}
+
 function load(profile) {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS[profile])) ?? {};
+    return repair(JSON.parse(localStorage.getItem(STORAGE_KEYS[profile])));
   } catch {
     return {};
   }
@@ -31,7 +38,7 @@ export const isAllOpen = () => profile === 'admin';
 export const isWeekWaiting = (week) => Boolean(week.simulation) && !isAllOpen();
 
 // Un jour sans devoir (jour férié, sortie) compte comme fait : il ne bloque jamais la suite.
-export const isDayDone = (week, day) => day.rooms.length === 0 || (progress[week.id] ?? []).includes(day.name);
+export const isDayDone = (week, day) => week.done || day.rooms.length === 0 || (progress[week.id] ?? []).includes(day.name);
 export const isWeekDone = (week) => week.done || week.days.every((day) => isDayDone(week, day));
 
 // Un jour s'ouvre quand tous les précédents sont validés : un mardi sans devoir n'ouvre pas jeudi
