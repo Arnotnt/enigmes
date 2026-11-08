@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   base: './',
   build: {
+    chunkSizeWarningLimit: 1600, // le fichier du jeu est gros à cause de Phaser, sans gêne ici
     rollupOptions: {
       input: { jeu: 'index.html', voix: 'outils/voix.html' },
     },

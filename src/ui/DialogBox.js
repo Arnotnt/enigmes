@@ -9,7 +9,10 @@ class DialogBox {
     this.listenButton = document.querySelector('#dialog-listen');
     this.listenable = true;
     this.listenButton.hidden = !canSpeak();
-    this.listenButton.addEventListener('click', () => this.listen());
+    this.listenButton.addEventListener('click', () => {
+      this.listen();
+      this.listenButton.blur(); // sinon Entrée « cliquerait » encore le bouton
+    });
   }
 
   // autoSpeak : lire tout de suite, pour une consigne. Une épreuve de lecture passera false.

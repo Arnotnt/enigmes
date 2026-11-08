@@ -123,7 +123,7 @@ function write({ position }, { determiner, subject, objectDeterminer, object }) 
     const target = `${objectDeterminer} ${object}`.replace(/'\s/, "'").trim();
     text = `${group} ${many ? 'sont' : 'est'} ${where} ${target}`.replace(/ d'(un|une) /, " d'$1 ");
   }
-  return `${text[0].toUpperCase()}${text.slice(1)}.`;
+  return `${text[0].toUpperCase()}${text.slice(1)}.`.replace(/'/g, '’'); // comme dans le parcours
 }
 
 // Change la position, et l'article de l'objet avec elle quand il le faut.

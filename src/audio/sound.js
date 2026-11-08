@@ -76,6 +76,8 @@ export function initSound(game) {
   });
 }
 
+let pendingStart = null; // la musique qui attend le premier appui sur une touche
+
 // Lance une musique en boucle, chargée par BootScene. Si c'est déjà elle, elle continue.
 export function playMusic(key) {
   if (key === musicKey) return;
@@ -90,6 +92,8 @@ export function playMusic(key) {
     fade(music, musicVolume(), MUSIC_FADE);
   };
   // Le navigateur garde le son bloqué jusqu'au premier appui sur une touche.
+  if (pendingStart) sound.off('unlocked', pendingStart);
+  pendingStart = sound.locked ? start : null;
   if (sound.locked) sound.once('unlocked', start);
   else start();
 }

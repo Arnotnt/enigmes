@@ -51,11 +51,11 @@ export const TORCH = {
 };
 
 export const TORCH_REACH = 15; // pixels entre les pieds et la torche : il faut la toucher pour répondre
-export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant d'annoncer le son suivant
+export const TORCH_NEXT_ROUND_DELAY = 900; // millisecondes avant le tour suivant, dans toutes les épreuves
 
-export const ADDITION_MAX = 10; // total le plus grand, sauf si la carte a une propriété `max`
+export const ADDITION_MAX = 10; // total le plus grand, sauf si le devoir donne un `max`
 export const ADDITION_ANSWER_MAX = 10; // nombre à trouver le plus grand : les torches vont de 0 à 10
-export const ADDITION_ROUNDS = 4; // additions à trouver avant la fin du jeu
+export const ADDITION_ROUNDS = 4; // additions à trouver avant la fin de la salle
 export const ADDITION_NEXT_DELAY = 4000; // millisecondes pour écouter le bravo avant la suivante
 export const COMPARE_MAX = 20; // nombres comparés, de 0 à 20
 export const COMPARE_ROUNDS = 4; // comparaisons à faire avant la fin de la salle

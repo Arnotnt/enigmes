@@ -2,7 +2,7 @@ import * as Phaser from 'phaser';
 import { OVERWORLD, TORCH, TORCH_REACH } from '../constants.js';
 import { TORCH_STYLES, torchKey, torchStyleName } from './torchStyles.js';
 
-// Torche portant une lettre, un nombre, un signe, un mot ou une image, placée sur un point de la carte.
+// Torche portant une lettre, un nombre, un signe, un mot ou une image, placée par placeStones.
 // Le dessin est une stèle : image 0 éteinte, image 1 allumée. Le point désigne le centre de la
 // case où elle est posée ; la stèle monte au-dessus, comme un personnage.
 export class Torch {
@@ -119,6 +119,7 @@ export class Torch {
   extinguish() {
     this.lit = false;
     this.stele.setFrame(0);
+    this.scene.tweens.killTweensOf(this.glow);
     this.glow?.destroy();
     this.glow = null;
   }
