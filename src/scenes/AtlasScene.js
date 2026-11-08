@@ -62,4 +62,9 @@ export class AtlasScene extends PathMapScene {
     }
     this.leave(() => this.scene.start('world', { world: WORLDS[index] }));
   }
+
+  // Échap ramène à l'écran de départ, sans rien valider.
+  goBack() {
+    this.leave(() => this.scene.start('title'));
+  }
 }
