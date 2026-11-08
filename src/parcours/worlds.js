@@ -10,7 +10,8 @@ import {
 // Un monde sans nom est un « ? » sur la carte : un monde à découvrir.
 // Les Pirates (septembre-octobre) comptent comme terminés : ce monde sera construit plus tard.
 //
-// Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks` :
+// Une semaine = un point d'étape. Chaque week-end, compléter la semaine à venir dans `weeks`,
+// en remplaçant `simulation` par `week` si elle était simulée :
 // - id : la date du lundi. Elle sert à la sauvegarde : ne plus la changer ensuite ;
 // - lessons : pour chaque jour, les salles à traverser dans l'ordre, avec un devoir par salle.
 //   `room` est une clé de src/rooms.js et `entry` le point d'arrivée dans cette carte.
@@ -31,6 +32,12 @@ const DAY_NAMES = ['Lundi', 'Mardi', 'Jeudi', 'Vendredi'];
 
 function week(id, title, lessons = {}, done = false) {
   return { id, title, done, days: DAY_NAMES.map((name) => ({ name, rooms: lessons[name] ?? [] })) };
+}
+
+// Une semaine inventée pour tester, en attendant les vrais devoirs : elle ne se joue que dans la
+// sauvegarde Admin. Quand les vrais devoirs arrivent, écrire `week` à la place de `simulation`.
+function simulation(id, title, lessons) {
+  return { ...week(id, title, lessons), simulation: true };
 }
 
 // Un devoir dans la salle du temple, la salle commune de l'Égypte.
@@ -289,31 +296,31 @@ export const WORLDS = [
         Jeudi: [temple('additions', { max: 15 })],
         Vendredi: [temple('mots', { mots: ['lune', 'renard', 'moto'] })],
       }),
-      week('2026-11-16', 'Semaine du 16 novembre', {
+      simulation('2026-11-16', 'Semaine du 16 novembre', {
         Lundi: [temple('lire-mots', { mots: S3.mots }), temple('scene-phrase', { phrases: S3.phrases })],
         Mardi: [temple('additions', { max: 10 }), temple('mots', { mots: ['momie', 'mûre', 'mur', 'mime', 'rame', 'moto'] })],
         Jeudi: [temple('syllabes', { syllabes: ['ma', 'mi', 'mo', 'mu', 'ra', 'li'] }), temple('image-mot', { mots: S3.mots, pieges: S3.pieges })],
         Vendredi: [temple('comparaisons', { max: 20 }), temple('phrase-scene', { phrases: S3.phrases })],
       }),
-      week('2026-11-23', 'Semaine du 23 novembre', {
+      simulation('2026-11-23', 'Semaine du 23 novembre', {
         Lundi: [temple('phrase-scene', { phrases: S4.phrases }), temple('additions', { max: 12 })],
         Mardi: [temple('syllabes', { syllabes: ['sa', 'si', 'so', 'su', 'ma', 'ré'] }), temple('image-mot', { mots: S4.mots, pieges: S4.pieges })],
         Jeudi: [temple('scene-phrase', { phrases: S4.phrases }), temple('comparaisons', { max: 20 })],
         Vendredi: [temple('mots', { mots: ['sac', 'sel', 'sol', 'salade', 'sirop', 'os'] }), temple('lire-mots', { mots: S4.mots })],
       }),
-      week('2026-11-30', 'Semaine du 30 novembre', {
+      simulation('2026-11-30', 'Semaine du 30 novembre', {
         Lundi: [temple('mots', { mots: ['fée', 'fil', 'fusée', 'fumée', 'sofa', 'café'] }), temple('scene-phrase', { phrases: S5.phrases })],
         Mardi: [temple('comparaisons', { max: 30 }), temple('image-mot', { mots: S5.mots, pieges: S5.pieges })],
         Jeudi: [temple('syllabes', { syllabes: ['fa', 'fi', 'fo', 'fu', 'sa', 'mi'] }), temple('phrase-scene', { phrases: S5.phrases })],
         Vendredi: [temple('additions', { max: 15 }), temple('lire-mots', { mots: S5.mots })],
       }),
-      week('2026-12-07', 'Semaine du 7 décembre', {
+      simulation('2026-12-07', 'Semaine du 7 décembre', {
         Lundi: [temple('additions', { max: 15 }), temple('phrase-scene', { phrases: S6.phrases })],
         Mardi: [temple('lire-mots', { mots: S6.mots }), temple('syllabes', { syllabes: ['na', 'ni', 'no', 'nu', 'fa', 'lu'] })],
         Jeudi: [temple('mots', { mots: ['âne', 'ananas', 'navire', 'nez', 'nana', 'lune'] }), temple('comparaisons', { max: 30 })],
         Vendredi: [temple('scene-phrase', { phrases: S6.phrases }), temple('image-mot', { mots: S6.mots, pieges: S6.pieges })],
       }),
-      week('2026-12-14', 'Semaine du 14 décembre', {
+      simulation('2026-12-14', 'Semaine du 14 décembre', {
         Lundi: [temple('image-mot', { mots: S7.mots, pieges: S7.pieges }), temple('comparaisons', { max: 30 })],
         Mardi: [temple('phrase-scene', { phrases: S7.phrases }), temple('mots', { mots: ['tortue', 'tapis', 'tasse', 'tarte', 'tomate', 'moto'] })],
         Jeudi: [temple('scene-phrase', { phrases: S7.phrases }), temple('additions', { max: 20 })],
@@ -329,37 +336,37 @@ export const WORLDS = [
     weekPlace: CHINE_JOURS,
     // Simulation (US-902).
     weeks: [
-      week('2027-01-04', 'Semaine du 4 janvier', {
+      simulation('2027-01-04', 'Semaine du 4 janvier', {
         Lundi: [chine('mots', { mots: [...C1.mots, 'pile'] }), chine('additions', { max: 20 })],
         Mardi: [chine('image-mot', { mots: C1.mots, pieges: C1.pieges }), chine('syllabes', { syllabes: ['pa', 'pi', 'po', 'pu', 'té'] })],
         Jeudi: [chine('phrase-scene', { phrases: C1.phrases }), chine('comparaisons', { max: 50 })],
         Vendredi: [chine('lire-mots', { mots: C1.mots }), chine('scene-phrase', { phrases: C1.phrases })],
       }),
-      week('2027-01-11', 'Semaine du 11 janvier', {
+      simulation('2027-01-11', 'Semaine du 11 janvier', {
         Lundi: [chine('syllabes', { syllabes: ['da', 'di', 'do', 'du', 'pa'] }), chine('lire-mots', { mots: C2.mots })],
         Mardi: [chine('scene-phrase', { phrases: C2.phrases }), chine('additions', { max: 20 })],
         Jeudi: [chine('comparaisons', { max: 50 }), chine('image-mot', { mots: C2.mots, pieges: C2.pieges })],
         Vendredi: [chine('mots', { mots: [...C2.mots, 'date'] }), chine('phrase-scene', { phrases: C2.phrases })],
       }),
-      week('2027-01-18', 'Semaine du 18 janvier', {
+      simulation('2027-01-18', 'Semaine du 18 janvier', {
         Lundi: [chine('phrase-scene', { phrases: C3.phrases }), chine('comparaisons', { max: 60 })],
         Mardi: [chine('mots', { mots: ['bol', 'bus', 'bébé', 'balle', 'robe', 'tube'] }), chine('lire-mots', { mots: C3.mots })],
         Jeudi: [chine('additions', { max: 20 }), chine('scene-phrase', { phrases: C3.phrases })],
         Vendredi: [chine('syllabes', { syllabes: ['ba', 'bo', 'bu', 'da', 'po'] }), chine('image-mot', { mots: C3.mots, pieges: C3.pieges })],
       }),
-      week('2027-01-25', 'Semaine du 25 janvier', {
+      simulation('2027-01-25', 'Semaine du 25 janvier', {
         Lundi: [chine('image-mot', { mots: C4.mots, pieges: C4.pieges }), chine('additions', { max: 20 })],
         Mardi: [chine('syllabes', { syllabes: ['l-ou', 'm-ou', 'p-ou', 'r-ou', 's-ou'] }), chine('phrase-scene', { phrases: C4.phrases })],
         Jeudi: [chine('lire-mots', { mots: C4.mots }), chine('mots', { mots: ['loup', 'loupe', 'poule', 'roue', 'soupe', 'poupée'] })],
         Vendredi: [chine('scene-phrase', { phrases: C4.phrases }), chine('comparaisons', { max: 80 })],
       }),
-      week('2027-02-01', 'Semaine du 1er février', {
+      simulation('2027-02-01', 'Semaine du 1er février', {
         Lundi: [chine('scene-phrase', { phrases: C5.phrases }), chine('syllabes', { syllabes: ['p-on', 'l-on', 'm-on', 'b-on', 'd-on'] })],
         Mardi: [chine('comparaisons', { max: 100 }), chine('lire-mots', { mots: C5.mots })],
         Jeudi: [chine('mots', { mots: ['dragon', 'pont', 'melon', 'lion', 'long', 'bonbon'] }), chine('phrase-scene', { phrases: C5.phrases })],
         Vendredi: [chine('additions', { max: 20 }), chine('image-mot', { mots: C5.mots, pieges: C5.pieges })],
       }),
-      week('2027-02-08', 'Semaine du 8 février', {
+      simulation('2027-02-08', 'Semaine du 8 février', {
         Lundi: [chine('lire-mots', { mots: C6.mots }), chine('comparaisons', { max: 100 })],
         Mardi: [chine('phrase-scene', { phrases: C6.phrases }), chine('additions', { max: 20 })],
         Jeudi: [chine('syllabes', { syllabes: ['ch-a', 'ch-i', 'ch-o', 'ch-ou', 'ch-on'] }), chine('image-mot', { mots: C6.mots, pieges: C6.pieges })],
@@ -375,37 +382,37 @@ export const WORLDS = [
     weekPlace: GAULE_JOURS,
     // Simulation, comme la Chine.
     weeks: [
-      week('2027-03-01', 'Semaine du 1er mars', {
+      simulation('2027-03-01', 'Semaine du 1er mars', {
         Lundi: [gaule('mots', { mots: [...G1.mots, 'vase'] }), gaule('additions', { max: 20 })],
         Mardi: [gaule('image-mot', { mots: G1.mots, pieges: G1.pieges }), gaule('syllabes', { syllabes: ['va', 'vi', 'vo', 'vu', 'vé'] })],
         Jeudi: [gaule('phrase-scene', { phrases: G1.phrases }), gaule('comparaisons', { max: 100 })],
         Vendredi: [gaule('lire-mots', { mots: G1.mots }), gaule('scene-phrase', { phrases: G1.phrases })],
       }),
-      week('2027-03-08', 'Semaine du 8 mars', {
+      simulation('2027-03-08', 'Semaine du 8 mars', {
         Lundi: [gaule('syllabes', { syllabes: ['ja', 'ji', 'jo', 'ju', 'j-ou'] }), gaule('lire-mots', { mots: G2.mots })],
         Mardi: [gaule('scene-phrase', { phrases: G2.phrases }), gaule('additions', { max: 20 })],
         Jeudi: [gaule('comparaisons', { max: 100 }), gaule('image-mot', { mots: G2.mots, pieges: G2.pieges })],
         Vendredi: [gaule('mots', { mots: [...G2.mots, 'joli'] }), gaule('phrase-scene', { phrases: G2.phrases })],
       }),
-      week('2027-03-15', 'Semaine du 15 mars', {
+      simulation('2027-03-15', 'Semaine du 15 mars', {
         Lundi: [gaule('phrase-scene', { phrases: G3.phrases }), gaule('comparaisons', { max: 100 })],
         Mardi: [gaule('mots', { mots: ['banane', 'pantalon', 'éléphant', 'gant', 'ballon', 'bonbon'] }), gaule('lire-mots', { mots: G3.mots })],
         Jeudi: [gaule('additions', { max: 20 }), gaule('scene-phrase', { phrases: G3.phrases })],
         Vendredi: [gaule('syllabes', { syllabes: ['b-an', 'm-an', 'p-an', 'l-on', 'r-an'] }), gaule('image-mot', { mots: G3.mots, pieges: G3.pieges })],
       }),
-      week('2027-03-22', 'Semaine du 22 mars', {
+      simulation('2027-03-22', 'Semaine du 22 mars', {
         Lundi: [gaule('image-mot', { mots: G4.mots, pieges: G4.pieges }), gaule('additions', { max: 20 })],
         Mardi: [gaule('syllabes', { syllabes: ['l-in', 'm-in', 'p-in', 's-in', 'v-in'] }), gaule('phrase-scene', { phrases: G4.phrases })],
         Jeudi: [gaule('lire-mots', { mots: G4.mots }), gaule('mots', { mots: ['lapin', 'sapin', 'raisin', 'moulin', 'lion', 'dauphin'] })],
         Vendredi: [gaule('scene-phrase', { phrases: G4.phrases }), gaule('comparaisons', { max: 100 })],
       }),
-      week('2027-03-29', 'Semaine du 29 mars', {
+      simulation('2027-03-29', 'Semaine du 29 mars', {
         Lundi: [gaule('scene-phrase', { phrases: G5.phrases }), gaule('syllabes', { syllabes: ['r-oi', 'm-oi', 't-oi', 'l-oi', 'b-oi'] })],
         Mardi: [gaule('comparaisons', { max: 100 }), gaule('lire-mots', { mots: G5.mots })],
         Jeudi: [gaule('mots', { mots: ['roi', 'oiseau', 'poire', 'étoile', 'noix', 'noir'] }), gaule('phrase-scene', { phrases: G5.phrases })],
         Vendredi: [gaule('additions', { max: 20 }), gaule('image-mot', { mots: G5.mots, pieges: G5.pieges })],
       }),
-      week('2027-04-05', 'Semaine du 5 avril', {
+      simulation('2027-04-05', 'Semaine du 5 avril', {
         Lundi: [gaule('lire-mots', { mots: G6.mots }), gaule('comparaisons', { max: 100 })],
         Mardi: [gaule('phrase-scene', { phrases: G6.phrases }), gaule('additions', { max: 20 })],
         Jeudi: [gaule('syllabes', { syllabes: ['v-an', 'j-ou', 'l-in', 'r-oi', 'ch-on'] }), gaule('image-mot', { mots: G6.mots, pieges: G6.pieges })],
@@ -421,37 +428,37 @@ export const WORLDS = [
     weekPlace: GRECE_JOURS,
     // Simulation, comme la Chine.
     weeks: [
-      week('2027-05-03', 'Semaine du 3 mai', {
+      simulation('2027-05-03', 'Semaine du 3 mai', {
         Lundi: [grece('mots', { mots: [...R1.mots, 'bâton'] }), grece('additions', { max: 20 })],
         Mardi: [grece('image-mot', { mots: R1.mots, pieges: R1.pieges }), grece('syllabes', { syllabes: ['b-eau', 'm-au', 'l-au', 'r-eau', 'p-eau'] })],
         Jeudi: [grece('phrase-scene', { phrases: R1.phrases }), grece('comparaisons', { max: 100 })],
         Vendredi: [grece('lire-mots', { mots: R1.mots }), grece('scene-phrase', { phrases: R1.phrases })],
       }),
-      week('2027-05-10', 'Semaine du 10 mai', {
+      simulation('2027-05-10', 'Semaine du 10 mai', {
         Lundi: [grece('syllabes', { syllabes: ['l-ai', 'm-ai', 'f-ai', 'b-ai', 'r-ai'] }), grece('lire-mots', { mots: R2.mots })],
         Mardi: [grece('scene-phrase', { phrases: R2.phrases }), grece('additions', { max: 20 })],
         Jeudi: [grece('comparaisons', { max: 100 }), grece('image-mot', { mots: R2.mots, pieges: R2.pieges })],
         Vendredi: [grece('mots', { mots: [...R2.mots, 'lit'] }), grece('phrase-scene', { phrases: R2.phrases })],
       }),
-      week('2027-05-17', 'Semaine du 17 mai', {
+      simulation('2027-05-17', 'Semaine du 17 mai', {
         Lundi: [grece('phrase-scene', { phrases: R3.phrases }), grece('comparaisons', { max: 100 })],
         Mardi: [grece('mots', { mots: ['champignon', 'peigne', 'araignée', 'montagne', 'cygne', 'pigeon'] }), grece('lire-mots', { mots: R3.mots })],
         Jeudi: [grece('additions', { max: 20 }), grece('scene-phrase', { phrases: R3.phrases })],
         Vendredi: [grece('syllabes', { syllabes: ['gn-a', 'gn-o', 'gn-on', 'gn-é', 'gn-i'] }), grece('image-mot', { mots: R3.mots, pieges: R3.pieges })],
       }),
-      week('2027-05-24', 'Semaine du 24 mai', {
+      simulation('2027-05-24', 'Semaine du 24 mai', {
         Lundi: [grece('image-mot', { mots: R4.mots, pieges: R4.pieges }), grece('additions', { max: 20 })],
         Mardi: [grece('syllabes', { syllabes: ['za', 'zi', 'zo', 'zu', 'zé'] }), grece('phrase-scene', { phrases: R4.phrases })],
         Jeudi: [grece('lire-mots', { mots: R4.mots }), grece('mots', { mots: ['zèbre', 'zéro', 'rose', 'vase', 'chemise', 'cerise'] })],
         Vendredi: [grece('scene-phrase', { phrases: R4.phrases }), grece('comparaisons', { max: 100 })],
       }),
-      week('2027-05-31', 'Semaine du 31 mai', {
+      simulation('2027-05-31', 'Semaine du 31 mai', {
         Lundi: [grece('scene-phrase', { phrases: R5.phrases }), grece('syllabes', { syllabes: ['ca', 'co', 'cu', 'ki', 'ké'] })],
         Mardi: [grece('comparaisons', { max: 100 }), grece('lire-mots', { mots: R5.mots })],
         Jeudi: [grece('mots', { mots: ['canard', 'coq', 'koala', 'kiwi', 'café', 'cane'] }), grece('phrase-scene', { phrases: R5.phrases })],
         Vendredi: [grece('additions', { max: 20 }), grece('image-mot', { mots: R5.mots, pieges: R5.pieges })],
       }),
-      week('2027-06-07', 'Semaine du 7 juin', {
+      simulation('2027-06-07', 'Semaine du 7 juin', {
         Lundi: [grece('lire-mots', { mots: R6.mots }), grece('comparaisons', { max: 100 })],
         Mardi: [grece('phrase-scene', { phrases: R6.phrases }), grece('additions', { max: 20 })],
         Jeudi: [grece('syllabes', { syllabes: ['b-eau', 'f-ai', 'gn-on', 'za', 'ca'] }), grece('image-mot', { mots: R6.mots, pieges: R6.pieges })],

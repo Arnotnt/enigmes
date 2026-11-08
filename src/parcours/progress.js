@@ -26,6 +26,10 @@ export function chooseProfile(name) {
 // Vrai dans la sauvegarde admin : rien n'est fermé.
 export const isAllOpen = () => profile === 'admin';
 
+// Vrai pour une semaine simulée vue depuis la sauvegarde de l'enfant : elle attend ses vrais
+// devoirs. L'enfant ne peut pas y jouer, donc aucun de ses jours ne sera validé à l'avance.
+export const isWeekWaiting = (week) => Boolean(week.simulation) && !isAllOpen();
+
 export const isDayDone = (week, day) => (progress[week.id] ?? []).includes(day.name);
 export const isWeekDone = (week) => week.done || week.days.every((day) => isDayDone(week, day));
 
@@ -36,9 +40,11 @@ export function isDayOpen(week, day) {
 }
 
 // La semaine à faire : la première qui n'est pas finie, ou la dernière si tout est fini.
+// Si cette semaine attend ses vrais devoirs, l'enfant reste sur celle qu'il vient de finir.
 export function currentWeekIndex(world) {
   const index = world.weeks.findIndex((week) => !isWeekDone(week));
-  return index === -1 ? world.weeks.length - 1 : index;
+  if (index === -1) return world.weeks.length - 1;
+  return isWeekWaiting(world.weeks[index]) ? Math.max(index - 1, 0) : index;
 }
 
 export function markDayDone(week, day) {

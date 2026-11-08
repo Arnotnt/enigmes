@@ -16,6 +16,8 @@ week('2026-11-16', 'Semaine du 16 novembre', {
 }),
 ```
 
+Une semaine écrite avec `simulation(…)` au lieu de `week(…)` est inventée pour tester : elle ne se joue que dans la sauvegarde Admin. Quand les vrais devoirs arrivent, remplacer son contenu et écrire `week`.
+
 - `room` : la salle (clé de `src/rooms.js`). En Égypte, c'est toujours `temple-egypte`.
 - `entry` : le point d'arrivée dans la salle, ici `entree`.
 - `devoir` : l'exercice, choisi dans le tableau ci-dessous. Le reste de la ligne donne son contenu.
