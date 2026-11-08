@@ -6,7 +6,7 @@ import {
 } from '../constants.js';
 import { heroTexture } from '../characters/costumes.js';
 import { standingFrame } from '../directions.js';
-import { chooseProfile } from '../parcours/progress.js';
+import { chooseProfile, resetAdminProgress } from '../parcours/progress.js';
 import { ATLAS } from '../parcours/places.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
@@ -24,7 +24,7 @@ const ALL_PROFILES = [
     id: 'admin',
     name: 'Admin',
     detail: 'Tout est ouvert',
-    speech: 'Admin : tous les mondes sont ouverts.',
+    speech: 'Admin : tous les mondes sont ouverts. Touche R pour effacer la progression.',
     color: 0xdfe6ee,
   },
 ];
@@ -45,6 +45,7 @@ export class TitleScene extends Phaser.Scene {
   create() {
     this.leaving = false;
     this.selected = 0;
+    this.confirmingReset = false;
 
     // La carte des mondes en fond, un peu voilée pour que le titre ressorte.
     const background = this.add.image(0, 0, ATLAS.key).setOrigin(0).setScale(GAME_WIDTH / ATLAS.width);
@@ -65,6 +66,7 @@ export class TitleScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.enterKey = this.input.keyboard.addKey('ENTER');
     this.listenKey = this.input.keyboard.addKey('SPACE');
+    this.resetKey = this.input.keyboard.addKey('R');
     this.cameras.main.fadeIn(ROOM_FADE);
   }
 
@@ -150,6 +152,7 @@ export class TitleScene extends Phaser.Scene {
   select(index) {
     if (index === this.selected) return;
     this.selected = index;
+    this.confirmingReset = false;
     this.highlight();
     playStep();
     this.tweens.killTweensOf(this.hero, ['x']);
@@ -163,8 +166,22 @@ export class TitleScene extends Phaser.Scene {
     const { JustDown } = Phaser.Input.Keyboard;
     if (JustDown(this.listenKey)) dialogBox.listen();
     else if (JustDown(this.enterKey)) this.start();
+    else if (JustDown(this.resetKey)) this.askReset();
     else if (JustDown(this.cursors.left)) this.select(0);
     else if (JustDown(this.cursors.right)) this.select(PROFILES.length - 1);
+  }
+
+  // R efface la progression d'Admin, seulement quand Admin est choisi, et après une confirmation.
+  askReset() {
+    if (PROFILES[this.selected].id !== 'admin') return;
+    if (!this.confirmingReset) {
+      this.confirmingReset = true;
+      dialogBox.show('Effacer la progression Admin ? Appuie encore sur R.', { autoSpeak: true });
+      return;
+    }
+    this.confirmingReset = false;
+    resetAdminProgress();
+    dialogBox.show('La progression Admin est effacée.', { autoSpeak: true });
   }
 
   start() {
