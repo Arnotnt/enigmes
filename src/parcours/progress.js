@@ -1,10 +1,13 @@
 // La progression est gardée dans le navigateur : { "2026-11-09": ["Lundi", "Mardi"] }.
 // Si le navigateur refuse, le jeu marche quand même, sans sauvegarde d'une fois sur l'autre.
 //
-// Deux sauvegardes, choisies sur l'écran de démarrage : celle de l'enfant, et « admin », où tous
+// Une sauvegarde par joueur (`PLAYERS`), choisie sur l'écran de démarrage, plus « admin », où tous
 // les mondes, toutes les semaines et tous les jours sont ouverts, pour tout tester. Chacune garde
-// sa progression à part. La clé de l'enfant reste celle d'avant, pour ne rien perdre.
-const STORAGE_KEYS = { joueur: 'enigmes.progress', admin: 'enigmes.progress.admin' };
+// sa progression à part. La clé d'Alexis reste celle d'avant le second joueur, pour ne rien perdre.
+const storageKey = (name) => (name === 'alexis' ? 'enigmes.progress' : `enigmes.progress.${name}`);
+
+// La dernière sauvegarde choisie, pour la proposer d'office au prochain lancement.
+const LAST_PROFILE_KEY = 'enigmes.dernier-joueur';
 
 // Garde seulement ce qui ressemble à une progression : une sauvegarde abîmée ne doit jamais
 // empêcher d'enregistrer la suite.
@@ -15,25 +18,39 @@ function repair(saved) {
 
 function load(profile) {
   try {
-    return repair(JSON.parse(localStorage.getItem(STORAGE_KEYS[profile])));
+    return repair(JSON.parse(localStorage.getItem(storageKey(profile))));
   } catch {
     return {};
   }
 }
 
-let profile = 'joueur';
+let profile = 'alexis';
 let progress = load(profile);
 
-// profile : 'joueur' ou 'admin'.
+// name : l'id d'un joueur de `PLAYERS`, ou 'admin'.
 export function chooseProfile(name) {
   profile = name;
   progress = load(profile);
+  try {
+    localStorage.setItem(LAST_PROFILE_KEY, name);
+  } catch {
+    // Rien à faire : au prochain lancement, la première sauvegarde sera proposée.
+  }
 }
 
-// Efface la progression de la sauvegarde admin, jamais celle de l'enfant.
+// L'id de la dernière sauvegarde choisie, ou null la première fois.
+export function lastProfile() {
+  try {
+    return localStorage.getItem(LAST_PROFILE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+// Efface la progression de la sauvegarde admin, jamais celle d'un enfant.
 export function resetAdminProgress() {
   try {
-    localStorage.removeItem(STORAGE_KEYS.admin);
+    localStorage.removeItem(storageKey('admin'));
   } catch {
     // Rien à faire : la sauvegarde n'existe qu'en mémoire.
   }
@@ -43,7 +60,7 @@ export function resetAdminProgress() {
 // Vrai dans la sauvegarde admin : rien n'est fermé.
 export const isAllOpen = () => profile === 'admin';
 
-// Vrai pour une semaine simulée vue depuis la sauvegarde de l'enfant : elle attend ses vrais
+// Vrai pour une semaine simulée vue depuis la sauvegarde d'un enfant : elle attend ses vrais
 // devoirs. L'enfant ne peut pas y jouer, donc aucun de ses jours ne sera validé à l'avance.
 export const isWeekWaiting = (week) => Boolean(week.simulation) && !isAllOpen();
 
@@ -70,7 +87,7 @@ export function markDayDone(week, day) {
   if (isDayDone(week, day)) return;
   progress[week.id] = [...(progress[week.id] ?? []), day.name];
   try {
-    localStorage.setItem(STORAGE_KEYS[profile], JSON.stringify(progress));
+    localStorage.setItem(storageKey(profile), JSON.stringify(progress));
   } catch {
     // Rien à faire : la progression reste en mémoire jusqu'à la fermeture de la page.
   }
