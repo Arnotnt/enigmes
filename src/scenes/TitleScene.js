@@ -2,35 +2,36 @@ import * as Phaser from 'phaser';
 import { MAP_MUSIC } from '../audio/musics.js';
 import { playMusic, playStep } from '../audio/sound.js';
 import {
-  GAME_HEIGHT, GAME_TITLE, GAME_WIDTH, MAP_HERO_SCALE, PLAYER_NAME, PLAYER_TEXTURE_SCALE, ROOM_FADE,
+  GAME_HEIGHT, GAME_TITLE, GAME_WIDTH, MAP_HERO_SCALE, PLAYERS, PLAYER_TEXTURE_SCALE, ROOM_FADE,
 } from '../constants.js';
 import { heroTexture } from '../characters/costumes.js';
 import { standingFrame } from '../directions.js';
-import { chooseProfile, resetAdminProgress } from '../parcours/progress.js';
+import { chooseProfile, lastProfile, resetAdminProgress } from '../parcours/progress.js';
 import { ATLAS } from '../parcours/places.js';
 import { dialogBox } from '../ui/DialogBox.js';
 
-// Les sauvegardes. Celle de l'enfant est choisie d'office : il n'a qu'à appuyer sur Entrée.
-// Admin ne s'affiche qu'avec ?admin dans l'adresse : l'enfant ne peut pas y entrer par erreur.
-const ALL_PROFILES = [
-  {
-    id: 'joueur',
-    name: PLAYER_NAME,
-    detail: 'Ma partie',
-    speech: `${PLAYER_NAME}. Appuie sur Entrée pour jouer.`,
-    color: 0xfff8e7,
-  },
-  {
-    id: 'admin',
-    name: 'Admin',
-    detail: 'Tout est ouvert',
-    speech: 'Admin : tous les mondes sont ouverts. Touche R pour effacer la progression.',
-    color: 0xdfe6ee,
-  },
-];
-const PROFILES = new URLSearchParams(window.location.search).has('admin') ? ALL_PROFILES : [ALL_PROFILES[0]];
+// Les sauvegardes : une par joueur, puis Admin. La dernière choisie l'est d'office au lancement :
+// l'enfant n'a qu'à appuyer sur Entrée. Admin ne s'affiche qu'avec ?admin dans l'adresse : un
+// enfant ne peut pas y entrer par erreur.
+const PLAYER_PROFILES = PLAYERS.map(({ id, name }) => ({
+  id,
+  name,
+  detail: 'Ma partie',
+  speech: `${name}. Appuie sur Entrée pour jouer.`,
+  color: 0xfff8e7,
+}));
+const ADMIN_PROFILE = {
+  id: 'admin',
+  name: 'Admin',
+  detail: 'Tout est ouvert',
+  speech: 'Admin : tous les mondes sont ouverts. Touche R pour effacer la progression.',
+  color: 0xdfe6ee,
+};
+const PROFILES = new URLSearchParams(window.location.search).has('admin')
+  ? [...PLAYER_PROFILES, ADMIN_PROFILE]
+  : PLAYER_PROFILES;
 
-const CARD = { width: 250, height: 110, gap: 60, y: GAME_HEIGHT * 0.66 };
+const CARD = { width: 250, height: 110, gap: 40, y: GAME_HEIGHT * 0.66 };
 const GOLD = 0xf2c14e;
 const BROWN = 0x6b4a2f;
 
@@ -44,7 +45,8 @@ export class TitleScene extends Phaser.Scene {
 
   create() {
     this.leaving = false;
-    this.selected = 0;
+    // La dernière sauvegarde jouée, si elle est encore à l'écran ; sinon la première.
+    this.selected = Math.max(PROFILES.findIndex((profile) => profile.id === lastProfile()), 0);
     this.confirmingReset = false;
 
     // La carte des mondes en fond, un peu voilée pour que le titre ressorte.
@@ -56,13 +58,13 @@ export class TitleScene extends Phaser.Scene {
     this.cards = PROFILES.map((profile, index) => this.drawCard(profile, index));
 
     // Le personnage se tient au-dessus de la sauvegarde choisie, et sautille de temps en temps.
-    this.hero = this.add.sprite(this.cardX(0), CARD.y - CARD.height / 2 - 2, heroTexture(), standingFrame('down'));
+    this.hero = this.add.sprite(this.cardX(this.selected), CARD.y - CARD.height / 2 - 2, heroTexture(), standingFrame('down'));
     this.hero.setOrigin(0.5, 1).setScale((MAP_HERO_SCALE * 1.2) / PLAYER_TEXTURE_SCALE);
     this.tweens.add({ targets: this.hero, scaleY: this.hero.scaleY * 0.92, duration: 220, yoyo: true, repeat: -1, repeatDelay: 1600 });
     this.highlight();
 
     playMusic(MAP_MUSIC);
-    dialogBox.show(PROFILES[0].speech, { autoSpeak: true });
+    dialogBox.show(PROFILES[this.selected].speech, { autoSpeak: true });
     this.cursors = this.input.keyboard.createCursorKeys();
     this.enterKey = this.input.keyboard.addKey('ENTER');
     this.listenKey = this.input.keyboard.addKey('SPACE');
@@ -70,7 +72,7 @@ export class TitleScene extends Phaser.Scene {
     this.cameras.main.fadeIn(ROOM_FADE);
   }
 
-  // Le titre sur deux lignes : « Le Tour du Monde » en crème, le prénom en grand et en or.
+  // Le titre sur deux lignes : « Parcours » en crème, « du CP » en grand et en or.
   drawTitle() {
     const [top, bottom] = GAME_TITLE.split('\n');
     const container = this.add.container(GAME_WIDTH / 2, GAME_HEIGHT * 0.25);
@@ -100,7 +102,7 @@ export class TitleScene extends Phaser.Scene {
     gradient.addColorStop(0.9, '#d9822b');
     second.setFill(gradient);
 
-    // Quelques étoiles qui scintillent autour du prénom.
+    // Quelques étoiles qui scintillent autour du titre.
     const stars = [[-250, 10, 1], [255, -10, 0.8], [-200, 80, 0.6], [220, 75, 0.7], [-300, -70, 0.5], [310, -80, 0.6]];
     const starItems = stars.map(([x, y, size], index) => {
       const star = this.add.star(x, y, 5, 6 * size, 16 * size, 0xfff3b0).setStrokeStyle(2, 0x4a3220);
@@ -116,10 +118,9 @@ export class TitleScene extends Phaser.Scene {
     this.tweens.add({ targets: second, angle: { from: -2, to: 2 }, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
   }
 
+  // Les cartes sont alignées et centrées, quel que soit leur nombre.
   cardX(index) {
-    if (PROFILES.length === 1) return GAME_WIDTH / 2;
-    const offset = (CARD.width + CARD.gap) / 2;
-    return GAME_WIDTH / 2 + (index === 0 ? -offset : offset);
+    return GAME_WIDTH / 2 + (index - (PROFILES.length - 1) / 2) * (CARD.width + CARD.gap);
   }
 
   // Une sauvegarde : une carte avec son nom. Un clic la choisit et lance la partie.
@@ -167,8 +168,8 @@ export class TitleScene extends Phaser.Scene {
     if (JustDown(this.listenKey)) dialogBox.listen();
     else if (JustDown(this.enterKey)) this.start();
     else if (JustDown(this.resetKey)) this.askReset();
-    else if (JustDown(this.cursors.left)) this.select(0);
-    else if (JustDown(this.cursors.right)) this.select(PROFILES.length - 1);
+    else if (JustDown(this.cursors.left)) this.select(Math.max(this.selected - 1, 0));
+    else if (JustDown(this.cursors.right)) this.select(Math.min(this.selected + 1, PROFILES.length - 1));
   }
 
   // R efface la progression d'Admin, seulement quand Admin est choisi, et après une confirmation.

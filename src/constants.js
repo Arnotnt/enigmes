@@ -68,8 +68,13 @@ export const SCENE_PICTURE = { y: 27, size: 50 }; // la scène à décrire, en h
 export const PICTURE_FRAME = { y: 20, size: 26 }; // l'image à reconnaître, en haut de la salle (pixels de salle)
 export const ROOM_END_DELAY = 2500; // millisecondes pour écouter le bravo avant de quitter la salle
 
-export const PLAYER_NAME = 'Alexis'; // le joueur : dans le titre et sur sa sauvegarde
-export const GAME_TITLE = `Le Tour du Monde\nd’${PLAYER_NAME}`; // titre de l'écran de démarrage, sur deux lignes
+// Les joueurs : chacun a sa sauvegarde, sur le même parcours. `id` sert à la sauvegarde et ne
+// change plus ; `name` s'affiche sur sa carte de l'écran de démarrage.
+export const PLAYERS = [
+  { id: 'alexis', name: 'Alexis' },
+  { id: 'ayden', name: 'Ayden' },
+];
+export const GAME_TITLE = 'Parcours\ndu CP'; // titre de l'écran de démarrage, sur deux lignes
 
 // Musique : volume normal, volume quand la voix parle, et durée des fondus.
 export const MUSIC_VOLUME = 0.35;

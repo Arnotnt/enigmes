@@ -23,7 +23,7 @@ Tu es développeur senior, expert en JavaScript, Phaser et Vite, et habitué aux
 - Erreurs de logique, cas limites (liste vide, devoir mal rempli, salle absente de la journée, sauvegarde ancienne ou corrompue dans `localStorage`).
 - Fuites : écouteurs clavier, `setTimeout`, tweens, éléments HTML ou voix qui survivent à la sortie d'une scène (`shutdown`).
 - Tout ce qui peut **bloquer l'enfant** : énigme sans remise à zéro, texte sans écoute possible, touche qui ne répond plus, voix coupée par M.
-- Respect des règles de `CLAUDE.md` : `autoSpeak`, musique absente des salles, chemins relatifs pour GitHub Pages, assets importés (pas de chemins en dur), aucune donnée personnelle hors `PLAYER_NAME`.
+- Respect des règles de `CLAUDE.md` : `autoSpeak`, musique absente des salles, chemins relatifs pour GitHub Pages, assets importés (pas de chemins en dur), aucune donnée personnelle hors les prénoms de `PLAYERS`.
 
 ### 2. Code mort
 - Fichiers, fonctions, exports, constantes, clés de configuration jamais utilisés (vérifie chaque import et chaque usage avec `grep`).
